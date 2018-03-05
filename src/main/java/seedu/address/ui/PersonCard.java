@@ -13,6 +13,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String[] TAG_COLORS = {"salmon", "mint", "teal", "turquoise", "pink", "pale-blue", "purple", "blue", "indigo"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -47,7 +48,30 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        addTagLabels(person);
+    }
+
+    /**
+     * Tag colors are derived by calculating the hash code of the {@code tagName} string to
+     * select a color from the {@code TAG_COLORS} array
+     *
+     * @param tagName
+     * @return color for the {@code tagName}'s tag label
+     */
+    private String getTagColor(String tagName) {
+        int index = Math.abs(tagName.hashCode()) %  TAG_COLORS.length;
+        return TAG_COLORS[index];
+    }
+
+    /**
+     * Adds all tags of {@code person} as color-coded labels
+     */
+    private void addTagLabels(Person person) {
+        person.getTags().forEach(tag -> {
+            Label newLabel = new Label(tag.tagName);
+            newLabel.getStyleClass().add(getTagColor(tag.tagName));
+            tags.getChildren().add(newLabel);
+        });
     }
 
     @Override
