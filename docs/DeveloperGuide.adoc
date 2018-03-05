@@ -798,17 +798,63 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |have a user manual |know how to use the app.
 
-|`* * *` |user |add a new person |
+|`* * *` |user |have an authentication page |prevent unauthorized access to my information.
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |update my password |keep my account secure.
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |employer |view an employee’s contact |contact them.
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |employer |edit an employee’s contact |update their outdated contact information.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |employer |view an employee’s salary|view their salary.
+
+|`* * *` |employer |edit an employee’s salary|update their salary.
+
+|`* * *` |employer |add a new employee |store them in the record.
+
+|`* * *` |employer |delete an existing employee |remove employees that are no longer working.
+
+|`* * *` |employer |update the schedule |show employees the available slots.
+
+|`* * *` |employee |view the schedule |choose when I want to work.
+
+|`* * *` |employee |select from the available slots |work during that slot.
+
+|`* *` |employer |sort employees by name |have a clearer view of all employees’ details.
+
+|`* * ` |employer |sort employees by outlet |have a clearer view of all employees’ details.
+
+|`* *` |employer |add a new admin account |have multiple managers.
+
+|`* *` |employer |find an employee by name |locate details of employees without having to go through the entire list.
+
+|`* *` |employer |find employees by outlet |locate details of employees according to the outlet they are working at.
+
+|`* *` |employer |view an employee’s working outlet |view their working outlet.
+
+|`* *` |employer |edit an employee’s working outlet |edit their working outlet.
+
+|`* *` |employer |view an employee’s address|view their address information.
+
+|`* *` |employer |edit an employee’s address|update their outdated address.
+
+|`* *` |employee |edit my contact and address |update my particulars.
+
+|`* *` |employee |view my salary so far for the month |plan my expenses.
+
+|`*` |employer |add an employee’s photo|view it at any time.
+
+|`*` |employer |edit an employee’s photo|change an employee's photo to a newer one.
+
+|`*` |employer |view an employee’s photo|recognize the employee.
+
+|`*` |employer |remove an employee’s photo|remove their old photo.
+
+|`*` |employee |add a photo |be easily identified by my employer.
+
+|`*` |employee |have notification for the selected slot |be assured that I am working at that slot.
 |=======================================================================
 
 _{More to be added}_
