@@ -384,3 +384,7 @@
 #tags .indigo {
     -fx-background-color: #5C6BC0;
 }
+
+#tags .yellow {
+    -fx-background-color: ##FFCA28;
+}
