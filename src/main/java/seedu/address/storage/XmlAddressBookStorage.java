@@ -66,6 +66,19 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
     }
+    
+    /**
+     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     * @param filePath location of the data. Cannot be null
+     */
+    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        requireNonNull(addressBook);
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+    }
 
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -83,19 +96,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         } else {
             return filePath + BACKUP_FILE_EXTENSION;
         }
-    }
-
-    /**
-     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
-     * @param filePath location of the data. Cannot be null
-     */
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-        requireNonNull(addressBook);
-        requireNonNull(filePath);
-
-        File file = new File(filePath);
-        FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
 }
