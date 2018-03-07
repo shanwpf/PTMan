@@ -141,6 +141,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            removeUnusedTag();
             return true;
         } else {
             throw new PersonNotFoundException();
@@ -154,6 +155,58 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// util methods
+
+    /**
+     * Remove tag from Person if the tag exist in Person.
+     * @param tag
+     * @param person
+     */
+    private void removeTagFromPerson(Tag tag, Person person) {
+        Set<Tag> newTags = new HashSet<>(person.getTags());
+
+        if (!newTags.contains(tag)) {
+            return;
+        } else {
+            newTags.remove(tag);
+        }
+
+        Person newPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                person.getAddress(), newTags);
+
+        try {
+            updatePerson(person, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("updating person should not result in duplicated person");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("updating person should always be able to find the person you are editing");
+        }
+
+    }
+
+    /**
+     * remove tag that is unused in addressbook
+     */
+    private void removeUnusedTag() {
+        HashSet newSet = new HashSet();
+        for (Person person:persons) {
+            for (Tag tag: person.getTags()) {
+                if (!newSet.contains(tag)) {
+                    newSet.add(tag);
+                }
+            }
+        }
+        tags.setTags(newSet);
+    }
+    /**
+     * Remove tags from everyone in the address book
+     * @param tag
+     */
+    public void removeTagFromAllPersons(Tag tag) {
+        for (Person person: persons) {
+            removeTagFromPerson(tag, person);
+        }
+        removeUnusedTag();
+    }
 
     @Override
     public String toString() {

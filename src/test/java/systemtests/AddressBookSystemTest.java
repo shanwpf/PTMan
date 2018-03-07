@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.StatusBarFooter.NUM_PERSONS_STATUS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -41,6 +42,7 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ResultDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -53,6 +55,9 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+
+    private List<String> defaultStyleOfResultDisplay;
+    private List<String> errorStyleOfResultDisplay;
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -68,6 +73,10 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
+
+        defaultStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
+        errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
 
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
@@ -191,6 +200,7 @@ public abstract class AddressBookSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
+        statusBarFooterHandle.rememberNumPersons();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
@@ -234,17 +244,19 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the command box's shows the default style.
+     * Asserts that the command box and result display shows the default style.
      */
     protected void assertCommandBoxShowsDefaultStyle() {
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
+        assertEquals(defaultStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
     /**
-     * Asserts that the command box's shows the error style.
+     * Asserts that the command box and result display shows the error style.
      */
-    protected void assertCommandBoxShowsErrorStyle() {
+    protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+        assertEquals(errorStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
     /**
@@ -253,18 +265,24 @@ public abstract class AddressBookSystemTest {
     protected void assertStatusBarUnchanged() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isNumPersonsChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
 
     /**
-     * Asserts that only the sync status in the status bar was changed to the timing of
-     * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
+     * Asserts that only the save location in the status bar was unchanged, while sync status
+     * is changed to the timing of {@code ClockRule#getInjectedClock()}, and num persons updates to
+     * the current num of persons.
      */
-    protected void assertStatusBarUnchangedExceptSyncStatus() {
+    protected void assertStatusBarChangedExceptSaveLocation() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
+        int currNumPersons = testApp.getModel().getAddressBook().getPersonList().size();
+        String expectedNumPersons = String.format(NUM_PERSONS_STATUS, currNumPersons);
+
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        assertEquals(expectedNumPersons, handle.getNumPersons());
         assertFalse(handle.isSaveLocationChanged());
     }
 
@@ -279,6 +297,8 @@ public abstract class AddressBookSystemTest {
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertEquals(String.format(NUM_PERSONS_STATUS,
+                    getModel().getAddressBook().getPersonList().size()), getStatusBarFooter().getNumPersons());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
