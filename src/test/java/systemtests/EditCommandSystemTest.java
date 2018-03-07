@@ -256,7 +256,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         } else {
             assertSelectedCardUnchanged();
         }
-        assertStatusBarUnchangedExceptSyncStatus();
+        assertStatusBarChangedExceptSaveLocation();
     }
 
     /**
@@ -276,7 +276,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
+        assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 }
