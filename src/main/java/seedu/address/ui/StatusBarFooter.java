@@ -68,7 +68,7 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     private void setNumPersons(int numPersons) {
-        Platform.runLater(() -> this.numPersonsStatus.setText(String.format(NUM_PERSONS_STATUS,numPersons)));
+        Platform.runLater(() -> this.numPersonsStatus.setText(String.format(NUM_PERSONS_STATUS, numPersons)));
     }
 
     private void setSaveLocation(String location) {
