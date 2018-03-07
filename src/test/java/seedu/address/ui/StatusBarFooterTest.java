@@ -3,9 +3,9 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.ui.StatusBarFooter.NUM_PERSONS_STATUS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.StatusBarFooter.NUM_PERSONS_STATUS;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -28,7 +28,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     private static final int INITIAL_NUM_PERSONS = 0;
 
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBookBuilder().withPerson(ALICE).build());
+    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(
+            new AddressBookBuilder().withPerson(ALICE).build());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -73,7 +74,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
      * sync status matches that of {@code expectedSyncStatus}, and the num persons matches
      * that of {@code expectedNumPersons}
      */
-    private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus, String expectedNumPersons) {
+    private void assertStatusBarContent(String expectedSaveLocation,
+                                        String expectedSyncStatus, String expectedNumPersons) {
         assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
         assertEquals(expectedNumPersons, statusBarFooterHandle.getNumPersons());
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());

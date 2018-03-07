@@ -55,30 +55,33 @@ public class GuiTestAssert {
      */
     private static String getTagColor(String tagName) {
         switch (tagName) {
-            case "classmates":
-            case "owesMoney":
-                return "salmon";
-            case "colleagues":
-            case "neighbours":
-                return "teal";
-            case "family":
-            case "friend":
-                return "pink";
-            case "friends":
-                return "pale-blue";
-            case "husband":
-                return "yellow";
-            default:
-                fail(tagName + " does not have a color assigned.");
-                return "";
+        case "classmates":
+        case "owesMoney":
+            return "salmon";
+        case "colleagues":
+        case "neighbours":
+            return "teal";
+        case "family":
+        case "friend":
+            return "pink";
+        case "friends":
+            return "pale-blue";
+        case "husband":
+            return "yellow";
+        default:
+            fail(tagName + " does not have a color assigned.");
+            return "";
         }
     }
 
     /**
-     * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct color.
+     * Asserts that the tags in {@code actualCard} matches all the tags in
+     * {@code expectedPerson} with the correct color.
      * */
-    private static void assertTagEquals(Person expectedPerson, PersonCardHandle actualCard) {
-        List<String> expectedTags = expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList());
+    private static void assertTagEquals(Person expectedPerson,
+                                        PersonCardHandle actualCard) {
+        List<String> expectedTags = expectedPerson.getTags().stream().map(tag -> tag.tagName)
+                .collect(Collectors.toList());
         assertEquals(expectedTags, actualCard.getTags());
         expectedTags.forEach(tag ->
                 assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColor(tag)), actualCard.getTagStyleClasses(tag)));

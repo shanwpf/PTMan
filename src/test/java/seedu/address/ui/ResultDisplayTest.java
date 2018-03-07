@@ -13,8 +13,10 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_SUCCESS = new NewResultAvailableEvent("Success", false);
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_FAILED = new NewResultAvailableEvent("Failed", true);
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_SUCCESS =
+            new NewResultAvailableEvent("Success", false);
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_FAILED =
+            new NewResultAvailableEvent("Failed", true);
 
     private ArrayList<String> defaultStyleOfResultDisplay;
     private ArrayList<String> errorStyleOfResultDisplay;
