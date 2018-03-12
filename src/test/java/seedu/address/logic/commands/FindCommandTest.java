@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.getTypicalPartTimeManager;
+import static seedu.address.commons.core.Messages.MESSAGE_EMPLOYEES_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalEmployees.CARL;
+import static seedu.address.testutil.TypicalEmployees.ELLE;
+import static seedu.address.testutil.TypicalEmployees.FIONA;
+import static seedu.address.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,8 +21,8 @@ import seedu.address.model.PartTimeManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
+import seedu.address.model.employee.NameContainsKeywordsPredicate;
+import seedu.address.model.employee.Employee;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -53,20 +53,20 @@ public class FindCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different employee -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+    public void execute_zeroKeywords_noEmployeeFound() {
+        String expectedMessage = String.format(MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+    public void execute_multipleKeywords_multipleEmployeesFound() {
+        String expectedMessage = String.format(MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
@@ -84,15 +84,15 @@ public class FindCommandTest {
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
+     *     - the {@code FilteredList<Employee>} is equal to {@code expectedList}<br>
      *     - the {@code PartTimeManager} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<Person> expectedList) {
+    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<Employee> expectedList) {
         PartTimeManager expectedPartTimeManager = new PartTimeManager(model.getPartTimeManager());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedList, model.getFilteredEmployeeList());
         assertEquals(expectedPartTimeManager, model.getPartTimeManager());
     }
 }

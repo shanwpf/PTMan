@@ -1,14 +1,14 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
+import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_EMPLOYEE_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TestUtil.getEmployee;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.address.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.exceptions.EmployeeNotFoundException;
 
 public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
 
@@ -30,60 +30,60 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: delete the first employee in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        Person deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_EMPLOYEE.getOneBased() + "       ";
+        Employee deletedEmployee = removeEmployee(expectedModel, INDEX_FIRST_EMPLOYEE);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_EMPLOYEE_SUCCESS, deletedEmployee);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last person in the list -> deleted */
+        /* Case: delete the last employee in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
-        assertCommandSuccess(lastPersonIndex);
+        Index lastEmployeeIndex = getLastIndex(modelBeforeDeletingLast);
+        assertCommandSuccess(lastEmployeeIndex);
 
-        /* Case: undo deleting the last person in the list -> last person restored */
+        /* Case: undo deleting the last employee in the list -> last employee restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: redo deleting the last person in the list -> last person deleted again */
+        /* Case: redo deleting the last employee in the list -> last employee deleted again */
         command = RedoCommand.COMMAND_WORD;
-        removePerson(modelBeforeDeletingLast, lastPersonIndex);
+        removeEmployee(modelBeforeDeletingLast, lastEmployeeIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: delete the middle person in the list -> deleted */
-        Index middlePersonIndex = getMidIndex(getModel());
-        assertCommandSuccess(middlePersonIndex);
+        /* Case: delete the middle employee in the list -> deleted */
+        Index middleEmployeeIndex = getMidIndex(getModel());
+        assertCommandSuccess(middleEmployeeIndex);
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered person list, delete index within bounds of address book and person list -> deleted */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        /* Case: filtered employee list, delete index within bounds of address book and employee list -> deleted */
+        showEmployeesWithName(KEYWORD_MATCHING_MEIER);
+        Index index = INDEX_FIRST_EMPLOYEE;
+        assertTrue(index.getZeroBased() < getModel().getFilteredEmployeeList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
+        /* Case: filtered employee list, delete index within bounds of address book but out of bounds of employee list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getPartTimeManager().getPersonList().size();
+        showEmployeesWithName(KEYWORD_MATCHING_MEIER);
+        int invalidIndex = getModel().getPartTimeManager().getEmployeeList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+        /* --------------------- Performing delete operation while a employee card is selected ------------------------ */
 
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
-        showAllPersons();
+        /* Case: delete the selected employee -> employee list panel selects the employee before the deleted employee */
+        showAllEmployees();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
+        selectEmployee(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        deletedEmployee = removeEmployee(expectedModel, selectedIndex);
+        expectedResultMessage = String.format(MESSAGE_DELETE_EMPLOYEE_SUCCESS, deletedEmployee);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
@@ -98,9 +98,9 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getPartTimeManager().getPersonList().size() + 1);
+                getModel().getPartTimeManager().getEmployeeList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
@@ -113,28 +113,28 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
     }
 
     /**
-     * Removes the {@code Person} at the specified {@code index} in {@code model}'s address book.
-     * @return the removed person
+     * Removes the {@code Employee} at the specified {@code index} in {@code model}'s address book.
+     * @return the removed employee
      */
-    private Person removePerson(Model model, Index index) {
-        Person targetPerson = getPerson(model, index);
+    private Employee removeEmployee(Model model, Index index) {
+        Employee targetEmployee = getEmployee(model, index);
         try {
-            model.deletePerson(targetPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("targetPerson is retrieved from model.");
+            model.deleteEmployee(targetEmployee);
+        } catch (EmployeeNotFoundException pnfe) {
+            throw new AssertionError("targetEmployee is retrieved from model.");
         }
-        return targetPerson;
+        return targetEmployee;
     }
 
     /**
-     * Deletes the person at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+     * Deletes the employee at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        Person deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        Employee deletedEmployee = removeEmployee(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_EMPLOYEE_SUCCESS, deletedEmployee);
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);

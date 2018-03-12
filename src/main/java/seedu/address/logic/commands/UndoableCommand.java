@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.PartTimeManager;
@@ -32,18 +32,18 @@ public abstract class UndoableCommand extends Command {
 
     /**
      * Reverts the PartTimeManager to the state before this command
-     * was executed and updates the filtered person list to
-     * show all persons.
+     * was executed and updates the filtered employee list to
+     * show all employees.
      */
     protected final void undo() {
         requireAllNonNull(model, previousPartTimeManager);
         model.resetData(previousPartTimeManager);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
     }
 
     /**
-     * Executes the command and updates the filtered person
-     * list to show all persons.
+     * Executes the command and updates the filtered employee
+     * list to show all employees.
      */
     protected final void redo() {
         requireNonNull(model);
@@ -53,7 +53,7 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
     }
 
     @Override

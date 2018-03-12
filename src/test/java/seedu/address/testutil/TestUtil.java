@@ -6,7 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.employee.Employee;
 
 /**
  * A utility class for test cases.
@@ -32,23 +32,23 @@ public class TestUtil {
     }
 
     /**
-     * Returns the middle index of the person in the {@code model}'s person list.
+     * Returns the middle index of the employee in the {@code model}'s employee list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getPartTimeManager().getPersonList().size() / 2);
+        return Index.fromOneBased(model.getPartTimeManager().getEmployeeList().size() / 2);
     }
 
     /**
-     * Returns the last index of the person in the {@code model}'s person list.
+     * Returns the last index of the employee in the {@code model}'s employee list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getPartTimeManager().getPersonList().size());
+        return Index.fromOneBased(model.getPartTimeManager().getEmployeeList().size());
     }
 
     /**
-     * Returns the person in the {@code model}'s person list at {@code index}.
+     * Returns the employee in the {@code model}'s employee list at {@code index}.
      */
-    public static Person getPerson(Model model, Index index) {
-        return model.getPartTimeManager().getPersonList().get(index.getZeroBased());
+    public static Employee getEmployee(Model model, Index index) {
+        return model.getPartTimeManager().getEmployeeList().get(index.getZeroBased());
     }
 }

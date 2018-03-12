@@ -2,9 +2,9 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
+import static seedu.address.testutil.TypicalEmployees.ALICE;
+import static seedu.address.testutil.TypicalEmployees.BENSON;
 
 import java.util.Arrays;
 
@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.employee.NameContainsKeywordsPredicate;
 import seedu.address.testutil.PartTimeManagerBuilder;
 
 public class ModelManagerTest {
@@ -20,15 +20,15 @@ public class ModelManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredEmployeeList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredPersonList().remove(0);
+        modelManager.getFilteredEmployeeList().remove(0);
     }
 
     @Test
     public void equals() {
-        PartTimeManager partTimeManager = new PartTimeManagerBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        PartTimeManager partTimeManager = new PartTimeManagerBuilder().withEmployee(ALICE).withEmployee(BENSON).build();
         PartTimeManager differentPartTimeManager = new PartTimeManager();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -51,11 +51,11 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        modelManager.updateFilteredEmployeeList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(partTimeManager, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalPartTimeManager;
+import static seedu.address.logic.commands.CommandTestUtil.showEmployeeAtIndex;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.address.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showEmployeeAtIndex(model, INDEX_FIRST_EMPLOYEE);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

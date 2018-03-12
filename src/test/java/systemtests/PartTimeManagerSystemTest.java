@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.StatusBarFooter.NUM_PERSONS_STATUS;
+import static seedu.address.ui.StatusBarFooter.NUM_EMPLOYEES_STATUS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -26,7 +26,7 @@ import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.EmployeeListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.MainApp;
@@ -39,7 +39,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.PartTimeManager;
 import seedu.address.model.Model;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalEmployees;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
@@ -92,7 +92,7 @@ public abstract class PartTimeManagerSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected PartTimeManager getInitialData() {
-        return TypicalPersons.getTypicalPartTimeManager();
+        return TypicalEmployees.getTypicalPartTimeManager();
     }
 
     /**
@@ -110,8 +110,8 @@ public abstract class PartTimeManagerSystemTest {
         return mainWindowHandle.getCommandBox();
     }
 
-    public PersonListPanelHandle getPersonListPanel() {
-        return mainWindowHandle.getPersonListPanel();
+    public EmployeeListPanelHandle getEmployeeListPanel() {
+        return mainWindowHandle.getEmployeeListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -146,41 +146,41 @@ public abstract class PartTimeManagerSystemTest {
     }
 
     /**
-     * Displays all persons in the address book.
+     * Displays all employees in the address book.
      */
-    protected void showAllPersons() {
+    protected void showAllEmployees() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getPartTimeManager().getPersonList().size(), getModel().getFilteredPersonList().size());
+        assertEquals(getModel().getPartTimeManager().getEmployeeList().size(), getModel().getFilteredEmployeeList().size());
     }
 
     /**
-     * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
+     * Displays all employees with any parts of their names matching {@code keyword} (case-insensitive).
      */
-    protected void showPersonsWithName(String keyword) {
+    protected void showEmployeesWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredPersonList().size() < getModel().getPartTimeManager().getPersonList().size());
+        assertTrue(getModel().getFilteredEmployeeList().size() < getModel().getPartTimeManager().getEmployeeList().size());
     }
 
     /**
-     * Selects the person at {@code index} of the displayed list.
+     * Selects the employee at {@code index} of the displayed list.
      */
-    protected void selectPerson(Index index) {
+    protected void selectEmployee(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        assertEquals(index.getZeroBased(), getEmployeeListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Deletes all persons in the address book.
+     * Deletes all employees in the address book.
      */
-    protected void deleteAllPersons() {
+    protected void deleteAllEmployees() {
         executeCommand(ClearCommand.COMMAND_WORD);
-        assertEquals(0, getModel().getPartTimeManager().getPersonList().size());
+        assertEquals(0, getModel().getPartTimeManager().getEmployeeList().size());
     }
 
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
-     * and the person list panel displays the persons in the model correctly.
+     * {@code expectedResultMessage}, the model and storage contains the same employee objects as {@code expectedModel}
+     * and the employee list panel displays the employees in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
@@ -188,11 +188,11 @@ public abstract class PartTimeManagerSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getPartTimeManager(), testApp.readStoragePartTimeManager());
-        assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertListMatching(getEmployeeListPanel(), expectedModel.getFilteredEmployeeList());
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code BrowserPanelHandle}, {@code EmployeeListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
@@ -200,28 +200,28 @@ public abstract class PartTimeManagerSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
-        statusBarFooterHandle.rememberNumPersons();
-        getPersonListPanel().rememberSelectedPersonCard();
+        statusBarFooterHandle.rememberNumEmployees();
+        getEmployeeListPanel().rememberSelectedEmployeeCard();
     }
 
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected person.
+     * of the previously selected employee.
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
-        assertFalse(getPersonListPanel().isAnyCardSelected());
+        assertFalse(getEmployeeListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * Asserts that the browser's url is changed to display the details of the employee in the employee list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see BrowserPanelHandle#isUrlChanged()
-     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     * @see EmployeeListPanelHandle#isSelectedEmployeeCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardName = getEmployeeListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
             expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
@@ -230,17 +230,17 @@ public abstract class PartTimeManagerSystemTest {
         }
         assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getEmployeeListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the browser's url and the selected card in the employee list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
-     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     * @see EmployeeListPanelHandle#isSelectedEmployeeCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
-        assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+        assertFalse(getEmployeeListPanel().isSelectedEmployeeCardChanged());
     }
 
     /**
@@ -265,24 +265,24 @@ public abstract class PartTimeManagerSystemTest {
     protected void assertStatusBarUnchanged() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         assertFalse(handle.isSaveLocationChanged());
-        assertFalse(handle.isNumPersonsChanged());
+        assertFalse(handle.isNumEmployeesChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
 
     /**
      * Asserts that only the save location in the status bar was unchanged, while sync status
-     * is changed to the timing of {@code ClockRule#getInjectedClock()}, and num persons updates to
-     * the current num of persons.
+     * is changed to the timing of {@code ClockRule#getInjectedClock()}, and num employees updates to
+     * the current num of employees.
      */
     protected void assertStatusBarChangedExceptSaveLocation() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
-        int currNumPersons = testApp.getModel().getPartTimeManager().getPersonList().size();
-        String expectedNumPersons = String.format(NUM_PERSONS_STATUS, currNumPersons);
+        int currNumEmployees = testApp.getModel().getPartTimeManager().getEmployeeList().size();
+        String expectedNumEmployees = String.format(NUM_EMPLOYEES_STATUS, currNumEmployees);
 
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
-        assertEquals(expectedNumPersons, handle.getNumPersons());
+        assertEquals(expectedNumEmployees, handle.getNumEmployees());
         assertFalse(handle.isSaveLocationChanged());
     }
 
@@ -293,12 +293,12 @@ public abstract class PartTimeManagerSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertListMatching(getEmployeeListPanel(), getModel().getFilteredEmployeeList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertEquals(String.format(NUM_PERSONS_STATUS,
-                    getModel().getPartTimeManager().getPersonList().size()), getStatusBarFooter().getNumPersons());
+            assertEquals(String.format(NUM_EMPLOYEES_STATUS,
+                    getModel().getPartTimeManager().getEmployeeList().size()), getStatusBarFooter().getNumEmployees());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

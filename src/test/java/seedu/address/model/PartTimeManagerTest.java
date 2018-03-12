@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalPartTimeManager;
+import static seedu.address.testutil.TypicalEmployees.ALICE;
+import static seedu.address.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
+import seedu.address.model.employee.Employee;
 import seedu.address.model.tag.Tag;
 
 public class PartTimeManagerTest {
@@ -28,7 +28,7 @@ public class PartTimeManagerTest {
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), partTimeManager.getPersonList());
+        assertEquals(Collections.emptyList(), partTimeManager.getEmployeeList());
         assertEquals(Collections.emptyList(), partTimeManager.getTagList());
     }
 
@@ -46,20 +46,20 @@ public class PartTimeManagerTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
+    public void resetData_withDuplicateEmployees_throwsAssertionError() {
         // Repeat ALICE twice
-        List<Person> newPersons = Arrays.asList(ALICE, ALICE);
+        List<Employee> newEmployees = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        PartTimeManagerStub newData = new PartTimeManagerStub(newPersons, newTags);
+        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags);
 
         thrown.expect(AssertionError.class);
         partTimeManager.resetData(newData);
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getEmployeeList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        partTimeManager.getPersonList().remove(0);
+        partTimeManager.getEmployeeList().remove(0);
     }
 
     @Test
@@ -69,20 +69,20 @@ public class PartTimeManagerTest {
     }
 
     /**
-     * A stub ReadOnlyPartTimeManager whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyPartTimeManager whose employees and tags lists can violate interface constraints.
      */
     private static class PartTimeManagerStub implements ReadOnlyPartTimeManager {
-        private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Employee> employees = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        PartTimeManagerStub(Collection<Person> persons, Collection<? extends Tag> tags) {
-            this.persons.setAll(persons);
+        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags) {
+            this.employees.setAll(employees);
             this.tags.setAll(tags);
         }
 
         @Override
-        public ObservableList<Person> getPersonList() {
-            return persons;
+        public ObservableList<Employee> getEmployeeList() {
+            return employees;
         }
 
         @Override

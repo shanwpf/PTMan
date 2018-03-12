@@ -11,10 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.UniqueEmployeeList;
+import seedu.address.model.employee.exceptions.DuplicateEmployeeException;
+import seedu.address.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class PartTimeManager implements ReadOnlyPartTimeManager {
 
-    private final UniquePersonList persons;
+    private final UniqueEmployeeList employees;
     private final UniqueTagList tags;
 
     /*
@@ -35,14 +35,14 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        employees = new UniqueEmployeeList();
         tags = new UniqueTagList();
     }
 
     public PartTimeManager() {}
 
     /**
-     * Creates an PartTimeManager using the Persons and Tags in the {@code toBeCopied}
+     * Creates an PartTimeManager using the Employees and Tags in the {@code toBeCopied}
      */
     public PartTimeManager(ReadOnlyPartTimeManager toBeCopied) {
         this();
@@ -51,8 +51,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     //// list overwrite operations
 
-    public void setPersons(List<Person> persons) throws DuplicatePersonException {
-        this.persons.setPersons(persons);
+    public void setEmployees(List<Employee> employees) throws DuplicateEmployeeException {
+        this.employees.setEmployees(employees);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -65,85 +65,85 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     public void resetData(ReadOnlyPartTimeManager newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        List<Person> syncedPersonList = newData.getPersonList().stream()
+        List<Employee> syncedEmployeeList = newData.getEmployeeList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
         try {
-            setPersons(syncedPersonList);
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("PartTimeManagers should not have duplicate persons");
+            setEmployees(syncedEmployeeList);
+        } catch (DuplicateEmployeeException e) {
+            throw new AssertionError("PartTimeManagers should not have duplicate employees");
         }
     }
 
-    //// person-level operations
+    //// employee-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a employee to the address book.
+     * Also checks the new employee's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the employee to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicateEmployeeException if an equivalent employee already exists.
      */
-    public void addPerson(Person p) throws DuplicatePersonException {
-        Person person = syncWithMasterTagList(p);
+    public void addEmployee(Employee p) throws DuplicateEmployeeException {
+        Employee employee = syncWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(person);
+        // This can cause the tags master list to have additional tags that are not tagged to any employee
+        // in the employee list.
+        employees.add(employee);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code PartTimeManager}'s tag list will be updated with the tags of {@code editedPerson}.
+     * Replaces the given employee {@code target} in the list with {@code editedEmployee}.
+     * {@code PartTimeManager}'s tag list will be updated with the tags of {@code editedEmployee}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateEmployeeException if updating the employee's details causes the employee to be equivalent to
+     *      another existing employee in the list.
+     * @throws EmployeeNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncWithMasterTagList(Person)
+     * @see #syncWithMasterTagList(Employee)
      */
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedPerson);
+    public void updateEmployee(Employee target, Employee editedEmployee)
+            throws DuplicateEmployeeException, EmployeeNotFoundException {
+        requireNonNull(editedEmployee);
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        Employee syncedEditedEmployee = syncWithMasterTagList(editedEmployee);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        // This can cause the tags master list to have additional tags that are not tagged to any employee
+        // in the employee list.
+        employees.setEmployee(target, syncedEditedEmployee);
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     *  Updates the master tag list to include tags in {@code employee} that are not in the list.
+     *  @return a copy of this {@code employee} such that every tag in this employee points to a Tag object in the master
      *  list.
      */
-    private Person syncWithMasterTagList(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
+    private Employee syncWithMasterTagList(Employee employee) {
+        final UniqueTagList employeeTags = new UniqueTagList(employee.getTags());
+        tags.mergeFrom(employeeTags);
 
         // Create map with values = tag object references in the master list
-        // used for checking person tag references
+        // used for checking employee tag references
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        // Rebuild the list of employee tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        employeeTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new Employee(
+                employee.getName(), employee.getPhone(), employee.getEmail(), employee.getAddress(), correctTagReferences);
     }
 
     /**
      * Removes {@code key} from this {@code PartTimeManager}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code PartTimeManager}.
+     * @throws EmployeeNotFoundException if the {@code key} is not in this {@code PartTimeManager}.
      */
-    public boolean removePerson(Person key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeEmployee(Employee key) throws EmployeeNotFoundException {
+        if (employees.remove(key)) {
             return true;
         } else {
-            throw new PersonNotFoundException();
+            throw new EmployeeNotFoundException();
         }
     }
 
@@ -157,13 +157,13 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return employees.asObservableList().size() + " employees, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asObservableList();
+    public ObservableList<Employee> getEmployeeList() {
+        return employees.asObservableList();
     }
 
     @Override
@@ -175,13 +175,13 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PartTimeManager // instanceof handles nulls
-                && this.persons.equals(((PartTimeManager) other).persons)
+                && this.employees.equals(((PartTimeManager) other).employees)
                 && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(employees, tags);
     }
 }

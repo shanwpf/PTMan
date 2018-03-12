@@ -12,9 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.PartTimeManagerChangedEvent;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.exceptions.DuplicateEmployeeException;
+import seedu.address.model.employee.exceptions.EmployeeNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,7 +24,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final PartTimeManager partTimeManager;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Employee> filteredEmployees;
 
     /**
      * Initializes a ModelManager with the given partTimeManager and userPrefs.
@@ -36,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + partTimeManager + " and user prefs " + userPrefs);
 
         this.partTimeManager = new PartTimeManager(partTimeManager);
-        filteredPersons = new FilteredList<>(this.partTimeManager.getPersonList());
+        filteredEmployees = new FilteredList<>(this.partTimeManager.getEmployeeList());
     }
 
     public ModelManager() {
@@ -60,42 +60,42 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        partTimeManager.removePerson(target);
+    public synchronized void deleteEmployee(Employee target) throws EmployeeNotFoundException {
+        partTimeManager.removeEmployee(target);
         indicatePartTimeManagerChanged();
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        partTimeManager.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public synchronized void addEmployee(Employee employee) throws DuplicateEmployeeException {
+        partTimeManager.addEmployee(employee);
+        updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
         indicatePartTimeManagerChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
+    public void updateEmployee(Employee target, Employee editedEmployee)
+            throws DuplicateEmployeeException, EmployeeNotFoundException {
+        requireAllNonNull(target, editedEmployee);
 
-        partTimeManager.updatePerson(target, editedPerson);
+        partTimeManager.updateEmployee(target, editedEmployee);
         indicatePartTimeManagerChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Employee List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Employee} backed by the internal list of
      * {@code partTimeManager}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Employee> getFilteredEmployeeList() {
+        return FXCollections.unmodifiableObservableList(filteredEmployees);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredEmployeeList(Predicate<Employee> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredEmployees.setPredicate(predicate);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return partTimeManager.equals(other.partTimeManager)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredEmployees.equals(other.filteredEmployees);
     }
 
 }

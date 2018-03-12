@@ -12,30 +12,30 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.PartTimeManager;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalEmployees;
 
 public class XmlSerializablePartTimeManagerTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializablePartTimeManagerTest/");
-    private static final File TYPICAL_PERSONS_FILE = new File(TEST_DATA_FOLDER + "typicalPersonsPartTimeManager.xml");
-    private static final File INVALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "invalidPersonPartTimeManager.xml");
+    private static final File TYPICAL_EMPLOYEES_FILE = new File(TEST_DATA_FOLDER + "typicalEmployeesPartTimeManager.xml");
+    private static final File INVALID_EMPLOYEE_FILE = new File(TEST_DATA_FOLDER + "invalidEmployeePartTimeManager.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagPartTimeManager.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void toModelType_typicalPersonsFile_success() throws Exception {
-        XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+    public void toModelType_typicalEmployeesFile_success() throws Exception {
+        XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(TYPICAL_EMPLOYEES_FILE,
                 XmlSerializablePartTimeManager.class);
         PartTimeManager partTimeManagerFromFile = dataFromFile.toModelType();
-        PartTimeManager typicalPersonsPartTimeManager = TypicalPersons.getTypicalPartTimeManager();
-        assertEquals(partTimeManagerFromFile, typicalPersonsPartTimeManager);
+        PartTimeManager typicalEmployeesPartTimeManager = TypicalEmployees.getTypicalPartTimeManager();
+        assertEquals(partTimeManagerFromFile, typicalEmployeesPartTimeManager);
     }
 
     @Test
-    public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
-        XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
+    public void toModelType_invalidEmployeeFile_throwsIllegalValueException() throws Exception {
+        XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(INVALID_EMPLOYEE_FILE,
                 XmlSerializablePartTimeManager.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();

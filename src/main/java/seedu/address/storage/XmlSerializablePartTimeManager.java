@@ -18,7 +18,7 @@ import seedu.address.model.ReadOnlyPartTimeManager;
 public class XmlSerializablePartTimeManager {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedEmployee> employees;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -27,7 +27,7 @@ public class XmlSerializablePartTimeManager {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializablePartTimeManager() {
-        persons = new ArrayList<>();
+        employees = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -36,7 +36,7 @@ public class XmlSerializablePartTimeManager {
      */
     public XmlSerializablePartTimeManager(ReadOnlyPartTimeManager src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        employees.addAll(src.getEmployeeList().stream().map(XmlAdaptedEmployee::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -44,15 +44,15 @@ public class XmlSerializablePartTimeManager {
      * Converts this parttimemanager into the model's {@code PartTimeManager} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedEmployee} or {@code XmlAdaptedTag}.
      */
     public PartTimeManager toModelType() throws IllegalValueException {
         PartTimeManager partTimeManager = new PartTimeManager();
         for (XmlAdaptedTag t : tags) {
             partTimeManager.addTag(t.toModelType());
         }
-        for (XmlAdaptedPerson p : persons) {
-            partTimeManager.addPerson(p.toModelType());
+        for (XmlAdaptedEmployee p : employees) {
+            partTimeManager.addEmployee(p.toModelType());
         }
         return partTimeManager;
     }
@@ -68,6 +68,6 @@ public class XmlSerializablePartTimeManager {
         }
 
         XmlSerializablePartTimeManager otherAb = (XmlSerializablePartTimeManager) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return employees.equals(otherAb.employees) && tags.equals(otherAb.tags);
     }
 }

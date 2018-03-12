@@ -2,14 +2,14 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.PartTimeManager;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.address.model.tag.Tag;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code PartTimeManager ab = new PartTimeManagerBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code PartTimeManager ab = new PartTimeManagerBuilder().withEmployee("John", "Doe").withTag("Friend").build();}
  */
 public class PartTimeManagerBuilder {
 
@@ -24,13 +24,13 @@ public class PartTimeManagerBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code PartTimeManager} that we are building.
+     * Adds a new {@code Employee} to the {@code PartTimeManager} that we are building.
      */
-    public PartTimeManagerBuilder withPerson(Person person) {
+    public PartTimeManagerBuilder withEmployee(Employee employee) {
         try {
-            partTimeManager.addPerson(person);
-        } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("person is expected to be unique.");
+            partTimeManager.addEmployee(employee);
+        } catch (DuplicateEmployeeException dpe) {
+            throw new IllegalArgumentException("employee is expected to be unique.");
         }
         return this;
     }

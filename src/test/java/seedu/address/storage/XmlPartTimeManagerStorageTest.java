@@ -2,10 +2,10 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalPartTimeManager;
+import static seedu.address.testutil.TypicalEmployees.ALICE;
+import static seedu.address.testutil.TypicalEmployees.HOON;
+import static seedu.address.testutil.TypicalEmployees.IDA;
+import static seedu.address.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import java.io.IOException;
 
@@ -61,15 +61,15 @@ public class XmlPartTimeManagerStorageTest {
     }
 
     @Test
-    public void readPartTimeManager_invalidPersonPartTimeManager_throwDataConversionException() throws Exception {
+    public void readPartTimeManager_invalidEmployeePartTimeManager_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readPartTimeManager("invalidPersonPartTimeManager.xml");
+        readPartTimeManager("invalidEmployeePartTimeManager.xml");
     }
 
     @Test
-    public void readPartTimeManager_invalidAndValidPersonPartTimeManager_throwDataConversionException() throws Exception {
+    public void readPartTimeManager_invalidAndValidEmployeePartTimeManager_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readPartTimeManager("invalidAndValidPersonPartTimeManager.xml");
+        readPartTimeManager("invalidAndValidEmployeePartTimeManager.xml");
     }
 
     @Test
@@ -84,14 +84,14 @@ public class XmlPartTimeManagerStorageTest {
         assertEquals(original, new PartTimeManager(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addPerson(HOON);
-        original.removePerson(ALICE);
+        original.addEmployee(HOON);
+        original.removeEmployee(ALICE);
         xmlPartTimeManagerStorage.savePartTimeManager(original, filePath);
         readBack = xmlPartTimeManagerStorage.readPartTimeManager(filePath).get();
         assertEquals(original, new PartTimeManager(readBack));
 
         //Save and read without specifying file path
-        original.addPerson(IDA);
+        original.addEmployee(IDA);
         xmlPartTimeManagerStorage.savePartTimeManager(original); //file path not specified
         readBack = xmlPartTimeManagerStorage.readPartTimeManager().get(); //file path not specified
         assertEquals(original, new PartTimeManager(readBack));

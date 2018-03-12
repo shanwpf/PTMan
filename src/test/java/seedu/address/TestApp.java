@@ -95,7 +95,7 @@ public class TestApp extends MainApp {
      */
     public Model getModel() {
         Model copy = new ModelManager((model.getPartTimeManager()), new UserPrefs());
-        ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        ModelHelper.setFilteredList(copy, model.getFilteredEmployeeList());
         return copy;
     }
 
