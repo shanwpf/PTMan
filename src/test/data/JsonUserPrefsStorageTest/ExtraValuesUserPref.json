@@ -9,6 +9,6 @@
       "z" : 99
     }
   },
-  "partTimeManagerFilePath" : "addressbook.xml",
+  "partTimeManagerFilePath" : "parttimemanager.xml",
   "partTimeManagerName" : "TypicalPartTimeManagerName"
 }

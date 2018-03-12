@@ -7,6 +7,6 @@
       "y" : 100
     }
   },
-  "partTimeManagerFilePath" : "addressbook.xml",
+  "partTimeManagerFilePath" : "parttimemanager.xml",
   "partTimeManagerName" : "TypicalPartTimeManagerName"
 }

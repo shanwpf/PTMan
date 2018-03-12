@@ -10,7 +10,7 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String partTimeManagerFilePath = "data/addressbook.xml";
+    private String partTimeManagerFilePath = "data/parttimemanager.xml";
     private String partTimeManagerName = "MyPartTimeManager";
 
     public UserPrefs() {

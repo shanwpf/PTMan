@@ -9,11 +9,11 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores parttimemanager data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given parttimemanager data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializablePartTimeManager partTimeManager)
             throws FileNotFoundException {

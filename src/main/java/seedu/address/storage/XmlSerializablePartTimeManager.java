@@ -14,7 +14,7 @@ import seedu.address.model.ReadOnlyPartTimeManager;
 /**
  * An Immutable PartTimeManager that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "parttimemanager")
 public class XmlSerializablePartTimeManager {
 
     @XmlElement
@@ -41,7 +41,7 @@ public class XmlSerializablePartTimeManager {
     }
 
     /**
-     * Converts this addressbook into the model's {@code PartTimeManager} object.
+     * Converts this parttimemanager into the model's {@code PartTimeManager} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
