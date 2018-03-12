@@ -1,25 +1,25 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_EMPLOYEE_SUCCESS;
-import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getEmployee;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
-import static seedu.address.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
+import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
+import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.ptman.logic.commands.DeleteCommand.MESSAGE_DELETE_EMPLOYEE_SUCCESS;
+import static seedu.ptman.testutil.TestUtil.getLastIndex;
+import static seedu.ptman.testutil.TestUtil.getMidIndex;
+import static seedu.ptman.testutil.TestUtil.getEmployee;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.employee.Employee;
-import seedu.address.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.commons.core.Messages;
+import seedu.ptman.commons.core.index.Index;
+import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.RedoCommand;
+import seedu.ptman.logic.commands.UndoCommand;
+import seedu.ptman.model.Model;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 
 public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
 
@@ -59,13 +59,13 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered employee list, delete index within bounds of address book and employee list -> deleted */
+        /* Case: filtered employee list, delete index within bounds of ptman book and employee list -> deleted */
         showEmployeesWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_EMPLOYEE;
         assertTrue(index.getZeroBased() < getModel().getFilteredEmployeeList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered employee list, delete index within bounds of address book but out of bounds of employee list
+        /* Case: filtered employee list, delete index within bounds of ptman book but out of bounds of employee list
          * -> rejected
          */
         showEmployeesWithName(KEYWORD_MATCHING_MEIER);
@@ -113,7 +113,7 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
     }
 
     /**
-     * Removes the {@code Employee} at the specified {@code index} in {@code model}'s address book.
+     * Removes the {@code Employee} at the specified {@code index} in {@code model}'s ptman book.
      * @return the removed employee
      */
     private Employee removeEmployee(Model model, Index index) {

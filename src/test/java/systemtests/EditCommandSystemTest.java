@@ -2,52 +2,52 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
-import static seedu.address.testutil.TypicalEmployees.AMY;
-import static seedu.address.testutil.TypicalEmployees.BOB;
-import static seedu.address.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
+import static seedu.ptman.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.ptman.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.ptman.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.ptman.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.ptman.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.ptman.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.ptman.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.ptman.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.ptman.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.ptman.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.ptman.testutil.TypicalEmployees.AMY;
+import static seedu.ptman.testutil.TypicalEmployees.BOB;
+import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.employee.Address;
-import seedu.address.model.employee.Email;
-import seedu.address.model.employee.Name;
-import seedu.address.model.employee.Employee;
-import seedu.address.model.employee.Phone;
-import seedu.address.model.employee.exceptions.DuplicateEmployeeException;
-import seedu.address.model.employee.exceptions.EmployeeNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.EmployeeBuilder;
-import seedu.address.testutil.EmployeeUtil;
+import seedu.ptman.commons.core.Messages;
+import seedu.ptman.commons.core.index.Index;
+import seedu.ptman.logic.commands.EditCommand;
+import seedu.ptman.logic.commands.RedoCommand;
+import seedu.ptman.logic.commands.UndoCommand;
+import seedu.ptman.model.Model;
+import seedu.ptman.model.employee.Address;
+import seedu.ptman.model.employee.Email;
+import seedu.ptman.model.employee.Name;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Phone;
+import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
+import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.tag.Tag;
+import seedu.ptman.testutil.EmployeeBuilder;
+import seedu.ptman.testutil.EmployeeUtil;
 
 public class EditCommandSystemTest extends PartTimeManagerSystemTest {
 
@@ -99,7 +99,7 @@ public class EditCommandSystemTest extends PartTimeManagerSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered employee list, edit index within bounds of address book and employee list -> edited */
+        /* Case: filtered employee list, edit index within bounds of ptman book and employee list -> edited */
         showEmployeesWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_EMPLOYEE;
         assertTrue(index.getZeroBased() < getModel().getFilteredEmployeeList().size());
@@ -108,7 +108,7 @@ public class EditCommandSystemTest extends PartTimeManagerSystemTest {
         editedEmployee = new EmployeeBuilder(employeeToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedEmployee);
 
-        /* Case: filtered employee list, edit index within bounds of address book but out of bounds of employee list
+        /* Case: filtered employee list, edit index within bounds of ptman book but out of bounds of employee list
          * -> rejected
          */
         showEmployeesWithName(KEYWORD_MATCHING_MEIER);
@@ -165,7 +165,7 @@ public class EditCommandSystemTest extends PartTimeManagerSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_EMPLOYEE.getOneBased() + INVALID_EMAIL_DESC,
                 Email.MESSAGE_EMAIL_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
+        /* Case: invalid ptman -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_EMPLOYEE.getOneBased() + INVALID_ADDRESS_DESC,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.employee.Employee;
-import seedu.address.ui.EmployeeCard;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.ui.EmployeeCard;
 
 /**
  * Provides a handle for {@code EmployeeListPanel} containing the list of {@code EmployeeCard}.

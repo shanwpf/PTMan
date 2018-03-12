@@ -4,12 +4,12 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.StatusBarFooter.NUM_EMPLOYEES_STATUS;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.ptman.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.ptman.ui.StatusBarFooter.NUM_EMPLOYEES_STATUS;
+import static seedu.ptman.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+import static seedu.ptman.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.ptman.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.ptman.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,20 +29,20 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.EmployeeListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
-import seedu.address.TestApp;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.PartTimeManager;
-import seedu.address.model.Model;
-import seedu.address.testutil.TypicalEmployees;
-import seedu.address.ui.BrowserPanel;
-import seedu.address.ui.CommandBox;
-import seedu.address.ui.ResultDisplay;
+import seedu.ptman.MainApp;
+import seedu.ptman.TestApp;
+import seedu.ptman.commons.core.EventsCenter;
+import seedu.ptman.commons.core.index.Index;
+import seedu.ptman.logic.commands.ClearCommand;
+import seedu.ptman.logic.commands.FindCommand;
+import seedu.ptman.logic.commands.ListCommand;
+import seedu.ptman.logic.commands.SelectCommand;
+import seedu.ptman.model.PartTimeManager;
+import seedu.ptman.model.Model;
+import seedu.ptman.testutil.TypicalEmployees;
+import seedu.ptman.ui.BrowserPanel;
+import seedu.ptman.ui.CommandBox;
+import seedu.ptman.ui.ResultDisplay;
 
 /**
  * A system test class for PartTimeManager, which provides access to handles of GUI components and helper methods
@@ -146,7 +146,7 @@ public abstract class PartTimeManagerSystemTest {
     }
 
     /**
-     * Displays all employees in the address book.
+     * Displays all employees in PTMan.
      */
     protected void showAllEmployees() {
         executeCommand(ListCommand.COMMAND_WORD);
@@ -170,7 +170,7 @@ public abstract class PartTimeManagerSystemTest {
     }
 
     /**
-     * Deletes all employees in the address book.
+     * Deletes all employees in PTMan.
      */
     protected void deleteAllEmployees() {
         executeCommand(ClearCommand.COMMAND_WORD);

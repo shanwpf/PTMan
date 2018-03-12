@@ -1,21 +1,21 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_EMPLOYEE_SUCCESS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
-import static seedu.address.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
-import static seedu.address.testutil.TypicalEmployees.getTypicalEmployees;
+import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
+import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.ptman.logic.commands.SelectCommand.MESSAGE_SELECT_EMPLOYEE_SUCCESS;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
+import static seedu.ptman.testutil.TypicalEmployees.getTypicalEmployees;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
+import seedu.ptman.commons.core.index.Index;
+import seedu.ptman.logic.commands.RedoCommand;
+import seedu.ptman.logic.commands.SelectCommand;
+import seedu.ptman.logic.commands.UndoCommand;
+import seedu.ptman.model.Model;
 
 public class SelectCommandSystemTest extends PartTimeManagerSystemTest {
     @Test
@@ -53,14 +53,14 @@ public class SelectCommandSystemTest extends PartTimeManagerSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered employee list, select index within bounds of address book but out of bounds of employee list
+        /* Case: filtered employee list, select index within bounds of ptman book but out of bounds of employee list
          * -> rejected
          */
         showEmployeesWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getPartTimeManager().getEmployeeList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
 
-        /* Case: filtered employee list, select index within bounds of address book and employee list -> selected */
+        /* Case: filtered employee list, select index within bounds of ptman book and employee list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredEmployeeList().size());
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
@@ -91,7 +91,7 @@ public class SelectCommandSystemTest extends PartTimeManagerSystemTest {
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: select from empty address book -> rejected */
+        /* Case: select from empty ptman book -> rejected */
         deleteAllEmployees();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_EMPLOYEE.getOneBased(),
                 MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);

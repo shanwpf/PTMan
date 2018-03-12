@@ -1,6 +1,6 @@
 package systemtests;
 
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.ptman.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
-import seedu.address.model.PartTimeManager;
-import seedu.address.model.employee.Employee;
-import seedu.address.model.util.SampleDataUtil;
-import seedu.address.testutil.TestUtil;
+import seedu.ptman.model.PartTimeManager;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.util.SampleDataUtil;
+import seedu.ptman.testutil.TestUtil;
 
 public class SampleDataTest extends PartTimeManagerSystemTest {
     /**

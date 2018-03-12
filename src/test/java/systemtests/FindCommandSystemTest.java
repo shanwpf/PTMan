@@ -1,31 +1,31 @@
 package systemtests;
 
 import static org.junit.Assert.assertFalse;
-import static seedu.address.commons.core.Messages.MESSAGE_EMPLOYEES_LISTED_OVERVIEW;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalEmployees.BENSON;
-import static seedu.address.testutil.TypicalEmployees.CARL;
-import static seedu.address.testutil.TypicalEmployees.DANIEL;
-import static seedu.address.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
+import static seedu.ptman.commons.core.Messages.MESSAGE_EMPLOYEES_LISTED_OVERVIEW;
+import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.ptman.testutil.TypicalEmployees.BENSON;
+import static seedu.ptman.testutil.TypicalEmployees.CARL;
+import static seedu.ptman.testutil.TypicalEmployees.DANIEL;
+import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
+import seedu.ptman.commons.core.index.Index;
+import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.FindCommand;
+import seedu.ptman.logic.commands.RedoCommand;
+import seedu.ptman.logic.commands.UndoCommand;
+import seedu.ptman.model.Model;
+import seedu.ptman.model.tag.Tag;
 
 public class FindCommandSystemTest extends PartTimeManagerSystemTest {
 
     @Test
     public void find() {
-        /* Case: find multiple employees in address book, command with leading spaces and trailing spaces
+        /* Case: find multiple employees in ptman book, command with leading spaces and trailing spaces
          * -> 2 employees found
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
@@ -47,23 +47,23 @@ public class FindCommandSystemTest extends PartTimeManagerSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple employees in address book, 2 keywords -> 2 employees found */
+        /* Case: find multiple employees in ptman book, 2 keywords -> 2 employees found */
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple employees in address book, 2 keywords in reversed order -> 2 employees found */
+        /* Case: find multiple employees in ptman book, 2 keywords in reversed order -> 2 employees found */
         command = FindCommand.COMMAND_WORD + " Daniel Benson";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple employees in address book, 2 keywords with 1 repeat -> 2 employees found */
+        /* Case: find multiple employees in ptman book, 2 keywords with 1 repeat -> 2 employees found */
         command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple employees in address book, 2 matching keywords and 1 non-matching keyword
+        /* Case: find multiple employees in ptman book, 2 matching keywords and 1 non-matching keyword
          * -> 2 employees found
          */
         command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
@@ -80,7 +80,7 @@ public class FindCommandSystemTest extends PartTimeManagerSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: find same employees in address book after deleting 1 of them -> 1 employee found */
+        /* Case: find same employees in ptman book after deleting 1 of them -> 1 employee found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertFalse(getModel().getPartTimeManager().getEmployeeList().contains(BENSON));
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
@@ -89,44 +89,44 @@ public class FindCommandSystemTest extends PartTimeManagerSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find employee in address book, keyword is same as name but of different case -> 1 employee found */
+        /* Case: find employee in ptman book, keyword is same as name but of different case -> 1 employee found */
         command = FindCommand.COMMAND_WORD + " MeIeR";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find employee in address book, keyword is substring of name -> 0 employees found */
+        /* Case: find employee in ptman book, keyword is substring of name -> 0 employees found */
         command = FindCommand.COMMAND_WORD + " Mei";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find employee in address book, name is substring of keyword -> 0 employees found */
+        /* Case: find employee in ptman book, name is substring of keyword -> 0 employees found */
         command = FindCommand.COMMAND_WORD + " Meiers";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find employee not in address book -> 0 employees found */
+        /* Case: find employee not in ptman book -> 0 employees found */
         command = FindCommand.COMMAND_WORD + " Mark";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of employee in address book -> 0 employees found */
+        /* Case: find phone number of employee in ptman book -> 0 employees found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of employee in address book -> 0 employees found */
+        /* Case: find ptman of employee in ptman book -> 0 employees found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of employee in address book -> 0 employees found */
+        /* Case: find email of employee in ptman book -> 0 employees found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of employee in address book -> 0 employees found */
+        /* Case: find tags of employee in ptman book -> 0 employees found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
@@ -141,7 +141,7 @@ public class FindCommandSystemTest extends PartTimeManagerSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
-        /* Case: find employee in empty address book -> 0 employees found */
+        /* Case: find employee in empty ptman book -> 0 employees found */
         deleteAllEmployees();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
