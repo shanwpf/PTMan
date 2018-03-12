@@ -1,12 +1,6 @@
 package seedu.ptman.model;
 
-import javafx.collections.ObservableList;
-import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.employee.UniqueEmployeeList;
-import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
-import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
-import seedu.ptman.model.tag.Tag;
-import seedu.ptman.model.tag.UniqueTagList;
+import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.ObservableList;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.UniqueEmployeeList;
+import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
+import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.tag.Tag;
+import seedu.ptman.model.tag.UniqueTagList;
 
 /**
  * Wraps all data at the address-book level
@@ -116,8 +116,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     /**
      *  Updates the master tag list to include tags in {@code employee} that are not in the list.
-     *  @return a copy of this {@code employee} such that every tag in this employee points to a Tag object in the master
-     *  list.
+     *  @return a copy of this {@code employee} such that every tag in this employee points to a Tag
+     *  object in the master list.
      */
     private Employee syncWithMasterTagList(Employee employee) {
         final UniqueTagList employeeTags = new UniqueTagList(employee.getTags());
@@ -132,7 +132,12 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         final Set<Tag> correctTagReferences = new HashSet<>();
         employeeTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Employee(
-                employee.getName(), employee.getPhone(), employee.getEmail(), employee.getAddress(), correctTagReferences);
+                employee.getName(),
+                employee.getPhone(),
+                employee.getEmail(),
+                employee.getAddress(),
+                correctTagReferences
+        );
     }
 
     /**

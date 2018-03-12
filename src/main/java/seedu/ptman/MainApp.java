@@ -20,14 +20,14 @@ import seedu.ptman.commons.util.ConfigUtil;
 import seedu.ptman.commons.util.StringUtil;
 import seedu.ptman.logic.Logic;
 import seedu.ptman.logic.LogicManager;
-import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.ModelManager;
+import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.ReadOnlyPartTimeManager;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.util.SampleDataUtil;
-import seedu.ptman.storage.PartTimeManagerStorage;
 import seedu.ptman.storage.JsonUserPrefsStorage;
+import seedu.ptman.storage.PartTimeManagerStorage;
 import seedu.ptman.storage.Storage;
 import seedu.ptman.storage.StorageManager;
 import seedu.ptman.storage.UserPrefsStorage;
@@ -61,7 +61,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        PartTimeManagerStorage partTimeManagerStorage = new XmlPartTimeManagerStorage(userPrefs.getPartTimeManagerFilePath());
+        PartTimeManagerStorage partTimeManagerStorage =
+                new XmlPartTimeManagerStorage(userPrefs.getPartTimeManagerFilePath());
         storage = new StorageManager(partTimeManagerStorage, userPrefsStorage);
 
         initLogging(config);

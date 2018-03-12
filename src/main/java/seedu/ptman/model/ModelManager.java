@@ -1,23 +1,21 @@
 package seedu.ptman.model;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.ptman.commons.core.ComponentManager;
 import seedu.ptman.commons.core.LogsCenter;
 import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
-import seedu.ptman.model.PartTimeManager;
-import seedu.ptman.model.Model;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.tag.Tag;
-
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents the in-memory model of the address book data.

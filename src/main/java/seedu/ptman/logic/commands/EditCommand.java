@@ -21,8 +21,8 @@ import seedu.ptman.commons.util.CollectionUtil;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
-import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
@@ -100,7 +100,8 @@ public class EditCommand extends UndoableCommand {
      * Creates and returns a {@code Employee} with the details of {@code employeeToEdit}
      * edited with {@code editEmployeeDescriptor}.
      */
-    private static Employee createEditedEmployee(Employee employeeToEdit, EditEmployeeDescriptor editEmployeeDescriptor) {
+    private static Employee createEditedEmployee(Employee employeeToEdit,
+                                                 EditEmployeeDescriptor editEmployeeDescriptor) {
         assert employeeToEdit != null;
 
         Name updatedName = editEmployeeDescriptor.getName().orElse(employeeToEdit.getName());

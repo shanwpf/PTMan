@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
-import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.tag.Tag;
 

@@ -13,8 +13,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.ptman.commons.core.LogsCenter;
-import seedu.ptman.commons.events.ui.JumpToListRequestEvent;
 import seedu.ptman.commons.events.ui.EmployeePanelSelectionChangedEvent;
+import seedu.ptman.commons.events.ui.JumpToListRequestEvent;
 import seedu.ptman.model.employee.Employee;
 
 /**

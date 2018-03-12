@@ -61,7 +61,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyPartTimeManager> readPartTimeManager(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyPartTimeManager> readPartTimeManager(String filePath)
+            throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return partTimeManagerStorage.readPartTimeManager(filePath);
     }
