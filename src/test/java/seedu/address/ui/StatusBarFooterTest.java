@@ -18,8 +18,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.commons.events.model.PartTimeManagerChangedEvent;
+import seedu.address.testutil.PartTimeManagerBuilder;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
@@ -28,8 +28,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     private static final int INITIAL_NUM_PERSONS = 0;
 
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(
-            new AddressBookBuilder().withPerson(ALICE).build());
+    private static final PartTimeManagerChangedEvent EVENT_STUB = new PartTimeManagerChangedEvent(
+            new PartTimeManagerBuilder().withPerson(ALICE).build());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());

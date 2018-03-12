@@ -37,7 +37,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.AddressBook;
+import seedu.address.model.PartTimeManager;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
@@ -45,10 +45,10 @@ import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
 
 /**
- * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
+ * A system test class for PartTimeManager, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class AddressBookSystemTest {
+public abstract class PartTimeManagerSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -91,8 +91,8 @@ public abstract class AddressBookSystemTest {
     /**
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
-    protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+    protected PartTimeManager getInitialData() {
+        return TypicalPersons.getTypicalPartTimeManager();
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getAddressBook().getPersonList().size(), getModel().getFilteredPersonList().size());
+        assertEquals(getModel().getPartTimeManager().getPersonList().size(), getModel().getFilteredPersonList().size());
     }
 
     /**
@@ -158,7 +158,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
+        assertTrue(getModel().getFilteredPersonList().size() < getModel().getPartTimeManager().getPersonList().size());
     }
 
     /**
@@ -174,7 +174,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void deleteAllPersons() {
         executeCommand(ClearCommand.COMMAND_WORD);
-        assertEquals(0, getModel().getAddressBook().getPersonList().size());
+        assertEquals(0, getModel().getPartTimeManager().getPersonList().size());
     }
 
     /**
@@ -187,7 +187,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getPartTimeManager(), testApp.readStoragePartTimeManager());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
@@ -278,7 +278,7 @@ public abstract class AddressBookSystemTest {
         StatusBarFooterHandle handle = getStatusBarFooter();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
-        int currNumPersons = testApp.getModel().getAddressBook().getPersonList().size();
+        int currNumPersons = testApp.getModel().getPartTimeManager().getPersonList().size();
         String expectedNumPersons = String.format(NUM_PERSONS_STATUS, currNumPersons);
 
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
@@ -298,7 +298,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
             assertEquals(String.format(NUM_PERSONS_STATUS,
-                    getModel().getAddressBook().getPersonList().size()), getStatusBarFooter().getNumPersons());
+                    getModel().getPartTimeManager().getPersonList().size()), getStatusBarFooter().getNumPersons());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

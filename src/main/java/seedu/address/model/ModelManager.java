@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.PartTimeManagerChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,53 +23,53 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final PartTimeManager partTimeManager;
     private final FilteredList<Person> filteredPersons;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given partTimeManager and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyPartTimeManager partTimeManager, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(partTimeManager, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + partTimeManager + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.partTimeManager = new PartTimeManager(partTimeManager);
+        filteredPersons = new FilteredList<>(this.partTimeManager.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new PartTimeManager(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-        indicateAddressBookChanged();
+    public void resetData(ReadOnlyPartTimeManager newData) {
+        partTimeManager.resetData(newData);
+        indicatePartTimeManagerChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyPartTimeManager getPartTimeManager() {
+        return partTimeManager;
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+    private void indicatePartTimeManagerChanged() {
+        raise(new PartTimeManagerChangedEvent(partTimeManager));
     }
 
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
+        partTimeManager.removePerson(target);
+        indicatePartTimeManagerChanged();
     }
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
+        partTimeManager.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicatePartTimeManagerChanged();
     }
 
     @Override
@@ -77,15 +77,15 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        partTimeManager.updatePerson(target, editedPerson);
+        indicatePartTimeManagerChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code addressBook}
+     * {@code partTimeManager}
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
@@ -112,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
+        return partTimeManager.equals(other.partTimeManager)
                 && filteredPersons.equals(other.filteredPersons);
     }
 

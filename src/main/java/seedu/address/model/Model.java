@@ -15,10 +15,10 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyPartTimeManager newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the PartTimeManager */
+    ReadOnlyPartTimeManager getPartTimeManager();
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;

@@ -8,14 +8,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.PartTimeManager;
+import seedu.address.model.ReadOnlyPartTimeManager;
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable PartTimeManager that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
-public class XmlSerializableAddressBook {
+public class XmlSerializablePartTimeManager {
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
@@ -23,10 +23,10 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedTag> tags;
 
     /**
-     * Creates an empty XmlSerializableAddressBook.
+     * Creates an empty XmlSerializablePartTimeManager.
      * This empty constructor is required for marshalling.
      */
-    public XmlSerializableAddressBook() {
+    public XmlSerializablePartTimeManager() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
     }
@@ -34,27 +34,27 @@ public class XmlSerializableAddressBook {
     /**
      * Conversion
      */
-    public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
+    public XmlSerializablePartTimeManager(ReadOnlyPartTimeManager src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
     /**
-     * Converts this addressbook into the model's {@code AddressBook} object.
+     * Converts this addressbook into the model's {@code PartTimeManager} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
      */
-    public AddressBook toModelType() throws IllegalValueException {
-        AddressBook addressBook = new AddressBook();
+    public PartTimeManager toModelType() throws IllegalValueException {
+        PartTimeManager partTimeManager = new PartTimeManager();
         for (XmlAdaptedTag t : tags) {
-            addressBook.addTag(t.toModelType());
+            partTimeManager.addTag(t.toModelType());
         }
         for (XmlAdaptedPerson p : persons) {
-            addressBook.addPerson(p.toModelType());
+            partTimeManager.addPerson(p.toModelType());
         }
-        return addressBook;
+        return partTimeManager;
     }
 
     @Override
@@ -63,11 +63,11 @@ public class XmlSerializableAddressBook {
             return true;
         }
 
-        if (!(other instanceof XmlSerializableAddressBook)) {
+        if (!(other instanceof XmlSerializablePartTimeManager)) {
             return false;
         }
 
-        XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
+        XmlSerializablePartTimeManager otherAb = (XmlSerializablePartTimeManager) other;
         return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
     }
 }
