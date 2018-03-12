@@ -1,6 +1,12 @@
 package seedu.ptman.model;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.ObservableList;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.UniqueEmployeeList;
+import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
+import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.tag.Tag;
+import seedu.ptman.model.tag.UniqueTagList;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,16 +16,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javafx.collections.ObservableList;
-import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.employee.UniqueEmployeeList;
-import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
-import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
-import seedu.ptman.model.tag.Tag;
-import seedu.ptman.model.tag.UniqueTagList;
+import static java.util.Objects.requireNonNull;
 
 /**
- * Wraps all data at the ptman-book level
+ * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
 public class PartTimeManager implements ReadOnlyPartTimeManager {
@@ -79,7 +79,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     //// employee-level operations
 
     /**
-     * Adds a employee to PTMan.
+     * Adds an employee to the address book.
      * Also checks the new employee's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the employee to point to those in {@link #tags}.
      *
@@ -141,6 +141,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      */
     public boolean removeEmployee(Employee key) throws EmployeeNotFoundException {
         if (employees.remove(key)) {
+            removeUnusedTag();
             return true;
         } else {
             throw new EmployeeNotFoundException();
@@ -154,6 +155,58 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     //// util methods
+
+    /**
+     * Remove tag from Employee if the tag exist in Employee.
+     * @param tag
+     * @param employee
+     */
+    private void removeTagFromEmployee(Tag tag, Employee employee) {
+        Set<Tag> newTags = new HashSet<>(employee.getTags());
+
+        if (!newTags.contains(tag)) {
+            return;
+        } else {
+            newTags.remove(tag);
+        }
+
+        Employee newEmployee = new Employee(employee.getName(), employee.getPhone(), employee.getEmail(),
+                employee.getAddress(), newTags);
+
+        try {
+            updateEmployee(employee, newEmployee);
+        } catch (DuplicateEmployeeException dpe) {
+            throw new AssertionError("updating employee should not result in duplicated employee");
+        } catch (EmployeeNotFoundException pnfe) {
+            throw new AssertionError("updating employee should always be able to find the employee you are editing");
+        }
+
+    }
+
+    /**
+     * remove tag that is unused in addressbook
+     */
+    private void removeUnusedTag() {
+        HashSet newSet = new HashSet();
+        for (Employee employee:employees) {
+            for (Tag tag: employee.getTags()) {
+                if (!newSet.contains(tag)) {
+                    newSet.add(tag);
+                }
+            }
+        }
+        tags.setTags(newSet);
+    }
+    /**
+     * Remove tags from everyone in the address book
+     * @param tag
+     */
+    public void removeTagFromAllEmployees(Tag tag) {
+        for (Employee employee: employees) {
+            removeTagFromEmployee(tag, employee);
+        }
+        removeUnusedTag();
+    }
 
     @Override
     public String toString() {

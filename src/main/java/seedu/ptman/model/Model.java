@@ -1,11 +1,12 @@
 package seedu.ptman.model;
 
-import java.util.function.Predicate;
-
 import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.tag.Tag;
+
+import java.util.function.Predicate;
 
 /**
  * The API of the Model component.
@@ -26,6 +27,10 @@ public interface Model {
     /** Adds the given employee */
     void addEmployee(Employee employee) throws DuplicateEmployeeException;
 
+    /**
+     * Delete tag from all employees
+     */
+    void deleteTagFromAllEmployee(Tag tag);
     /**
      * Replaces the given employee {@code target} with {@code editedEmployee}.
      *

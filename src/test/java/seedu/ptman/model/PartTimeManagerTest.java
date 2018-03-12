@@ -1,8 +1,14 @@
 package seedu.ptman.model;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.ptman.testutil.TypicalEmployees.ALICE;
-import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.tag.Tag;
+import seedu.ptman.testutil.PartTimeManagerBuilder;
+import seedu.ptman.testutil.EmployeeBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,14 +16,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.tag.Tag;
+import static org.junit.Assert.assertEquals;
+import static seedu.ptman.testutil.TypicalEmployees.ALICE;
+import static seedu.ptman.testutil.TypicalEmployees.BENSON;
+import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 public class PartTimeManagerTest {
 
@@ -25,6 +27,9 @@ public class PartTimeManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final PartTimeManager partTimeManager = new PartTimeManager();
+    private final PartTimeManager partTimeManagerWithAliceAndBenson = new PartTimeManagerBuilder().withEmployee(ALICE)
+            .withEmployee(BENSON).build();
+
 
     @Test
     public void constructor() {
@@ -66,6 +71,28 @@ public class PartTimeManagerTest {
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         partTimeManager.getTagList().remove(0);
+    }
+
+    @Test
+    public void removeTagFromAllEmployees_tagNonExisting_partTimeManagerNoChange() {
+        partTimeManagerWithAliceAndBenson.removeTagFromAllEmployees(new Tag("NoSuchTag"));
+
+        PartTimeManager expectedPartTimeManager = new PartTimeManagerBuilder().withEmployee(ALICE)
+                .withEmployee(BENSON).build();
+
+        assertEquals(expectedPartTimeManager, partTimeManagerWithAliceAndBenson);
+    }
+
+    @Test
+    public void removeTagFromAllEmployees_tagExistInMultipleEmployees_tagChanged() {
+        partTimeManagerWithAliceAndBenson.removeTagFromAllEmployees(new Tag("friends"));
+
+        Employee aliceWithoutFriendTag = new EmployeeBuilder(ALICE).withTags().build();
+        Employee bensonWithoutFriendTag = new EmployeeBuilder(BENSON).withTags("owesMoney").build();
+        PartTimeManager expectedPartTimeManager = new PartTimeManagerBuilder().withEmployee(aliceWithoutFriendTag)
+                .withEmployee(bensonWithoutFriendTag).build();
+
+        assertEquals(expectedPartTimeManager, partTimeManagerWithAliceAndBenson);
     }
 
     /**

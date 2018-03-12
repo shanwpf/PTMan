@@ -1,23 +1,26 @@
 package seedu.ptman.model;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
-
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.ptman.commons.core.ComponentManager;
 import seedu.ptman.commons.core.LogsCenter;
 import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
+import seedu.ptman.model.PartTimeManager;
+import seedu.ptman.model.Model;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.tag.Tag;
+
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
- * Represents the in-memory model of PTMan data.
+ * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -33,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(partTimeManager, userPrefs);
 
-        logger.fine("Initializing with ptman book: " + partTimeManager + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + partTimeManager + " and user prefs " + userPrefs);
 
         this.partTimeManager = new PartTimeManager(partTimeManager);
         filteredEmployees = new FilteredList<>(this.partTimeManager.getEmployeeList());
@@ -82,6 +85,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Filtered Employee List Accessors =============================================================
+    @Override
+    public void deleteTagFromAllEmployee(Tag tag) {
+        partTimeManager.removeTagFromAllEmployees(tag);
+    }
 
     /**
      * Returns an unmodifiable view of the list of {@code Employee} backed by the internal list of
