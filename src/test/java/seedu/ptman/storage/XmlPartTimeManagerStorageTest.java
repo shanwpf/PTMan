@@ -67,7 +67,8 @@ public class XmlPartTimeManagerStorageTest {
     }
 
     @Test
-    public void readPartTimeManager_invalidAndValidEmployeePartTimeManager_throwDataConversionException() throws Exception {
+    public void readPartTimeManager_invalidAndValidEmployeePartTimeManager_throwDataConversionException()
+            throws Exception {
         thrown.expect(DataConversionException.class);
         readPartTimeManager("invalidAndValidEmployeePartTimeManager.xml");
     }
@@ -109,7 +110,8 @@ public class XmlPartTimeManagerStorageTest {
      */
     private void savePartTimeManager(ReadOnlyPartTimeManager partTimeManager, String filePath) {
         try {
-            new XmlPartTimeManagerStorage(filePath).savePartTimeManager(partTimeManager, addToTestDataPathIfNotNull(filePath));
+            new XmlPartTimeManagerStorage(filePath)
+                    .savePartTimeManager(partTimeManager, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

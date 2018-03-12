@@ -2,8 +2,8 @@ package seedu.ptman.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.ptman.testutil.EventsUtil.postNow;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalEmployees;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
 import static seedu.ptman.ui.testutil.GuiTestAssert.assertCardDisplaysEmployee;
 import static seedu.ptman.ui.testutil.GuiTestAssert.assertCardEquals;
 
@@ -21,7 +21,8 @@ public class EmployeeListPanelTest extends GuiUnitTest {
     private static final ObservableList<Employee> TYPICAL_EMPLOYEES =
             FXCollections.observableList(getTypicalEmployees());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_EMPLOYEE);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToListRequestEvent(INDEX_SECOND_EMPLOYEE);
 
     private EmployeeListPanelHandle employeeListPanelHandle;
 
@@ -51,7 +52,8 @@ public class EmployeeListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        EmployeeCardHandle expectedCard = employeeListPanelHandle.getEmployeeCardHandle(INDEX_SECOND_EMPLOYEE.getZeroBased());
+        EmployeeCardHandle expectedCard =
+                employeeListPanelHandle.getEmployeeCardHandle(INDEX_SECOND_EMPLOYEE.getZeroBased());
         EmployeeCardHandle selectedCard = employeeListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }

@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 import seedu.ptman.logic.commands.EditCommand.EditEmployeeDescriptor;
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
-import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.tag.Tag;
 

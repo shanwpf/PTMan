@@ -4,9 +4,9 @@ import static seedu.ptman.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.ptman.logic.commands.CommandTestUtil.deleteFirstEmployee;
+import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
-import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -5,8 +5,8 @@ import java.util.Set;
 
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
-import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.model.util.SampleDataUtil;

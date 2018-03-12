@@ -1,14 +1,9 @@
 package seedu.ptman.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.tag.Tag;
-import seedu.ptman.testutil.PartTimeManagerBuilder;
-import seedu.ptman.testutil.EmployeeBuilder;
+import static org.junit.Assert.assertEquals;
+import static seedu.ptman.testutil.TypicalEmployees.ALICE;
+import static seedu.ptman.testutil.TypicalEmployees.BENSON;
+import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +11,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.ptman.testutil.TypicalEmployees.ALICE;
-import static seedu.ptman.testutil.TypicalEmployees.BENSON;
-import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.tag.Tag;
+import seedu.ptman.testutil.EmployeeBuilder;
+import seedu.ptman.testutil.PartTimeManagerBuilder;
 
 public class PartTimeManagerTest {
 

@@ -16,9 +16,12 @@ import seedu.ptman.testutil.TypicalEmployees;
 
 public class XmlSerializablePartTimeManagerTest {
 
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializablePartTimeManagerTest/");
-    private static final File TYPICAL_EMPLOYEES_FILE = new File(TEST_DATA_FOLDER + "typicalEmployeesPartTimeManager.xml");
-    private static final File INVALID_EMPLOYEE_FILE = new File(TEST_DATA_FOLDER + "invalidEmployeePartTimeManager.xml");
+    private static final String TEST_DATA_FOLDER =
+            FileUtil.getPath("src/test/data/XmlSerializablePartTimeManagerTest/");
+    private static final File TYPICAL_EMPLOYEES_FILE =
+            new File(TEST_DATA_FOLDER + "typicalEmployeesPartTimeManager.xml");
+    private static final File INVALID_EMPLOYEE_FILE =
+            new File(TEST_DATA_FOLDER + "invalidEmployeePartTimeManager.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagPartTimeManager.xml");
 
     @Rule

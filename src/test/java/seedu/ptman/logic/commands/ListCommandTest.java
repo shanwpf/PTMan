@@ -2,8 +2,8 @@ package seedu.ptman.logic.commands;
 
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.ptman.logic.commands.CommandTestUtil.showEmployeeAtIndex;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 
 import org.junit.Before;
 import org.junit.Test;

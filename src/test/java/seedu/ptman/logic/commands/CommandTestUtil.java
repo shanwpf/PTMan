@@ -17,10 +17,10 @@ import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
 import seedu.ptman.logic.commands.exceptions.CommandException;
-import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Model;
-import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
+import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.testutil.EditEmployeeDescriptorBuilder;
 

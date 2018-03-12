@@ -24,9 +24,9 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.EmployeeListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.EmployeeListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.ptman.MainApp;
@@ -37,8 +37,8 @@ import seedu.ptman.logic.commands.ClearCommand;
 import seedu.ptman.logic.commands.FindCommand;
 import seedu.ptman.logic.commands.ListCommand;
 import seedu.ptman.logic.commands.SelectCommand;
-import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Model;
+import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.testutil.TypicalEmployees;
 import seedu.ptman.ui.BrowserPanel;
 import seedu.ptman.ui.CommandBox;
@@ -150,7 +150,8 @@ public abstract class PartTimeManagerSystemTest {
      */
     protected void showAllEmployees() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getPartTimeManager().getEmployeeList().size(), getModel().getFilteredEmployeeList().size());
+        assertEquals(getModel().getPartTimeManager().getEmployeeList().size(),
+                getModel().getFilteredEmployeeList().size());
     }
 
     /**
@@ -158,7 +159,8 @@ public abstract class PartTimeManagerSystemTest {
      */
     protected void showEmployeesWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assertTrue(getModel().getFilteredEmployeeList().size() < getModel().getPartTimeManager().getEmployeeList().size());
+        assertTrue(getModel().getFilteredEmployeeList().size()
+                < getModel().getPartTimeManager().getEmployeeList().size());
     }
 
     /**

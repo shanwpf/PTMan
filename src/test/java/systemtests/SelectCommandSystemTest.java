@@ -5,9 +5,9 @@ import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
 import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.ptman.logic.commands.SelectCommand.MESSAGE_SELECT_EMPLOYEE_SUCCESS;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalEmployees;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 
 import org.junit.Test;
 

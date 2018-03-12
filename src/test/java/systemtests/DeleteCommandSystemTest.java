@@ -4,11 +4,11 @@ import static org.junit.Assert.assertTrue;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX;
 import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.ptman.logic.commands.DeleteCommand.MESSAGE_DELETE_EMPLOYEE_SUCCESS;
+import static seedu.ptman.testutil.TestUtil.getEmployee;
 import static seedu.ptman.testutil.TestUtil.getLastIndex;
 import static seedu.ptman.testutil.TestUtil.getMidIndex;
-import static seedu.ptman.testutil.TestUtil.getEmployee;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 
 import org.junit.Test;
 
@@ -32,7 +32,8 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
 
         /* Case: delete the first employee in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_EMPLOYEE.getOneBased() + "       ";
+        String command =
+                "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_EMPLOYEE.getOneBased() + "       ";
         Employee deletedEmployee = removeEmployee(expectedModel, INDEX_FIRST_EMPLOYEE);
         String expectedResultMessage = String.format(MESSAGE_DELETE_EMPLOYEE_SUCCESS, deletedEmployee);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -73,7 +74,7 @@ public class DeleteCommandSystemTest extends PartTimeManagerSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a employee card is selected ------------------------ */
+        /* ------------------- Performing delete operation while a employee card is selected ---------------------- */
 
         /* Case: delete the selected employee -> employee list panel selects the employee before the deleted employee */
         showAllEmployees();

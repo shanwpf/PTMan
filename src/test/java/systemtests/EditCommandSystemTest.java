@@ -25,10 +25,10 @@ import static seedu.ptman.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.ptman.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalEmployees.AMY;
 import static seedu.ptman.testutil.TypicalEmployees.BOB;
 import static seedu.ptman.testutil.TypicalEmployees.KEYWORD_MATCHING_MEIER;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 
 import org.junit.Test;
 
@@ -40,8 +40,8 @@ import seedu.ptman.logic.commands.UndoCommand;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
-import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
@@ -116,10 +116,10 @@ public class EditCommandSystemTest extends PartTimeManagerSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
 
-        /* --------------------- Performing edit operation while a employee card is selected -------------------------- */
+        /* ------------------- Performing edit operation while a employee card is selected ------------------------ */
 
-        /* Case: selects first card in the employee list, edit a employee -> edited, card selection remains unchanged but
-         * browser url changes
+        /* Case: selects first card in the employee list, edit a employee -> edited,
+         * card selection remains unchanged but browser url changes
          */
         showAllEmployees();
         index = INDEX_FIRST_EMPLOYEE;
@@ -182,7 +182,8 @@ public class EditCommandSystemTest extends PartTimeManagerSystemTest {
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_EMPLOYEE);
 
-        /* Case: edit a employee with new values same as another employee's values but with different tags -> rejected */
+        /* Case: edit a employee with new values same as another employee's values
+         * but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_EMPLOYEE);

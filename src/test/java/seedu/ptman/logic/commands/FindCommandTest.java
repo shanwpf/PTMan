@@ -17,12 +17,12 @@ import org.junit.Test;
 
 import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
-import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.ModelManager;
+import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.UserPrefs;
-import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.

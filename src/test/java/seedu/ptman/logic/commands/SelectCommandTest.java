@@ -5,10 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.ptman.logic.commands.CommandTestUtil.showEmployeeAtIndex;
+import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_THIRD_EMPLOYEE;
-import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import org.junit.Before;
 import org.junit.Rule;

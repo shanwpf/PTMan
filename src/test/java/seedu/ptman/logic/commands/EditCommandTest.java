@@ -13,9 +13,9 @@ import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.ptman.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.ptman.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.ptman.logic.commands.CommandTestUtil.showEmployeeAtIndex;
+import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
-import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
 import org.junit.Test;
 
@@ -24,9 +24,9 @@ import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
 import seedu.ptman.logic.commands.EditCommand.EditEmployeeDescriptor;
-import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.ModelManager;
+import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.testutil.EditEmployeeDescriptorBuilder;
@@ -117,7 +117,8 @@ public class EditCommandTest {
         showEmployeeAtIndex(model, INDEX_FIRST_EMPLOYEE);
 
         // edit employee in filtered list into a duplicate in ptman book
-        Employee employeeInList = model.getPartTimeManager().getEmployeeList().get(INDEX_SECOND_EMPLOYEE.getZeroBased());
+        Employee employeeInList =
+                model.getPartTimeManager().getEmployeeList().get(INDEX_SECOND_EMPLOYEE.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE,
                 new EditEmployeeDescriptorBuilder(employeeInList).build());
 

@@ -18,8 +18,8 @@ import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.storage.XmlAdaptedEmployee;
 import seedu.ptman.storage.XmlAdaptedTag;
 import seedu.ptman.storage.XmlSerializablePartTimeManager;
-import seedu.ptman.testutil.PartTimeManagerBuilder;
 import seedu.ptman.testutil.EmployeeBuilder;
+import seedu.ptman.testutil.PartTimeManagerBuilder;
 import seedu.ptman.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -70,7 +70,8 @@ public class XmlUtilTest {
 
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
-        PartTimeManager dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializablePartTimeManager.class).toModelType();
+        PartTimeManager dataFromFile =
+                XmlUtil.getDataFromFile(VALID_FILE, XmlSerializablePartTimeManager.class).toModelType();
         assertEquals(9, dataFromFile.getEmployeeList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
@@ -125,7 +126,8 @@ public class XmlUtilTest {
         TEMP_FILE.createNewFile();
         XmlSerializablePartTimeManager dataToWrite = new XmlSerializablePartTimeManager(new PartTimeManager());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializablePartTimeManager.class);
+        XmlSerializablePartTimeManager dataFromFile =
+                XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializablePartTimeManager.class);
         assertEquals(dataToWrite, dataFromFile);
 
         PartTimeManagerBuilder builder = new PartTimeManagerBuilder(new PartTimeManager());
@@ -138,7 +140,8 @@ public class XmlUtilTest {
     }
 
     /**
-     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedEmployee}
+     * Test class annotated with {@code XmlRootElement}
+     * to allow unmarshalling of .xml data to {@code XmlAdaptedEmployee}
      * objects.
      */
     @XmlRootElement(name = "employee")

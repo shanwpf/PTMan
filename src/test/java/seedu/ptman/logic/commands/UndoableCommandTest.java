@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.ptman.logic.commands.CommandTestUtil.deleteFirstEmployee;
 import static seedu.ptman.logic.commands.CommandTestUtil.showEmployeeAtIndex;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 
 import org.junit.Test;
 

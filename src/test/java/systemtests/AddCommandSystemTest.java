@@ -44,8 +44,8 @@ import seedu.ptman.logic.commands.UndoCommand;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
-import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.tag.Tag;
@@ -126,7 +126,7 @@ public class AddCommandSystemTest extends PartTimeManagerSystemTest {
         showEmployeesWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
-        /* ------------------------ Perform add operation while a employee card is selected --------------------------- */
+        /* ---------------------- Perform add operation while a employee card is selected ------------------------- */
 
         /* Case: selects first card in the employee list, add a employee -> added, card selection remains unchanged */
         selectEmployee(Index.fromOneBased(1));
