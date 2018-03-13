@@ -2,6 +2,7 @@ package seedu.ptman.commons.timetable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import seedu.ptman.model.employee.Employee;
 
@@ -11,14 +12,11 @@ import seedu.ptman.model.employee.Employee;
 public class TimetableCell {
     private int availableSlots;
     private ArrayList<Employee> employeeList;
-    private LocalDateTime time;
-    private int rowIndex;
-    private int colIndex;
+    private LocalDateTime dateTime;
 
-    public TimetableCell(LocalDateTime time, int availableSlots, int rowIndex) {
+    public TimetableCell(LocalDateTime dateTime, int availableSlots) {
         this.employeeList = new ArrayList<>();
-        this.time = time;
-        this.rowIndex = rowIndex;
+        this.dateTime = dateTime;
         this.availableSlots = availableSlots;
     }
 
@@ -26,8 +24,27 @@ public class TimetableCell {
         return employeeList;
     }
 
-    public int getAvailableSlots() {
+    protected int getAvailableSlots() {
         return availableSlots;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TimetableCell that = (TimetableCell) o;
+        return availableSlots == that.availableSlots
+                && Objects.equals(employeeList, that.employeeList)
+                && Objects.equals(dateTime, that.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(availableSlots, employeeList, dateTime);
     }
 
 }

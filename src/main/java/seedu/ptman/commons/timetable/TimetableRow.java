@@ -8,17 +8,18 @@ import java.util.ArrayList;
  * Stores the timetable cells in a row
  */
 public class TimetableRow {
+    private static final int PLACEHOLDER_AVAIL_SLOTS = 3;
     private ArrayList<TimetableCell> rowCellList;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
 
     /**
      * Creates a timetable row
-     * @param startTime
+     * @param startDateTime
      */
-    public TimetableRow(LocalDateTime startTime, LocalDateTime endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public TimetableRow(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         rowCellList = new ArrayList<>();
         initTimetableRow();
     }
@@ -29,12 +30,20 @@ public class TimetableRow {
     private void initTimetableRow() {
         int numCells = getNumberOfCells();
         for (int i = 0; i < numCells; i++) {
-            rowCellList.add(new TimetableCell(startTime.plusHours(i), 3, i));
+            rowCellList.add(new TimetableCell(startDateTime.plusHours(i), PLACEHOLDER_AVAIL_SLOTS));
         }
     }
 
-    private int getNumberOfCells() {
-        return (int) ChronoUnit.HOURS.between(startTime, endTime);
+    protected TimetableCell getCellFromTime(LocalDateTime cellTime) {
+        return rowCellList.get(getCellIndexFromTime(cellTime));
+    }
+
+    private int getCellIndexFromTime(LocalDateTime cellTime) {
+        return (int) ChronoUnit.HOURS.between(startDateTime, cellTime);
+    }
+
+    protected int getNumberOfCells() {
+        return (int) ChronoUnit.HOURS.between(startDateTime, endDateTime);
     }
 
 }
