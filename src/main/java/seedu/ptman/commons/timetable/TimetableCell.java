@@ -1,23 +1,30 @@
 package seedu.ptman.commons.timetable;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.outletinformation.Shift;
 
 /**
- * Stores data in a timetable cell
+ * Timetable cell representing a time slot
  */
 public class TimetableCell {
     private int availableSlots;
     private ArrayList<Employee> employeeList;
-    private LocalDateTime dateTime;
+    private LocalTime startTime;
 
-    public TimetableCell(LocalDateTime dateTime, int availableSlots) {
+    public TimetableCell(LocalTime startTime, int availableSlots) {
         this.employeeList = new ArrayList<>();
-        this.dateTime = dateTime;
+        this.startTime = startTime;
         this.availableSlots = availableSlots;
+    }
+
+    public TimetableCell(Shift shift) {
+        this.employeeList = new ArrayList<>();
+        this.startTime = shift.getStartDateTime().toLocalTime();
+        this.availableSlots = shift.getCapacity();
     }
 
     public ArrayList<Employee> getEmployeeList() {
@@ -39,12 +46,12 @@ public class TimetableCell {
         TimetableCell that = (TimetableCell) o;
         return availableSlots == that.availableSlots
                 && Objects.equals(employeeList, that.employeeList)
-                && Objects.equals(dateTime, that.dateTime);
+                && Objects.equals(startTime, that.startTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(availableSlots, employeeList, dateTime);
+        return Objects.hash(availableSlots, employeeList, startTime);
     }
 
 }
