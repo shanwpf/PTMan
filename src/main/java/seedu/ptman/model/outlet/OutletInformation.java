@@ -2,7 +2,7 @@ package seedu.ptman.model.outlet;
 
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
+import java.sql.Time;
 import java.util.Objects;
 
 import seedu.ptman.model.Password;
@@ -16,7 +16,9 @@ public class OutletInformation {
     private Name name;
     private Password masterPassword;
     private OperatingHours operatingHours;
-    private Timetable timetable;
+
+    // TODO: Use this timetable to store shifts.
+    // private Timetable timetable;
 
     /**
      * Constructs an {@code OutletInformation}.
@@ -30,7 +32,6 @@ public class OutletInformation {
         this.name = name;
         this.masterPassword = masterPassword;
         this.operatingHours = operatingHours;
-        this.timetable = new Timetable(LocalDate.now());
     }
 
     public Name getName() {
@@ -43,10 +44,6 @@ public class OutletInformation {
 
     public OperatingHours getOperatingHours() {
         return operatingHours;
-    }
-
-    public Timetable getTimetable() {
-        return timetable;
     }
 
     @Override
