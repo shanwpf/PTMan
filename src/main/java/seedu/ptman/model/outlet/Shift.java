@@ -1,8 +1,10 @@
 package seedu.ptman.model.outlet;
 
-import static java.util.Objects.requireNonNull;
+import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
@@ -17,42 +19,70 @@ import seedu.ptman.model.outlet.exceptions.IllegalTimeException;
 public class Shift {
     private LocalTime startTime;
     private LocalTime endTime;
+    private DayOfWeek dayOfWeek;
     private UniqueEmployeeList uniqueEmployeeList;
+    private int capacity;
 
-    public Shift(LocalTime startTime, LocalTime endTime) throws IllegalTimeException {
-        requireNonNull(startTime);
-        requireNonNull(endTime);
+    public Shift(LocalTime startTime, LocalTime endTime, DayOfWeek dayOfWeek, int capacity) throws IllegalTimeException {
+        requireAllNonNull(startTime, endTime, capacity);
         if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
             throw new IllegalTimeException();
         }
         this.startTime = startTime;
         this.endTime = endTime;
+        this.capacity = capacity;
+        this.dayOfWeek = dayOfWeek;
         this.uniqueEmployeeList = new UniqueEmployeeList();
     }
 
-    /**
-     * Adds employees that are working in this shift.
-     * @param employees
-     * @throws DuplicateEmployeeException
-     */
-    public void addEmployees(Employee... employees) throws DuplicateEmployeeException {
-        for (Employee employee : employees) {
-            uniqueEmployeeList.add(employee);
-        }
+    protected boolean contains(Employee employee) {
+        return uniqueEmployeeList.contains(employee);
     }
 
     /**
-     * Removes employees who are no longer working in this shift.
+     * Adds an employee that is working in this shift.
+     * @param employees
+     * @throws DuplicateEmployeeException
+     */
+    protected void addEmployee(Employee employee) throws DuplicateEmployeeException {
+        uniqueEmployeeList.add(employee);
+    }
+
+    /**
+     * Removes an employee who is no longer working in this shift.
      * @param employees
      * @throws EmployeeNotFoundException
      */
-    public void removeEmployees(Employee... employees) throws EmployeeNotFoundException {
-        for (Employee employee : employees) {
-            uniqueEmployeeList.remove(employee);
+    protected void removeEmployee(Employee employee) throws EmployeeNotFoundException {
+        uniqueEmployeeList.remove(employee);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Shift shift = (Shift) o;
+        return capacity == shift.capacity
+                && Objects.equals(startTime, shift.startTime)
+                && Objects.equals(endTime, shift.endTime)
+                && dayOfWeek == shift.dayOfWeek
+                && Objects.equals(uniqueEmployeeList, shift.uniqueEmployeeList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startTime, endTime, dayOfWeek, uniqueEmployeeList, capacity);
     }
 
     public ObservableList<Employee> getEmployeeList() {
         return uniqueEmployeeList.asObservableList();
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
     }
 }

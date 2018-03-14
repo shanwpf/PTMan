@@ -14,8 +14,20 @@ public class TimetableDay {
         this.date = date;
         this.shiftList = shiftList;
     }
-    // TODO: Implement better accessors
-    public ArrayList<Shift> getShifts() {
+
+    protected Shift getShift(int index) {
+        return shiftList.get(index);
+    }
+
+    protected ArrayList<Shift> getShifts() {
         return shiftList;
+    }
+
+    public void removeShift(Shift shift) {
+        shiftList.remove(shift);
+    }
+
+    public boolean containsShift(Shift shift) {
+        return shiftList.contains(shift);
     }
 }
