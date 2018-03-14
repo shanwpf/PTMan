@@ -13,7 +13,9 @@ import org.junit.Test;
 
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.IllegalTimeException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.testutil.Assert;
 import seedu.ptman.testutil.TypicalEmployees;
 
@@ -52,7 +54,7 @@ public class TimetableTest {
     }
 
     @Test
-    public void addShift_validShift_shiftAdded() throws IllegalTimeException {
+    public void addShift_validShift_shiftAdded() throws IllegalTimeException, DuplicateShiftException {
         Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
         Shift shift2 = new Shift(TIME_AM.plusHours(1), TIME_PM, DayOfWeek.SUNDAY, 3);
         Shift shift3 = new Shift(TIME_AM.plusHours(5), TIME_PM.minusHours(1), DayOfWeek.MONDAY, 3);
@@ -66,7 +68,8 @@ public class TimetableTest {
     }
 
     @Test
-    public void removeShift_shiftExists_shiftRemoved() throws IllegalTimeException {
+    public void removeShift_shiftExists_shiftRemoved()
+            throws IllegalTimeException, DuplicateShiftException, ShiftNotFoundException {
         Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
         Shift shift2 = new Shift(TIME_AM.plusHours(1), TIME_PM, DayOfWeek.SUNDAY, 3);
         Shift shift3 = new Shift(TIME_AM.plusHours(5), TIME_PM.minusHours(1), DayOfWeek.MONDAY, 3);
@@ -84,7 +87,7 @@ public class TimetableTest {
 
     @Test
     public void addEmployeeToShift_validEmployee_employeeAdded()
-            throws DuplicateEmployeeException, IllegalTimeException {
+            throws DuplicateEmployeeException, IllegalTimeException, DuplicateShiftException {
         Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
         Shift shift2 = new Shift(TIME_AM.plusHours(1), TIME_PM, DayOfWeek.MONDAY, 3);
         Shift shift3 = new Shift(TIME_AM.plusHours(5), TIME_PM.minusHours(1), DayOfWeek.TUESDAY, 3);
@@ -102,7 +105,8 @@ public class TimetableTest {
 
     @Test
     public void removeEmployeeFromShift_validEmployee_employeeRemoved()
-            throws DuplicateEmployeeException, IllegalTimeException, EmployeeNotFoundException {
+            throws DuplicateEmployeeException, IllegalTimeException,
+            EmployeeNotFoundException, DuplicateShiftException {
         Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
         Shift shift2 = new Shift(TIME_AM.plusHours(1), TIME_PM, DayOfWeek.MONDAY, 3);
         Shift shift3 = new Shift(TIME_AM.plusHours(5), TIME_PM.minusHours(1), DayOfWeek.TUESDAY, 3);

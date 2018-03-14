@@ -23,7 +23,8 @@ public class Shift {
     private UniqueEmployeeList uniqueEmployeeList;
     private int capacity;
 
-    public Shift(LocalTime startTime, LocalTime endTime, DayOfWeek dayOfWeek, int capacity) throws IllegalTimeException {
+    public Shift(LocalTime startTime, LocalTime endTime, DayOfWeek dayOfWeek, int capacity)
+            throws IllegalTimeException {
         requireAllNonNull(startTime, endTime, capacity);
         if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
             throw new IllegalTimeException();

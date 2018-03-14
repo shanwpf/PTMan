@@ -13,6 +13,8 @@ import java.util.Objects;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 
 /**
  * Represents a week
@@ -21,6 +23,7 @@ public class Timetable {
     private static final int INDEX_OFFSET = 1;
     private static final int NUM_DAYS_IN_WEEK = 7;
     private ArrayList<TimetableDay> dayList = new ArrayList<>();
+    private UniqueShiftList uniqueShiftList = new UniqueShiftList();
     private LocalDate mondayDate;
 
     public Timetable(LocalDate date) {
@@ -31,22 +34,45 @@ public class Timetable {
         }
     }
 
+    /**
+     * Gets the date for the Monday of this timetable week
+     * @return LocalDate of Monday
+     */
     public LocalDate getMondayDate() {
         return mondayDate;
     }
 
+    /**
+     * Gets the shift for the specified day and index
+     * @param dayOfWeek
+     * @param index
+     * @return
+     */
     public Shift getShift(DayOfWeek dayOfWeek, int index) {
         return getTimetableDayFromDayOfWeek(dayOfWeek).getShift(index);
     }
 
     public boolean containsShift(Shift shift) {
-        return getTimetableDayFromDayOfWeek(shift.getDayOfWeek()).containsShift(shift);
+        return uniqueShiftList.contains(shift);
     }
 
-    public void removeShift(Shift shift) {
+    /**
+     * Removes a shift from the timetable
+     * @param shift
+     * @throws ShiftNotFoundException
+     */
+    public void removeShift(Shift shift) throws ShiftNotFoundException {
+        uniqueShiftList.remove(shift);
         getTimetableDayFromDayOfWeek(shift.getDayOfWeek()).removeShift(shift);
     }
 
+    /**
+     * Checks if a shift contains a specified employee
+     * @param dayOfWeek
+     * @param index
+     * @param employee
+     * @return
+     */
     public boolean shiftContains(DayOfWeek dayOfWeek, int index, Employee employee) {
         return getShift(dayOfWeek, index).contains(employee);
     }
@@ -56,7 +82,8 @@ public class Timetable {
         getTimetableDayFromDayOfWeek(dayOfWeek).getShifts().get(index).addEmployee(employee);
     }
 
-    public void removeEmployeeFromShift(DayOfWeek dayOfWeek, int index, Employee employee) throws EmployeeNotFoundException {
+    public void removeEmployeeFromShift(DayOfWeek dayOfWeek, int index, Employee employee)
+            throws EmployeeNotFoundException {
         getTimetableDayFromDayOfWeek(dayOfWeek).getShifts().get(index).removeEmployee(employee);
     }
 
@@ -64,7 +91,13 @@ public class Timetable {
         return getTimetableDayFromDayOfWeek(dayOfWeek).getShifts().size();
     }
 
-    public void addShift(Shift shift) {
+    /**
+     * Adds a shift to the timetable
+     * @param shift
+     * @throws DuplicateShiftException
+     */
+    public void addShift(Shift shift) throws DuplicateShiftException {
+        uniqueShiftList.add(shift);
         getTimetableDayFromDayOfWeek(shift.getDayOfWeek()).getShifts().add(shift);
     }
 

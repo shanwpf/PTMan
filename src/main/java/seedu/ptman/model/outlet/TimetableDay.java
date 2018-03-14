@@ -27,7 +27,7 @@ public class TimetableDay {
         shiftList.remove(shift);
     }
 
-    public boolean containsShift(Shift shift) {
-        return shiftList.contains(shift);
+    public LocalDate getDate() {
+        return date;
     }
 }
