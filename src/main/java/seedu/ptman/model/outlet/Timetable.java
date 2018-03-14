@@ -8,7 +8,6 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
@@ -49,7 +48,7 @@ public class Timetable {
      * @return
      */
     public Shift getShift(DayOfWeek dayOfWeek, int index) {
-        return getTimetableDayFromDayOfWeek(dayOfWeek).getShift(index);
+        return getTimetableDay(dayOfWeek).getShift(index);
     }
 
     public boolean containsShift(Shift shift) {
@@ -63,7 +62,7 @@ public class Timetable {
      */
     public void removeShift(Shift shift) throws ShiftNotFoundException {
         uniqueShiftList.remove(shift);
-        getTimetableDayFromDayOfWeek(shift.getDayOfWeek()).removeShift(shift);
+        getTimetableDay(shift.getDayOfWeek()).removeShift(shift);
     }
 
     /**
@@ -79,16 +78,12 @@ public class Timetable {
 
     public void addEmployeeToShift(DayOfWeek dayOfWeek, int index, Employee employee)
             throws DuplicateEmployeeException {
-        getTimetableDayFromDayOfWeek(dayOfWeek).getShifts().get(index).addEmployee(employee);
+        getTimetableDay(dayOfWeek).getShifts().get(index).addEmployee(employee);
     }
 
     public void removeEmployeeFromShift(DayOfWeek dayOfWeek, int index, Employee employee)
             throws EmployeeNotFoundException {
-        getTimetableDayFromDayOfWeek(dayOfWeek).getShifts().get(index).removeEmployee(employee);
-    }
-
-    public int getNumShifts(DayOfWeek dayOfWeek) {
-        return getTimetableDayFromDayOfWeek(dayOfWeek).getShifts().size();
+        getTimetableDay(dayOfWeek).getShifts().get(index).removeEmployee(employee);
     }
 
     /**
@@ -98,10 +93,10 @@ public class Timetable {
      */
     public void addShift(Shift shift) throws DuplicateShiftException {
         uniqueShiftList.add(shift);
-        getTimetableDayFromDayOfWeek(shift.getDayOfWeek()).getShifts().add(shift);
+        getTimetableDay(shift.getDayOfWeek()).getShifts().add(shift);
     }
 
-    private TimetableDay getTimetableDayFromDayOfWeek(DayOfWeek dayOfWeek) {
+    private TimetableDay getTimetableDay(DayOfWeek dayOfWeek) {
         return dayList.get(dayOfWeek.getValue() - INDEX_OFFSET);
     }
 
@@ -124,21 +119,4 @@ public class Timetable {
                 .with(weekFields.dayOfWeek(), 1);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Timetable timetable = (Timetable) o;
-        return Objects.equals(dayList, timetable.dayList)
-                && Objects.equals(mondayDate, timetable.mondayDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(dayList, mondayDate);
-    }
 }

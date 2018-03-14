@@ -124,4 +124,5 @@ public class TimetableTest {
         assertFalse(timetable.shiftContains(DayOfWeek.MONDAY, 1, TypicalEmployees.BOB));
         assertFalse(timetable.shiftContains(DayOfWeek.TUESDAY, 0, TypicalEmployees.BOB));
     }
+
 }
