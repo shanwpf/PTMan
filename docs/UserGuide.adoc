@@ -96,7 +96,7 @@ Selects the 2nd employee in PTMan.
 `select 1` +
 Selects the 1st employee from the results of the `find` command.
 
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 Exits the app. +
 Format: `exit`
