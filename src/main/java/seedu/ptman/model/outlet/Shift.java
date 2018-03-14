@@ -42,7 +42,7 @@ public class Shift {
 
     /**
      * Adds an employee that is working in this shift.
-     * @param employees
+     * @param employee
      * @throws DuplicateEmployeeException
      */
     protected void addEmployee(Employee employee) throws DuplicateEmployeeException {
@@ -51,7 +51,7 @@ public class Shift {
 
     /**
      * Removes an employee who is no longer working in this shift.
-     * @param employees
+     * @param employee
      * @throws EmployeeNotFoundException
      */
     protected void removeEmployee(Employee employee) throws EmployeeNotFoundException {
