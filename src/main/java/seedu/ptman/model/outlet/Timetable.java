@@ -16,7 +16,7 @@ import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 
 /**
- * Represents a week
+ * Represents a week where shifts can be added/removed on different days and times.
  */
 public class Timetable {
     private static final int INDEX_OFFSET = 1;
@@ -25,6 +25,10 @@ public class Timetable {
     private UniqueShiftList uniqueShiftList = new UniqueShiftList();
     private LocalDate mondayDate;
 
+    /**
+     * Creates a timetable starting from the Monday of the week of the date provided
+     * @param date
+     */
     public Timetable(LocalDate date) {
         requireNonNull(date);
         this.mondayDate = findStartOfWeekDate(date);
@@ -112,6 +116,8 @@ public class Timetable {
      */
     private LocalDate findStartOfWeekDate(LocalDate date) {
         int week = getWeekFromDate(date);
+        // We use Locale.FRANCE because it sets the first day of the week
+        // to be Monday.
         WeekFields weekFields = WeekFields.of(Locale.FRANCE);
         return LocalDate.now()
                 .withYear(date.getYear())
