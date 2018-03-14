@@ -68,6 +68,25 @@ public class TimetableTest {
     }
 
     @Test
+    public void addShift_duplicateShift_throwsDuplicateShiftException() throws IllegalTimeException {
+        Timetable timetable = new Timetable(DATE_MON);
+        Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
+        Assert.assertThrows(DuplicateShiftException.class, () -> {
+            timetable.addShift(shift1);
+            timetable.addShift(shift1);
+        });
+    }
+
+    @Test
+    public void removeShift_shiftNotInTimetable_throwsShiftNotFoundException() throws IllegalTimeException {
+        Timetable timetable = new Timetable(DATE_MON);
+        Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
+        Assert.assertThrows(ShiftNotFoundException.class, () -> {
+            timetable.removeShift(shift1);
+        });
+    }
+
+    @Test
     public void removeShift_shiftExists_shiftRemoved()
             throws IllegalTimeException, DuplicateShiftException, ShiftNotFoundException {
         Shift shift1 = new Shift(TIME_AM, TIME_PM, DayOfWeek.MONDAY, 3);
