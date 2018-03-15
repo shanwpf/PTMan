@@ -2,6 +2,10 @@ package seedu.ptman.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -59,12 +63,92 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String day} into a {@code DayOfWeek}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code day} is invalid.
+     */
+    public static DayOfWeek parseDay(String day) throws IllegalValueException {
+        requireNonNull(day);
+        String trimmedDay = day.trim();
+        DayOfWeek dayOfWeek;
+        try {
+            dayOfWeek = DayOfWeek.valueOf(trimmedDay.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return dayOfWeek;
+    }
+
+    /**
+     * Parses a {@code Optional<String> day} into an {@code Optional<DayOfWeek>} if {@code day} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DayOfWeek> parseDay(Optional<String> day) throws IllegalValueException {
+        requireNonNull(day);
+        return day.isPresent() ? Optional.of(parseDay(day.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String time} into a {@code LocalTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code time} is invalid.
+     */
+    public static LocalTime parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        try {
+            LocalTime.parse(trimmedTime, DateTimeFormatter.ofPattern("HHmm"));
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return LocalTime.parse(trimmedTime, DateTimeFormatter.ofPattern("HHmm"));
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<LocalTime>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalTime> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String capacity} into a {@code int}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code capacity} is invalid.
+     */
+    public static int parseCapacity(String capacity) throws IllegalValueException {
+        requireNonNull(capacity);
+        String trimmedPhone = capacity.trim();
+        try {
+            Integer.parseInt(trimmedPhone);
+        } catch (NumberFormatException e) {
+            // TODO: Change the message
+            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+        }
+        return Integer.parseInt(trimmedPhone);
+    }
+
+    /**
+     * Parses a {@code Optional<String> capacity} into an {@code Optional<Integer>} if {@code capacity} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Integer> parseCapacity(Optional<String> capacity) throws IllegalValueException {
+        requireNonNull(capacity);
+        return capacity.isPresent() ? Optional.of(parseCapacity(capacity.get())) : Optional.empty();
     }
 
     /**

@@ -17,6 +17,7 @@ import seedu.ptman.model.tag.Tag;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Employee> PREDICATE_SHOW_ALL_EMPLOYEES = unused -> true;
+    Predicate<Shift> PREDICATE_SHOW_ALL_SHIFTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyPartTimeManager newData);
@@ -29,9 +30,6 @@ public interface Model {
 
     /** Adds the given employee */
     void addEmployee(Employee employee) throws DuplicateEmployeeException;
-
-    /** Deletes the given shift. */
-    void deleteShift(Shift target) throws ShiftNotFoundException;
 
     /** Adds the given shift */
     void addShift(Shift shift) throws DuplicateShiftException;

@@ -15,6 +15,9 @@ import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -26,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final PartTimeManager partTimeManager;
     private final FilteredList<Employee> filteredEmployees;
+    private final FilteredList<Shift> filteredShifts;
 
     /**
      * Initializes a ModelManager with the given partTimeManager and userPrefs.
@@ -38,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.partTimeManager = new PartTimeManager(partTimeManager);
         filteredEmployees = new FilteredList<>(this.partTimeManager.getEmployeeList());
+        filteredShifts = new FilteredList<>(this.partTimeManager.getShiftList());
     }
 
     public ModelManager() {
@@ -71,6 +76,18 @@ public class ModelManager extends ComponentManager implements Model {
         partTimeManager.addEmployee(employee);
         updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
         indicatePartTimeManagerChanged();
+    }
+
+    @Override
+    public void addShift(Shift shift) throws DuplicateShiftException {
+        partTimeManager.addShift(shift);
+        updateFilteredShiftList(PREDICATE_SHOW_ALL_SHIFTS);
+        indicatePartTimeManagerChanged();
+    }
+
+    private void updateFilteredShiftList(Predicate<Shift> predicate) {
+        requireNonNull(predicate);
+        filteredShifts.setPredicate(predicate);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class ShiftTest {
     @Test
     public void constructor_illegalTime_throwsIllegalTimeException() {
         Assert.assertThrows(IllegalTimeException.class, () ->
-                new Shift(TIME_PM, TIME_AM, DayOfWeek.MONDAY, 3)
+                new Shift(DayOfWeek.MONDAY, TIME_PM, TIME_AM, 3)
         );
     }
 
@@ -25,10 +25,10 @@ public class ShiftTest {
                 new Shift(null, null, null, 4)
         );
         Assert.assertThrows(NullPointerException.class, () ->
-                new Shift(TIME_AM, null, DayOfWeek.MONDAY, 1)
+                new Shift(DayOfWeek.MONDAY, TIME_AM, null, 1)
         );
         Assert.assertThrows(NullPointerException.class, () ->
-                new Shift(null, TIME_PM, DayOfWeek.MONDAY, 4)
+                new Shift(DayOfWeek.MONDAY, null, TIME_PM, 4)
         );
     }
 

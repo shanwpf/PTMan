@@ -15,6 +15,9 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.UniqueShiftList;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.model.tag.UniqueTagList;
 
@@ -25,6 +28,7 @@ import seedu.ptman.model.tag.UniqueTagList;
 public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     private final UniqueEmployeeList employees;
+    private final UniqueShiftList shifts;
     private final UniqueTagList tags;
 
     /*
@@ -36,6 +40,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      */
     {
         employees = new UniqueEmployeeList();
+        shifts = new UniqueShiftList();
         tags = new UniqueTagList();
     }
 
@@ -153,6 +158,15 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         }
     }
 
+    /**
+     * Adds a shift to the address book.
+     *
+     * @throws DuplicateShiftException if a equivalent shift already exists.
+     */
+    public void addShift(Shift p) throws DuplicateShiftException {
+        shifts.add(p);
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -225,6 +239,11 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     @Override
+    public ObservableList<Shift> getShiftList() {
+        return shifts.asObservableList();
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
@@ -242,4 +261,5 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(employees, tags);
     }
+
 }
