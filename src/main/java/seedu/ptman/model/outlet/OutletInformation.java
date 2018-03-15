@@ -15,9 +15,7 @@ public class OutletInformation {
     private Name name;
     private Password masterPassword;
     private OperatingHours operatingHours;
-
-    // TODO: Use this timetable to store shifts.
-    // private Timetable timetable;
+    private Timetable timetable;
 
     /**
      * Constructs an {@code OutletInformation}.
@@ -26,11 +24,12 @@ public class OutletInformation {
      * @param masterPassword a valid master password
      * @param operatingHours a valid operating hours
      */
-    public OutletInformation(Name name, Password masterPassword, OperatingHours operatingHours) {
-        requireAllNonNull(name, masterPassword, operatingHours);
+    public OutletInformation(Name name, Password masterPassword, OperatingHours operatingHours, Timetable timetable) {
+        requireAllNonNull(name, masterPassword, operatingHours, timetable);
         this.name = name;
         this.masterPassword = masterPassword;
         this.operatingHours = operatingHours;
+        this.timetable = timetable;
     }
 
     public Name getName() {
@@ -45,19 +44,24 @@ public class OutletInformation {
         return operatingHours;
     }
 
+    public Timetable getTimetable() {
+        return timetable;
+    }
+
     @Override
     public boolean equals(Object other) {
         return this == other
                 || (other instanceof OutletInformation
                 && ((OutletInformation) other).getName().equals(this.getName())
                 && ((OutletInformation) other).getMasterPassword().equals(this.getMasterPassword())
-                && ((OutletInformation) other).getOperatingHours().equals(this.getOperatingHours()));
+                && ((OutletInformation) other).getOperatingHours().equals(this.getOperatingHours())
+                && ((OutletInformation) other).getTimetable().equals(this.getTimetable()));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, masterPassword, operatingHours);
+        return Objects.hash(name, masterPassword, operatingHours, timetable);
     }
 
     @Override

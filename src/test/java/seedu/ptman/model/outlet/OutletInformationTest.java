@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Objects;
+import java.time.LocalDate;
+import java.time.Month;
 
 import org.junit.Test;
 
@@ -17,8 +19,9 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(null,
-                masterPassword, operatingHours));
+                masterPassword, operatingHours, timetable));
     }
 
     @Test
@@ -26,8 +29,9 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
-                null, operatingHours));
+                null, operatingHours, timetable));
     }
 
     @Test
@@ -35,8 +39,19 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
-                masterPassword, null));
+                masterPassword, null, timetable));
+    }
+
+    @Test
+    public void constructor_nullTimetable_throwsNullPointerException() {
+        Name name = new Name("outlet");
+        Password masterPassword = new Password();
+        OperatingHours operatingHours = new OperatingHours("09:00-22:00");
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
+                masterPassword, operatingHours, null));
     }
 
     @Test
@@ -44,7 +59,8 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours);
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
         assertEquals(outlet.getName(), name);
     }
 
@@ -53,7 +69,8 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours);
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
         assertEquals(outlet.getMasterPassword(), masterPassword);
     }
 
@@ -62,7 +79,8 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours);
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
         assertEquals(outlet.getOperatingHours(), operatingHours);
     }
 
@@ -71,8 +89,9 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours);
-        OutletInformation other = new OutletInformation(name, masterPassword, operatingHours);
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
+        OutletInformation other = new OutletInformation(name, masterPassword, operatingHours, timetable);
         assertTrue(outlet.equals(other));
     }
 
@@ -81,8 +100,9 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours);
-        assertEquals(outlet.hashCode(), Objects.hash(name, masterPassword, operatingHours));
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
+        assertEquals(outlet.hashCode(), Objects.hash(name, masterPassword, operatingHours, timetable));
     }
 
     @Test
@@ -90,7 +110,8 @@ public class OutletInformationTest {
         Name name = new Name("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours);
+        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
         String expected = "outlet Operating Hour: 09:00-22:00";
         assertEquals(outlet.toString(), expected);
     }
