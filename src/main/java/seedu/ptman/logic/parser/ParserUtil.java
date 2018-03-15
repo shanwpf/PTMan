@@ -63,6 +63,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
+    }
+
+
+    /**
      * Parses a {@code String day} into a {@code DayOfWeek}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -113,15 +123,6 @@ public class ParserUtil {
     public static Optional<LocalTime> parseTime(Optional<String> time) throws IllegalValueException {
         requireNonNull(time);
         return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
-        requireNonNull(name);
-        return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
     /**

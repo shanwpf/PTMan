@@ -60,6 +60,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         this.employees.setEmployees(employees);
     }
 
+    public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
+        this.shifts.setShifts(shifts);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -74,10 +78,14 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
+        List<Shift> syncedShiftList = newData.getShiftList();
         try {
             setEmployees(syncedEmployeeList);
+            setShifts(syncedShiftList);
         } catch (DuplicateEmployeeException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate employees");
+        } catch (DuplicateShiftException e) {
+            throw new AssertionError("PartTimeManagers should not have duplicate shifts");
         }
     }
 
