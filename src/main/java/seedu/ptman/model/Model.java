@@ -6,6 +6,9 @@ import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -26,6 +29,12 @@ public interface Model {
 
     /** Adds the given employee */
     void addEmployee(Employee employee) throws DuplicateEmployeeException;
+
+    /** Deletes the given shift. */
+    void deleteShift(Shift target) throws ShiftNotFoundException;
+
+    /** Adds the given shift */
+    void addShift(Shift shift) throws DuplicateShiftException;
 
     /**
      * Delete tag from all employees
