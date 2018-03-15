@@ -31,6 +31,9 @@ import seedu.ptman.model.tag.Tag;
  */
 public class ParserUtil {
 
+    public static final String MESSAGE_CAPACITY_CONSTRAINTS = "Capacity should be a positive integer.";
+    public static final String MESSAGE_DAY_CONSTRAINTS = "Day should be a valid day of week, spelt in full.";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time should be in 24-hour format.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -85,7 +88,7 @@ public class ParserUtil {
         try {
             dayOfWeek = DayOfWeek.valueOf(trimmedDay.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_DAY_CONSTRAINTS);
         }
         return dayOfWeek;
     }
@@ -111,7 +114,7 @@ public class ParserUtil {
         try {
             LocalTime.parse(trimmedTime, DateTimeFormatter.ofPattern("HHmm"));
         } catch (DateTimeParseException e) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
         }
         return LocalTime.parse(trimmedTime, DateTimeFormatter.ofPattern("HHmm"));
     }
@@ -137,8 +140,7 @@ public class ParserUtil {
         try {
             Integer.parseInt(trimmedPhone);
         } catch (NumberFormatException e) {
-            // TODO: Change the message
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_CAPACITY_CONSTRAINTS);
         }
         return Integer.parseInt(trimmedPhone);
     }
