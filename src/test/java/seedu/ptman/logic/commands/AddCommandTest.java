@@ -24,6 +24,8 @@ import seedu.ptman.model.ReadOnlyPartTimeManager;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.testutil.EmployeeBuilder;
 
@@ -99,6 +101,11 @@ public class AddCommandTest {
     private class ModelStub implements Model {
         @Override
         public void addEmployee(Employee employee) throws DuplicateEmployeeException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addShift(Shift shift) throws DuplicateShiftException {
             fail("This method should not be called.");
         }
 
