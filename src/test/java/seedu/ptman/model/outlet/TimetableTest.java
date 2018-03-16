@@ -18,7 +18,6 @@ import org.junit.Test;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
-import seedu.ptman.model.outlet.exceptions.IllegalTimeException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.testutil.Assert;
 import seedu.ptman.testutil.TypicalEmployees;
@@ -58,7 +57,7 @@ public class TimetableTest {
     }
 
     @Test
-    public void addShift_validShift_shiftAdded() throws IllegalTimeException, DuplicateShiftException {
+    public void addShift_validShift_shiftAdded() throws DuplicateShiftException {
         Timetable timetable = new Timetable(DATE_MON);
         timetable.addShift(MONDAY_AM);
         timetable.addShift(MONDAY_PM);
@@ -71,7 +70,7 @@ public class TimetableTest {
     }
 
     @Test
-    public void addShift_duplicateShift_throwsDuplicateShiftException() throws IllegalTimeException {
+    public void addShift_duplicateShift_throwsDuplicateShiftException() {
         Timetable timetable = new Timetable(DATE_MON);
         Assert.assertThrows(DuplicateShiftException.class, () -> {
             timetable.addShift(MONDAY_PM);
@@ -80,7 +79,7 @@ public class TimetableTest {
     }
 
     @Test
-    public void removeShift_shiftNotInTimetable_throwsShiftNotFoundException() throws IllegalTimeException {
+    public void removeShift_shiftNotInTimetable_throwsShiftNotFoundException() {
         Timetable timetable = new Timetable(DATE_MON);
         Assert.assertThrows(ShiftNotFoundException.class, () -> {
             timetable.removeShift(SUNDAY_AM);
@@ -104,7 +103,7 @@ public class TimetableTest {
 
     @Test
     public void addEmployeeToShift_validEmployee_employeeAdded()
-            throws DuplicateEmployeeException, IllegalTimeException, DuplicateShiftException {
+            throws DuplicateEmployeeException, DuplicateShiftException {
         Timetable timetable = new Timetable(DATE_MON);
         timetable.addShift(MONDAY_AM);
         timetable.addShift(MONDAY_PM);
