@@ -15,6 +15,9 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.Name;
+import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.UniqueShiftList;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
@@ -31,6 +34,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     private final UniqueShiftList shifts;
     private final UniqueTagList tags;
     private final Password password;
+    private final OutletInformation outlet;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -44,6 +48,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         shifts = new UniqueShiftList();
         tags = new UniqueTagList();
         password = new Password();
+        outlet = new OutletInformation(new Name("asd"), new Password(""), new OperatingHours("11:00-14:00"));
     }
 
     public PartTimeManager() {}
