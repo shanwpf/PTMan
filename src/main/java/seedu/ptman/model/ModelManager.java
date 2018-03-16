@@ -89,6 +89,10 @@ public class ModelManager extends ComponentManager implements Model {
         filteredShifts.setPredicate(predicate);
     }
 
+    public synchronized boolean isAdmin(String password) {
+        return partTimeManager.isAdmin(password);
+    }
+
     @Override
     public void updateEmployee(Employee target, Employee editedEmployee)
             throws DuplicateEmployeeException, EmployeeNotFoundException {

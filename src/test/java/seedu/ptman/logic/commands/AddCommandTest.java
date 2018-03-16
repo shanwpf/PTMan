@@ -109,6 +109,11 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        public boolean isAdmin(String password) {
+            fail("This method should not be called.");
+            return true;
+        }
+
         @Override
         public void deleteTagFromAllEmployee(Tag tag) {
             fail("This method should not be called");

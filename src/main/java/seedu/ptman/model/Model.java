@@ -33,6 +33,9 @@ public interface Model {
     /** Adds the given shift */
     void addShift(Shift shift) throws DuplicateShiftException;
 
+    //** check if authorized */
+    boolean isAdmin(String password);
+
     /**
      * Delete tag from all employees
      */
