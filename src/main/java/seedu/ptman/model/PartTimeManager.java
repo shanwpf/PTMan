@@ -186,6 +186,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      * @throws DuplicateShiftException if a equivalent shift already exists.
      */
     public void addShift(Shift p) throws DuplicateShiftException {
+        outlet.addShift(p);
         shifts.add(p);
     }
 
