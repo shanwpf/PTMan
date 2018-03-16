@@ -69,7 +69,8 @@ public class CommandTestUtil {
     public static final String CAPACITY_DESC_2 = " " + PREFIX_CAPACITY + VALID_CAPACITY_2;
 
     public static final String INVALID_DAY_DESC = " " + PREFIX_DAY + "mon"; // days should be spelt in full
-    public static final String INVALID_TIME_START_DESC = " " + PREFIX_TIME_START + "9am"; // time should be in 24-hour format
+    public static final String INVALID_TIME_START_DESC =
+            " " + PREFIX_TIME_START + "9am"; // time should be in 24-hour format
     public static final String INVALID_TIME_END_DESC = " " + PREFIX_TIME_END + "23:00"; // time should not include ':'
     public static final String INVALID_CAPACITY_DESC = " " + PREFIX_CAPACITY + "3!"; // '!' not allowed in capacity
 

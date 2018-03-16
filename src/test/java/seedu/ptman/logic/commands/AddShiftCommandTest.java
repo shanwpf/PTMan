@@ -70,20 +70,20 @@ public class AddShiftCommandTest {
         AddShiftCommand addMondayPmCommand = new AddShiftCommand(MONDAY_PM);
 
         // same object -> returns true
-        assertTrue( addMondayAmCommand.equals( addMondayAmCommand));
+        assertTrue(addMondayAmCommand.equals(addMondayAmCommand));
 
         // same values -> returns true
         AddShiftCommand addMondayAmCommandCopy = new AddShiftCommand(MONDAY_AM);
-        assertTrue( addMondayAmCommand.equals( addMondayAmCommandCopy));
+        assertTrue(addMondayAmCommand.equals(addMondayAmCommandCopy));
 
         // different types -> returns false
-        assertFalse( addMondayAmCommand.equals(1));
+        assertFalse(addMondayAmCommand.equals(1));
 
         // null -> returns false
-        assertFalse( addMondayAmCommand.equals(null));
+        assertFalse(addMondayAmCommand.equals(null));
 
         // different employee -> returns false
-        assertFalse( addMondayAmCommand.equals(addMondayPmCommand));
+        assertFalse(addMondayAmCommand.equals(addMondayPmCommand));
     }
 
     /**
