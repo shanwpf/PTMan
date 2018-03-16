@@ -4,7 +4,6 @@ import seedu.ptman.model.outlet.Capacity;
 import seedu.ptman.model.outlet.Day;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Time;
-import seedu.ptman.model.outlet.exceptions.IllegalTimeException;
 
 /**
  * A utility class to help with building Employee objects.

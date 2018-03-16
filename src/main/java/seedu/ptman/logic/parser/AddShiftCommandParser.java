@@ -16,7 +16,6 @@ import seedu.ptman.model.outlet.Capacity;
 import seedu.ptman.model.outlet.Day;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Time;
-import seedu.ptman.model.outlet.exceptions.IllegalTimeException;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -30,9 +29,11 @@ public class AddShiftCommandParser implements Parser<AddShiftCommand> {
      */
     public AddShiftCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DAY, PREFIX_TIME_START, PREFIX_TIME_END, PREFIX_CAPACITY, PREFIX_PASSWORD);
+                ArgumentTokenizer.tokenize(args, PREFIX_DAY, PREFIX_TIME_START,
+                        PREFIX_TIME_END, PREFIX_CAPACITY, PREFIX_PASSWORD);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_DAY, PREFIX_TIME_START, PREFIX_TIME_END, PREFIX_CAPACITY, PREFIX_PASSWORD)
+        if (!arePrefixesPresent(argMultimap, PREFIX_DAY, PREFIX_TIME_START,
+                PREFIX_TIME_END, PREFIX_CAPACITY, PREFIX_PASSWORD)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddShiftCommand.MESSAGE_USAGE));
         }
