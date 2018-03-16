@@ -59,6 +59,6 @@ public class Day {
 
     @Override
     public int hashCode() {
-        return Objects.hash(day);
+        return day.toString().hashCode();
     }
 }
