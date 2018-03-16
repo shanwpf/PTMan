@@ -45,6 +45,6 @@ public class Capacity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(capacity);
+        return new Integer(capacity).hashCode();
     }
 }
