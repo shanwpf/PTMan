@@ -2,10 +2,6 @@ package seedu.ptman.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -18,6 +14,9 @@ import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
 import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
+import seedu.ptman.model.outlet.Capacity;
+import seedu.ptman.model.outlet.Day;
+import seedu.ptman.model.outlet.Time;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -31,9 +30,6 @@ import seedu.ptman.model.tag.Tag;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_CAPACITY_CONSTRAINTS = "Capacity should be a positive integer.";
-    public static final String MESSAGE_DAY_CONSTRAINTS = "Day should be a valid day of week, spelt in full.";
-    public static final String MESSAGE_TIME_CONSTRAINTS = "Time should be in 24-hour format.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -81,23 +77,20 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code day} is invalid.
      */
-    public static DayOfWeek parseDay(String day) throws IllegalValueException {
+    public static Day parseDay(String day) throws IllegalValueException {
         requireNonNull(day);
         String trimmedDay = day.trim();
-        DayOfWeek dayOfWeek;
-        try {
-            dayOfWeek = DayOfWeek.valueOf(trimmedDay.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalValueException(MESSAGE_DAY_CONSTRAINTS);
+        if (!Day.isValidDay(trimmedDay)) {
+            throw new IllegalValueException(Day.MESSAGE_DAY_CONSTRAINTS);
         }
-        return dayOfWeek;
+        return new Day(trimmedDay);
     }
 
     /**
      * Parses a {@code Optional<String> day} into an {@code Optional<DayOfWeek>} if {@code day} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DayOfWeek> parseDay(Optional<String> day) throws IllegalValueException {
+    public static Optional<Day> parseDay(Optional<String> day) throws IllegalValueException {
         requireNonNull(day);
         return day.isPresent() ? Optional.of(parseDay(day.get())) : Optional.empty();
     }
@@ -108,48 +101,44 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code time} is invalid.
      */
-    public static LocalTime parseTime(String time) throws IllegalValueException {
+    public static Time parseTime(String time) throws IllegalValueException {
         requireNonNull(time);
         String trimmedTime = time.trim();
-        try {
-            LocalTime.parse(trimmedTime, DateTimeFormatter.ofPattern("HHmm"));
-        } catch (DateTimeParseException e) {
-            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        if (!Time.isValidTime(trimmedTime)) {
+            throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
         }
-        return LocalTime.parse(trimmedTime, DateTimeFormatter.ofPattern("HHmm"));
+        return new Time(trimmedTime);
     }
 
     /**
      * Parses a {@code Optional<String> time} into an {@code Optional<LocalTime>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<LocalTime> parseTime(Optional<String> time) throws IllegalValueException {
+    public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
         requireNonNull(time);
         return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String capacity} into a {@code int}.
+     * Parses a {@code String day} into a {@code int}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code capacity} is invalid.
+     * @throws IllegalValueException if the given {@code day} is invalid.
      */
-    public static int parseCapacity(String capacity) throws IllegalValueException {
+    public static Capacity parseCapacity(String capacity) throws IllegalValueException {
         requireNonNull(capacity);
-        String trimmedPhone = capacity.trim();
-        try {
-            Integer.parseInt(trimmedPhone);
-        } catch (NumberFormatException e) {
-            throw new IllegalValueException(MESSAGE_CAPACITY_CONSTRAINTS);
+        String trimmedCapacity = capacity.trim();
+        if (!Capacity.isValidCapacity(trimmedCapacity)) {
+            throw new IllegalValueException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
         }
-        return Integer.parseInt(trimmedPhone);
+        return new Capacity(trimmedCapacity);
     }
 
     /**
-     * Parses a {@code Optional<String> capacity} into an {@code Optional<Integer>} if {@code capacity} is present.
+     * Parses a {@code Optional<String> day} into an {@code Optional<Integer>} if {@code day} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Integer> parseCapacity(Optional<String> capacity) throws IllegalValueException {
+    public static Optional<Capacity> parseCapacity(Optional<String> capacity) throws IllegalValueException {
         requireNonNull(capacity);
         return capacity.isPresent() ? Optional.of(parseCapacity(capacity.get())) : Optional.empty();
     }

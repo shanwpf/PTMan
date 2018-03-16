@@ -6,14 +6,15 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TIME_END;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TIME_START;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.stream.Stream;
 
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.logic.commands.AddShiftCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
+import seedu.ptman.model.outlet.Capacity;
+import seedu.ptman.model.outlet.Day;
 import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.Time;
 import seedu.ptman.model.outlet.exceptions.IllegalTimeException;
 
 /**
@@ -36,15 +37,15 @@ public class AddShiftCommandParser implements Parser<AddShiftCommand> {
         }
 
         try {
-            DayOfWeek dayOfWeek = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY)).get();
-            LocalTime startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME_START)).get();
-            LocalTime endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME_END)).get();
-            int capacity = ParserUtil.parseCapacity(argMultimap.getValue(PREFIX_CAPACITY)).get();
+            Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY)).get();
+            Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME_START)).get();
+            Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME_END)).get();
+            Capacity capacity = ParserUtil.parseCapacity(argMultimap.getValue(PREFIX_CAPACITY)).get();
 
-            Shift shift = new Shift(dayOfWeek, startTime, endTime, capacity);
+            Shift shift = new Shift(day, startTime, endTime, capacity);
 
             return new AddShiftCommand(shift);
-        } catch (IllegalValueException | IllegalTimeException ive) {
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
