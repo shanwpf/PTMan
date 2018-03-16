@@ -835,7 +835,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 . *Shifts (Major)*:
 .. *Add/remove shifts*: Added commands for the employer to add/remove shifts. Employees can then view the available shifts, their working hours, and the capacity of each shift.
-.. *Select/Deselect shifts*: Added commands for employees to choose the shifts they want to work in. 
+.. *Select/Deselect shifts*: Added commands for employees to choose the shifts they want to work in.
 . *Command aliases (Minor)*: Added aliases to most commands. These aliases can be used in place of the full length commands for the user's convenience.
 
 [appendix]
