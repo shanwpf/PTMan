@@ -44,7 +44,7 @@ public class Time {
 
     @Override
     public String toString() {
-        return time.toString();
+        return time.toString().replace(":", "");
     }
 
     @Override
@@ -61,6 +61,6 @@ public class Time {
 
     @Override
     public int hashCode() {
-        return Objects.hash(time);
+        return time.hashCode();
     }
 }
