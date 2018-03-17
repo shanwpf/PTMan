@@ -28,7 +28,8 @@ public interface Model {
     void addEmployee(Employee employee) throws DuplicateEmployeeException;
 
     //** check if authorized */
-    boolean isAdmin(String password);
+    boolean isAdminPassword(Password password);
+
 
     /**
      * Delete tag from all employees

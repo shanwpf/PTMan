@@ -30,6 +30,7 @@ import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.Salary;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -65,22 +66,28 @@ public class EditCommand extends UndoableCommand {
 
     private Employee employeeToEdit;
     private Employee editedEmployee;
+    private Password toCheck;
 
     /**
      * @param index of the employee in the filtered employee list to edit
      * @param editEmployeeDescriptor details to edit the employee with
      */
-    public EditCommand(Index index, EditEmployeeDescriptor editEmployeeDescriptor) {
+    public EditCommand(Index index, EditEmployeeDescriptor editEmployeeDescriptor, Password password) {
         requireNonNull(index);
         requireNonNull(editEmployeeDescriptor);
-        isAdminCommand = true;
         this.index = index;
         this.editEmployeeDescriptor = new EditEmployeeDescriptor(editEmployeeDescriptor);
-
+        toCheck = password;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(toCheck);
+
+        if (!model.isAdminPassword(toCheck)) {
+            throw new InvalidPasswordException();
+        }
+
         try {
             model.updateEmployee(employeeToEdit, editedEmployee);
         } catch (DuplicateEmployeeException dpe) {
@@ -88,6 +95,7 @@ public class EditCommand extends UndoableCommand {
         } catch (EmployeeNotFoundException pnfe) {
             throw new AssertionError("The target employee cannot be missing");
         }
+
         model.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
         return new CommandResult(String.format(MESSAGE_EDIT_EMPLOYEE_SUCCESS, editedEmployee));
     }
