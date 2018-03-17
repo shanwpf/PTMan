@@ -15,6 +15,9 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.OutletName;
+import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.model.tag.UniqueTagList;
 
@@ -26,6 +29,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     private final UniqueEmployeeList employees;
     private final UniqueTagList tags;
+    private final OutletInformation outlet;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     {
         employees = new UniqueEmployeeList();
         tags = new UniqueTagList();
+        outlet = new OutletInformation();
     }
 
     public PartTimeManager() {}
@@ -112,6 +117,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         // This can cause the tags master list to have additional tags that are not tagged to any employee
         // in the employee list.
         employees.setEmployee(target, syncedEditedEmployee);
+    }
+
+    public void updateOutlet(OutletName name, OperatingHours operatingHours) {
+        outlet.setOutletInformation(name, operatingHours);
     }
 
     /**

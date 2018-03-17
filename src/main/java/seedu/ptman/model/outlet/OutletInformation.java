@@ -3,6 +3,8 @@ package seedu.ptman.model.outlet;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+import java.time.LocalDate;
+import java.time.Month;
 
 import seedu.ptman.model.Password;
 
@@ -12,7 +14,10 @@ import seedu.ptman.model.Password;
  */
 public class OutletInformation {
 
-    private Name name;
+    private static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
+    private static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
+
+    private OutletName name;
     private Password masterPassword;
     private OperatingHours operatingHours;
     private Timetable timetable;
@@ -24,7 +29,7 @@ public class OutletInformation {
      * @param masterPassword a valid master password
      * @param operatingHours a valid operating hours
      */
-    public OutletInformation(Name name, Password masterPassword, OperatingHours operatingHours, Timetable timetable) {
+    public OutletInformation(OutletName name, Password masterPassword, OperatingHours operatingHours, Timetable timetable) {
         requireAllNonNull(name, masterPassword, operatingHours, timetable);
         this.name = name;
         this.masterPassword = masterPassword;
@@ -32,7 +37,17 @@ public class OutletInformation {
         this.timetable = timetable;
     }
 
-    public Name getName() {
+    /**
+     * Default constructor with default values
+     */
+    public OutletInformation() {
+        this.name = new OutletName(DEFAULT_OUTLET_NAME);
+        this.masterPassword = new Password();
+        this.operatingHours = new OperatingHours(DEFAULT_OPERATING_HOURS);
+        this.timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+    }
+
+    public OutletName getName() {
         return name;
     }
 
@@ -46,6 +61,30 @@ public class OutletInformation {
 
     public Timetable getTimetable() {
         return timetable;
+    }
+
+    public void setMasterPassword(Password masterPassword) {
+        this.masterPassword = masterPassword;
+    }
+
+    public void setTimetable(Timetable timetable) {
+        this.timetable = timetable;
+    }
+
+    public void setOutletInformation(OutletName name, OperatingHours operatingHours) throws NullPointerException {
+        if(name == null && operatingHours == null) {
+            throw new NullPointerException();
+        }
+        else if(name == null) {
+            this.operatingHours = operatingHours;
+        }
+        else if(operatingHours == null) {
+            this.name = name;
+        }
+        else {
+            this.name = name;
+            this.operatingHours = operatingHours;
+        }
     }
 
     @Override

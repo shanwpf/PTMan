@@ -16,7 +16,7 @@ public class OutletInformationTest {
 
     @Test
     public void constructor_nullName_throwsNullPointerException() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -26,7 +26,7 @@ public class OutletInformationTest {
 
     @Test
     public void constructor_nullMasterPassword_throwsNullPointerException() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -36,7 +36,7 @@ public class OutletInformationTest {
 
     @Test
     public void constructor_nullOperatingHours_throwsNullPointerException() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -46,7 +46,7 @@ public class OutletInformationTest {
 
     @Test
     public void constructor_nullTimetable_throwsNullPointerException() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -56,7 +56,7 @@ public class OutletInformationTest {
 
     @Test
     public void getName_validInput_returnsTrue() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -66,7 +66,7 @@ public class OutletInformationTest {
 
     @Test
     public void getMasterPassword_validInput_returnsTrue() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -76,7 +76,7 @@ public class OutletInformationTest {
 
     @Test
     public void getOperatingHours_validInput_returnsTrue() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -86,7 +86,7 @@ public class OutletInformationTest {
 
     @Test
     public void equals_sameOutletInformation_returnsTrue() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -97,7 +97,7 @@ public class OutletInformationTest {
 
     @Test
     public void hashCode_sameObject_returnsTrue() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
@@ -107,7 +107,7 @@ public class OutletInformationTest {
 
     @Test
     public void toString_validInput_returnsTrue() {
-        Name name = new Name("outlet");
+        OutletName name = new OutletName("outlet");
         Password masterPassword = new Password();
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));

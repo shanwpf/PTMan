@@ -15,6 +15,8 @@ import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -79,6 +81,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedEmployee);
 
         partTimeManager.updateEmployee(target, editedEmployee);
+        indicatePartTimeManagerChanged();
+    }
+
+    @Override
+    public void updateOutlet(OutletName name, OperatingHours operatingHours) {
+        partTimeManager.updateOutlet(name, operatingHours);
         indicatePartTimeManagerChanged();
     }
 
