@@ -24,6 +24,8 @@ import seedu.ptman.model.ReadOnlyPartTimeManager;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.testutil.EmployeeBuilder;
 
@@ -126,6 +128,11 @@ public class AddCommandTest {
         @Override
         public void updateEmployee(Employee target, Employee editedEmployee)
                 throws DuplicateEmployeeException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateOutlet(OutletName name, OperatingHours operatingHours) {
             fail("This method should not be called.");
         }
 

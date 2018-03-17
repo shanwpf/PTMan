@@ -32,9 +32,9 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
         OutletName outletName;
         OperatingHours operatingHours;
         try {
-            masterPassword = ParserUtil.parseMasterPassword(argMultimap.getPreamble());
-            outletName = ParserUtil.parseOutletName(argMultimap.getPreamble());
-            operatingHours = ParserUtil.parseOperatingHours(argMultimap.getPreamble());
+            masterPassword = ParserUtil.parseMasterPassword(argMultimap.getValue(PREFIX_MASTER_PASSWORD)).get();
+            outletName = ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).get();
+            operatingHours = ParserUtil.parseOperatingHours(argMultimap.getValue(PREFIX_OPERATING_HOURS)).get();
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditOutletCommand.MESSAGE_USAGE));

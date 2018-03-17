@@ -22,11 +22,11 @@ public class EditOutletCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: "
             + "[" + PREFIX_MASTER_PASSWORD + "MASSTERPASSWORD] "
-            + "[" + PREFIX_OUTLET_NAME + "PHONE] "
-            + "[" + PREFIX_OPERATING_HOURS + "EMAIL] "
-            + "Example: " + COMMAND_WORD
+            + "[" + PREFIX_OUTLET_NAME + "OUTLETNAME] "
+            + "[" + PREFIX_OPERATING_HOURS + "OPERATINGHOURS] "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_MASTER_PASSWORD + "DEFAULT1 "
-            + PREFIX_OUTLET_NAME + "AwesomeOutlet"
+            + PREFIX_OUTLET_NAME + "AwesomeOutlet "
             + PREFIX_OPERATING_HOURS + "09:00-22:00";
 
     public static final String MESSAGE_EDIT_OUTLET_SUCCESS = "Outlet Information Edited.";

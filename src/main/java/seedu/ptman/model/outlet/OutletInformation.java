@@ -63,28 +63,10 @@ public class OutletInformation {
         return timetable;
     }
 
-    public void setMasterPassword(Password masterPassword) {
-        this.masterPassword = masterPassword;
-    }
-
-    public void setTimetable(Timetable timetable) {
-        this.timetable = timetable;
-    }
-
-    public void setOutletInformation(OutletName name, OperatingHours operatingHours) throws NullPointerException {
-        if(name == null && operatingHours == null) {
-            throw new NullPointerException();
-        }
-        else if(name == null) {
-            this.operatingHours = operatingHours;
-        }
-        else if(operatingHours == null) {
-            this.name = name;
-        }
-        else {
-            this.name = name;
-            this.operatingHours = operatingHours;
-        }
+    public void setOutletInformation(OutletName name, OperatingHours operatingHours) {
+        requireAllNonNull(name, operatingHours);
+        this.name = name;
+        this.operatingHours = operatingHours;
     }
 
     @Override
