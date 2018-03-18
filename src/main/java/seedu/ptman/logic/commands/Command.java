@@ -14,6 +14,7 @@ public abstract class Command {
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of employees.
      *
@@ -40,4 +41,5 @@ public abstract class Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
     }
+
 }

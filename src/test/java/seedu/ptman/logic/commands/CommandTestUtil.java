@@ -9,6 +9,7 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_MASTER_PASSWORD;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TAG;
@@ -23,6 +24,7 @@ import seedu.ptman.logic.UndoRedoStack;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.PartTimeManager;
+import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
@@ -48,6 +50,8 @@ public class CommandTestUtil {
     public static final String VALID_OUTLET_NAME = "ValidOutlet";
     public static final String VALID_OPERATING_HOURS = "09:00-22:00";
     public static final String VALID_MASTER_PASSWORD = "DEFAULT1";
+    public static final String DEFAULT1_HASH = "wkqTFuX6NX3hucWqn2ZxB24cRo73LssRq7IDOk6Zx00=";
+    public static final String DEFAULT_PASSWORD = "DEFAULT1";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -64,6 +68,7 @@ public class CommandTestUtil {
     public static final String OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME;
     public static final String OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
     public static final String MASTER_PASSWORD_DESC = " " + PREFIX_MASTER_PASSWORD + VALID_MASTER_PASSWORD;
+    public static final String DEFAULT_DESC_ADMINPASSWORD = " " + PREFIX_PASSWORD + DEFAULT_PASSWORD;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -74,6 +79,7 @@ public class CommandTestUtil {
     public static final String INVALID_OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + "Invalid@Outlet";
     public static final String INVALID_OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + "09:00/22:00";
     public static final String INVALID_MASTER_PASSWORD_DESC = " " + PREFIX_MASTER_PASSWORD + " ";
+    public static final String INVALID_DESC_ADMINPASSWORD = " " + PREFIX_PASSWORD + "wrongpassword";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -157,8 +163,8 @@ public class CommandTestUtil {
     /**
      * Returns an {@code UndoCommand} with the given {@code model} and {@code undoRedoStack} set.
      */
-    public static UndoCommand prepareUndoCommand(Model model, UndoRedoStack undoRedoStack) {
-        UndoCommand undoCommand = new UndoCommand();
+    public static UndoCommand prepareUndoCommand(Model model, UndoRedoStack undoRedoStack, Password password) {
+        UndoCommand undoCommand = new UndoCommand(password);
         undoCommand.setData(model, new CommandHistory(), undoRedoStack);
         return undoCommand;
     }
@@ -166,8 +172,8 @@ public class CommandTestUtil {
     /**
      * Returns a {@code RedoCommand} with the given {@code model} and {@code undoRedoStack} set.
      */
-    public static RedoCommand prepareRedoCommand(Model model, UndoRedoStack undoRedoStack) {
-        RedoCommand redoCommand = new RedoCommand();
+    public static RedoCommand prepareRedoCommand(Model model, UndoRedoStack undoRedoStack, Password password) {
+        RedoCommand redoCommand = new RedoCommand(password);
         redoCommand.setData(model, new CommandHistory(), undoRedoStack);
         return redoCommand;
     }

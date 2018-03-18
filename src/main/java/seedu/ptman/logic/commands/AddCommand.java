@@ -1,16 +1,20 @@
 package seedu.ptman.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.ptman.logic.commands.exceptions.CommandException;
+import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
+import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 
 /**
  * Adds a employee to PTMan.
@@ -35,24 +39,34 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_SALARY + "0 "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney "
+            + PREFIX_PASSWORD + "AdminPassword";
 
     public static final String MESSAGE_SUCCESS = "New employee added: %1$s";
     public static final String MESSAGE_DUPLICATE_EMPLOYEE = "This employee already exists in PTMan";
 
     private final Employee toAdd;
+    private final Password toCheck;
 
     /**
      * Creates an AddCommand to add the specified {@code Employee}
+     *
      */
-    public AddCommand(Employee employee) {
+    public AddCommand(Employee employee, Password password) {
         requireNonNull(employee);
         toAdd = employee;
+        toCheck = password;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
+        requireAllNonNull(model, toCheck);
+
+
+        if (!model.isAdminPassword(toCheck)) {
+            throw new InvalidPasswordException();
+        }
+
         try {
             model.addEmployee(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -66,6 +80,7 @@ public class AddCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
-                && toAdd.equals(((AddCommand) other).toAdd));
+                && toAdd.equals(((AddCommand) other).toAdd)
+                && toCheck.equals(((AddCommand) other).toCheck));
     }
 }
