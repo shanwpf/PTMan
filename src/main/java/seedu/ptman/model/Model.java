@@ -47,6 +47,8 @@ public interface Model {
      */
     void updateOutlet(OutletName name, OperatingHours operatingHours);
 
+    String getOutletInformationMessage();
+
     /** Returns an unmodifiable view of the filtered employee list */
     ObservableList<Employee> getFilteredEmployeeList();
 

@@ -20,6 +20,7 @@ import seedu.ptman.logic.commands.ListCommand;
 import seedu.ptman.logic.commands.RedoCommand;
 import seedu.ptman.logic.commands.SelectCommand;
 import seedu.ptman.logic.commands.UndoCommand;
+import seedu.ptman.logic.commands.ViewOutletCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 
 /**
@@ -56,10 +57,6 @@ public class PartTimeManagerParser {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
-
-        case EditOutletCommand.COMMAND_WORD:
-        case EditOutletCommand.COMMAND_ALIAS:
-            return new EditOutletCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -98,6 +95,14 @@ public class PartTimeManagerParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case EditOutletCommand.COMMAND_WORD:
+        case EditOutletCommand.COMMAND_ALIAS:
+            return new EditOutletCommandParser().parse(arguments);
+
+        case ViewOutletCommand.COMMAND_WORD:
+        case ViewOutletCommand.COMMAND_ALIAS:
+            return new ViewOutletCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

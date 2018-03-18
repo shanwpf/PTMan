@@ -137,6 +137,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public String getOutletInformationMessage() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<Employee> getFilteredEmployeeList() {
             fail("This method should not be called.");
             return null;

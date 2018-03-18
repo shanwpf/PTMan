@@ -88,7 +88,8 @@ public class OutletInformation {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
+        builder.append("Outlet Name: ")
+                .append(getName())
                 .append(" Operating Hour: ")
                 .append(getOperatingHours());
         return builder.toString();

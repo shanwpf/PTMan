@@ -112,7 +112,7 @@ public class OutletInformationTest {
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
         OutletInformation outlet = new OutletInformation(name, masterPassword, operatingHours, timetable);
-        String expected = "outlet Operating Hour: 09:00-22:00";
+        String expected = "Outlet Name: outlet Operating Hour: 09:00-22:00";
         assertEquals(outlet.toString(), expected);
     }
 }

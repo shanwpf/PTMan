@@ -123,6 +123,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         outlet.setOutletInformation(name, operatingHours);
     }
 
+    public String getOutletInformationMessage() {
+        return outlet.toString();
+    }
+
     /**
      *  Updates the master tag list to include tags in {@code employee} that are not in the list.
      *  @return a copy of this {@code employee} such that every tag in this employee points to a Tag

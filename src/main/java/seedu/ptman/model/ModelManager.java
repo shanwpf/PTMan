@@ -90,6 +90,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicatePartTimeManagerChanged();
     }
 
+    @Override
+    public String getOutletInformationMessage() {
+        return partTimeManager.getOutletInformationMessage();
+    }
+
     //=========== Filtered Employee List Accessors =============================================================
     @Override
     public void deleteTagFromAllEmployee(Tag tag) {
