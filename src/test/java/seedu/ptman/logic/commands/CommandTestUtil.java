@@ -5,7 +5,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_MASTER_PASSWORD;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TAG;
@@ -42,6 +45,9 @@ public class CommandTestUtil {
     public static final String VALID_SALARY_BOB = "10";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_OUTLET_NAME = "ValidOutlet";
+    public static final String VALID_OPERATING_HOURS = "09:00-22:00";
+    public static final String VALID_MASTER_PASSWORD = "DEFAULT1";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,6 +61,9 @@ public class CommandTestUtil {
     public static final String SALARY_DESC_BOB = " " + PREFIX_SALARY + VALID_SALARY_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME;
+    public static final String OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
+    public static final String MASTER_PASSWORD_DESC = " " + PREFIX_MASTER_PASSWORD + VALID_MASTER_PASSWORD;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -62,6 +71,9 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_SALARY_DESC = " " + PREFIX_SALARY + "-1"; // negative not allowed for Salary
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + "Invalid@Outlet";
+    public static final String INVALID_OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + "09:00/22:00";
+    public static final String INVALID_MASTER_PASSWORD = " " + PREFIX_MASTER_PASSWORD + " ";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
