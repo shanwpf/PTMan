@@ -13,6 +13,8 @@ import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletName;
 
+import java.util.NoSuchElementException;
+
 /**
  * Parses input arguments and creates a new EditOutletCommand object
  */
@@ -36,6 +38,8 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
             outletName = ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).get();
             operatingHours = ParserUtil.parseOperatingHours(argMultimap.getValue(PREFIX_OPERATING_HOURS)).get();
         } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        } catch (NoSuchElementException nsee) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditOutletCommand.MESSAGE_USAGE));
         }

@@ -73,7 +73,7 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + "Invalid@Outlet";
     public static final String INVALID_OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + "09:00/22:00";
-    public static final String INVALID_MASTER_PASSWORD = " " + PREFIX_MASTER_PASSWORD + " ";
+    public static final String INVALID_MASTER_PASSWORD_DESC = " " + PREFIX_MASTER_PASSWORD + " ";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
