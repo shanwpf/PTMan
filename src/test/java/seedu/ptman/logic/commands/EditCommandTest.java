@@ -17,7 +17,9 @@ import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.ptman.commons.core.Messages;
 import seedu.ptman.commons.core.index.Index;
@@ -27,8 +29,10 @@ import seedu.ptman.logic.commands.EditCommand.EditEmployeeDescriptor;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.ModelManager;
 import seedu.ptman.model.PartTimeManager;
+import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.testutil.EditEmployeeDescriptorBuilder;
 import seedu.ptman.testutil.EmployeeBuilder;
 
@@ -37,13 +41,17 @@ import seedu.ptman.testutil.EmployeeBuilder;
  */
 public class EditCommandTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Model model = new ModelManager(getTypicalPartTimeManager(), new UserPrefs());
+    private Password defaultPassword = new Password();
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Employee editedEmployee = new EmployeeBuilder().build();
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder(editedEmployee).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, descriptor);
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, descriptor, defaultPassword);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EMPLOYEE_SUCCESS, editedEmployee);
 
@@ -64,7 +72,7 @@ public class EditCommandTest {
 
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = prepareCommand(indexLastEmployee, descriptor);
+        EditCommand editCommand = prepareCommand(indexLastEmployee, descriptor, defaultPassword);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EMPLOYEE_SUCCESS, editedEmployee);
 
@@ -76,7 +84,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, new EditEmployeeDescriptor());
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, new EditEmployeeDescriptor(), defaultPassword);
         Employee editedEmployee = model.getFilteredEmployeeList().get(INDEX_FIRST_EMPLOYEE.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EMPLOYEE_SUCCESS, editedEmployee);
@@ -87,13 +95,21 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_invalidPassword_invalidPasswordException() throws Exception {
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, new EditEmployeeDescriptor(),
+                new Password("wrongPAss"));
+        thrown.expect(InvalidPasswordException.class);
+        editCommand.execute();
+    }
+
+    @Test
     public void execute_filteredList_success() throws Exception {
         showEmployeeAtIndex(model, INDEX_FIRST_EMPLOYEE);
 
         Employee employeeInFilteredList = model.getFilteredEmployeeList().get(INDEX_FIRST_EMPLOYEE.getZeroBased());
         Employee editedEmployee = new EmployeeBuilder(employeeInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE,
-                new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB).build(), defaultPassword);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EMPLOYEE_SUCCESS, editedEmployee);
 
@@ -107,7 +123,7 @@ public class EditCommandTest {
     public void execute_duplicateEmployeeUnfilteredList_failure() {
         Employee firstEmployee = model.getFilteredEmployeeList().get(INDEX_FIRST_EMPLOYEE.getZeroBased());
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder(firstEmployee).build();
-        EditCommand editCommand = prepareCommand(INDEX_SECOND_EMPLOYEE, descriptor);
+        EditCommand editCommand = prepareCommand(INDEX_SECOND_EMPLOYEE, descriptor, defaultPassword);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_EMPLOYEE);
     }
@@ -120,7 +136,7 @@ public class EditCommandTest {
         Employee employeeInList =
                 model.getPartTimeManager().getEmployeeList().get(INDEX_SECOND_EMPLOYEE.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE,
-                new EditEmployeeDescriptorBuilder(employeeInList).build());
+                new EditEmployeeDescriptorBuilder(employeeInList).build(), defaultPassword);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_EMPLOYEE);
     }
@@ -129,7 +145,7 @@ public class EditCommandTest {
     public void execute_invalidEmployeeIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEmployeeList().size() + 1);
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
+        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor, defaultPassword);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
     }
@@ -146,7 +162,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getPartTimeManager().getEmployeeList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB).build(), defaultPassword);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
     }
@@ -154,12 +170,12 @@ public class EditCommandTest {
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack, defaultPassword);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack, defaultPassword);
         Employee editedEmployee = new EmployeeBuilder().build();
         Employee employeeToEdit = model.getFilteredEmployeeList().get(INDEX_FIRST_EMPLOYEE.getZeroBased());
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder(editedEmployee).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, descriptor);
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, descriptor, defaultPassword);
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
 
         // edit -> first employee edited
@@ -177,11 +193,11 @@ public class EditCommandTest {
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack, defaultPassword);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack, defaultPassword);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEmployeeList().size() + 1);
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder().withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
+        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor, defaultPassword);
 
         // execution failed -> editCommand not pushed into undoRedoStack
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_EMPLOYEE_DISPLAYED_INDEX);
@@ -201,11 +217,11 @@ public class EditCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameEmployeeEdited() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack, defaultPassword);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack, defaultPassword);
         Employee editedEmployee = new EmployeeBuilder().build();
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder(editedEmployee).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, descriptor);
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, descriptor, defaultPassword);
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
 
         showEmployeeAtIndex(model, INDEX_SECOND_EMPLOYEE);
@@ -225,11 +241,11 @@ public class EditCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, DESC_AMY);
+        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, DESC_AMY, defaultPassword);
 
         // same values -> returns true
         EditEmployeeDescriptor copyDescriptor = new EditEmployeeDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = prepareCommand(INDEX_FIRST_EMPLOYEE, copyDescriptor);
+        EditCommand commandWithSameValues = prepareCommand(INDEX_FIRST_EMPLOYEE, copyDescriptor, defaultPassword);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -243,20 +259,20 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new ClearCommand(defaultPassword)));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_EMPLOYEE, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_EMPLOYEE, DESC_AMY, defaultPassword)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_EMPLOYEE, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_EMPLOYEE, DESC_BOB, defaultPassword)));
     }
 
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
-    private EditCommand prepareCommand(Index index, EditEmployeeDescriptor descriptor) {
-        EditCommand editCommand = new EditCommand(index, descriptor);
+    private EditCommand prepareCommand(Index index, EditEmployeeDescriptor descriptor, Password password) {
+        EditCommand editCommand = new EditCommand(index, descriptor, password);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }

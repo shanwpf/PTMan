@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TAG;
@@ -20,6 +21,7 @@ import seedu.ptman.commons.core.Messages;
 import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.commons.util.CollectionUtil;
 import seedu.ptman.logic.commands.exceptions.CommandException;
+import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Address;
 import seedu.ptman.model.employee.Email;
 import seedu.ptman.model.employee.Employee;
@@ -28,6 +30,7 @@ import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.Salary;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -47,10 +50,12 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_SALARY + "SALARY] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]...  "
+            + PREFIX_PASSWORD + "AdminPassword\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "johndoe@example.com"
+            + PREFIX_PASSWORD + "AdminPassword";
 
     public static final String MESSAGE_EDIT_EMPLOYEE_SUCCESS = "Edited Employee: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -61,21 +66,28 @@ public class EditCommand extends UndoableCommand {
 
     private Employee employeeToEdit;
     private Employee editedEmployee;
+    private Password toCheck;
 
     /**
      * @param index of the employee in the filtered employee list to edit
      * @param editEmployeeDescriptor details to edit the employee with
      */
-    public EditCommand(Index index, EditEmployeeDescriptor editEmployeeDescriptor) {
+    public EditCommand(Index index, EditEmployeeDescriptor editEmployeeDescriptor, Password password) {
         requireNonNull(index);
         requireNonNull(editEmployeeDescriptor);
-
         this.index = index;
         this.editEmployeeDescriptor = new EditEmployeeDescriptor(editEmployeeDescriptor);
+        toCheck = password;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(toCheck);
+
+        if (!model.isAdminPassword(toCheck)) {
+            throw new InvalidPasswordException();
+        }
+
         try {
             model.updateEmployee(employeeToEdit, editedEmployee);
         } catch (DuplicateEmployeeException dpe) {
@@ -83,6 +95,7 @@ public class EditCommand extends UndoableCommand {
         } catch (EmployeeNotFoundException pnfe) {
             throw new AssertionError("The target employee cannot be missing");
         }
+
         model.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
         return new CommandResult(String.format(MESSAGE_EDIT_EMPLOYEE_SUCCESS, editedEmployee));
     }
@@ -113,8 +126,9 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editEmployeeDescriptor.getAddress().orElse(employeeToEdit.getAddress());
         Salary updatedSalary = editEmployeeDescriptor.getSalary().orElse(employeeToEdit.getSalary());
         Set<Tag> updatedTags = editEmployeeDescriptor.getTags().orElse(employeeToEdit.getTags());
-
-        return new Employee(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSalary, updatedTags);
+        Password notUpdatedPassword = employeeToEdit.getPassword();
+        return new Employee(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSalary,
+                notUpdatedPassword, updatedTags);
     }
 
     @Override
@@ -147,6 +161,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Salary salary;
         private Set<Tag> tags;
+        private Password password;
 
         public EditEmployeeDescriptor() {}
 
@@ -161,6 +176,7 @@ public class EditCommand extends UndoableCommand {
             setAddress(toCopy.address);
             setSalary(toCopy.salary);
             setTags(toCopy.tags);
+            setPassword(toCopy.password);
         }
 
         /**
@@ -209,6 +225,10 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Salary> getSalary() {
             return Optional.ofNullable(salary);
+        }
+
+        public void setPassword(Password password) {
+            this.password = password;
         }
 
         /**

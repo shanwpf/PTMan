@@ -76,6 +76,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized boolean isAdminPassword(Password password) {
+        requireNonNull(password);
+        return partTimeManager.isAdminPassword(password);
+    }
+
+    @Override
     public void updateEmployee(Employee target, Employee editedEmployee)
             throws DuplicateEmployeeException, EmployeeNotFoundException {
         requireAllNonNull(target, editedEmployee);

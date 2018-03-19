@@ -68,7 +68,7 @@ public class PartTimeManagerParser {
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+            return new ClearCommandParser().parse(arguments);
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
@@ -90,11 +90,11 @@ public class PartTimeManagerParser {
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            return new UndoCommandParser().parse(arguments);
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+            return new RedoCommandParser().parse(arguments);
 
         case EditOutletCommand.COMMAND_WORD:
         case EditOutletCommand.COMMAND_ALIAS:
@@ -108,5 +108,4 @@ public class PartTimeManagerParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }
