@@ -94,4 +94,20 @@ public class Shift {
     public Capacity getCapacity() {
         return capacity;
     }
+
+    /**
+     * Compares this shift to another. Returns a negative integer if the argument is a later shift,
+     * 0 if the shifts are equal, or a positive integer if the argument is a later shift.
+     * @param other
+     * @return
+     */
+    public int compareTo(Shift other) {
+        if (day.equals(other.getDay())) {
+            return startTime.compareTo(other.getStartTime());
+        } else if (day.compareTo(other.getDay()) < 0) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }
