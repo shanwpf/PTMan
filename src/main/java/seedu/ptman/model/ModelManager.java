@@ -82,6 +82,26 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean isAdminMode() {
+        return partTimeManager.isAdminMode();
+    }
+
+    @Override
+    public synchronized boolean setTrueAdminMode(Password password) {
+        requireNonNull(password);
+        if (!partTimeManager.isAdminPassword(password)) {
+            return false;
+        }
+        partTimeManager.setAdminMode(partTimeManager.isAdminPassword(password));
+        return true;
+    }
+
+    @Override
+    public synchronized void setFalseAdminMode() {
+        partTimeManager.setAdminMode(false);
+    }
+
+    @Override
     public void addShift(Shift shift) throws DuplicateShiftException {
         partTimeManager.addShift(shift);
         indicatePartTimeManagerChanged();
@@ -97,10 +117,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteShift(Shift target) throws ShiftNotFoundException {
         partTimeManager.removeShift(target);
         indicatePartTimeManagerChanged();
-    }
-
-    public synchronized boolean isAdmin(String password) {
-        return partTimeManager.isAdmin(password);
     }
 
     @Override

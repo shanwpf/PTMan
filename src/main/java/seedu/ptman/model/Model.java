@@ -37,8 +37,22 @@ public interface Model {
     void addShift(Shift shift) throws DuplicateShiftException;
 
 
-    //** check if authorized */
-    boolean isAdmin(String password);
+
+    boolean isAdminMode();
+
+    /**
+     * Replaces the given employee {@code target}
+     * check if given password {@code password}
+     * is authorized and set to admin mode
+     *
+     * @return false if admin mode is not set to true
+     */
+    boolean setTrueAdminMode(Password password);
+
+    /**
+     * guarantee to set false
+     */
+    void setFalseAdminMode();
 
     /**
      * Delete tag from all employees

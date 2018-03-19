@@ -34,9 +34,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     private final UniqueEmployeeList employees;
     private final UniqueShiftList shifts;
     private final UniqueTagList tags;
+    private boolean isAdminMode;
     private final OutletInformation outlet;
-    private final Password password;
-
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -49,7 +48,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         shifts = new UniqueShiftList();
         tags = new UniqueTagList();
         outlet = new OutletInformation();
-        password = new Password();
+        isAdminMode = false;
     }
 
     public PartTimeManager() {}
@@ -63,8 +62,17 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     //// authorization operations
-    public boolean isAdmin(String password) {
-        return this.password.isCorrectPassword(password);
+    public boolean isAdminMode() {
+        return this.isAdminMode;
+    }
+
+    /**
+     * Check if given password is of outlet's
+     * @param password
+     * @return true if password is the same
+     */
+    public boolean isAdminPassword(Password password) {
+        return outlet.getMasterPassword().equals(password);
     }
 
     //// list overwrite operations
@@ -210,6 +218,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     //// util methods
+    public void setAdminMode(boolean isAdmin) {
+        isAdminMode = isAdmin;
+    }
+
 
     /**
      * Remove tag from Employee if the tag exist in Employee.
