@@ -30,7 +30,6 @@ public class EditOutletCommand extends UndoableCommand {
             + PREFIX_OPERATING_HOURS + "09:00-22:00";
 
     public static final String MESSAGE_EDIT_OUTLET_SUCCESS = "Outlet Information Edited.";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
 
     private final Password masterPassword;
     private final OutletName name;

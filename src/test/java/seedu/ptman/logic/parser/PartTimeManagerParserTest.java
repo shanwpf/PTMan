@@ -37,6 +37,7 @@ import seedu.ptman.logic.commands.RedoCommand;
 import seedu.ptman.logic.commands.SelectCommand;
 import seedu.ptman.logic.commands.UndoCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
+import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 import seedu.ptman.model.outlet.OperatingHours;
@@ -145,24 +146,22 @@ public class PartTimeManagerParserTest {
     public void parseCommand_editoutlet() throws Exception {
         String name = "EditedOutlet";
         String operatingHours = "10:00-17:00";
-        OutletInformation outlet = new OutletInformation();
         EditOutletCommand command = (EditOutletCommand) parser.parseCommand(EditOutletCommand.COMMAND_WORD
                 + " " + PREFIX_MASTER_PASSWORD + DEFAULT_PASSWORD + " " + PREFIX_OUTLET_NAME + name
                 + " " + PREFIX_OPERATING_HOURS + operatingHours);
-        assertEquals(new EditOutletCommand(new Password(), new OutletName(name), new OperatingHours(operatingHours)),
-                command);
+        assertEquals(new EditOutletCommand(new Password(DEFAULT_PASSWORD), new OutletName(name),
+                        new OperatingHours(operatingHours)), command);
     }
 
     @Test
     public void parseCommand_editoutletAlias() throws Exception {
         String name = "EditedOutlet";
         String operatingHours = "10:00-17:00";
-        OutletInformation outlet = new OutletInformation();
         EditOutletCommand command = (EditOutletCommand) parser.parseCommand(EditOutletCommand.COMMAND_ALIAS
                 + " " + PREFIX_MASTER_PASSWORD + DEFAULT_PASSWORD + " " + PREFIX_OUTLET_NAME + name
                 + " " + PREFIX_OPERATING_HOURS + operatingHours);
-        assertEquals(new EditOutletCommand(new Password(), new OutletName(name), new OperatingHours(operatingHours)),
-                command);
+        assertEquals(new EditOutletCommand(new Password(DEFAULT_PASSWORD), new OutletName(name),
+                        new OperatingHours(operatingHours)), command);
     }
 
     @Test

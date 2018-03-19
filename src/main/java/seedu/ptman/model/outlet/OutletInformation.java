@@ -3,7 +3,6 @@ package seedu.ptman.model.outlet;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.Objects;
 
 import seedu.ptman.model.Password;
