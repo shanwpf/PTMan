@@ -99,7 +99,6 @@ public class CommandTestUtil {
     public static final String DEFAULT_DESC_ADMINPASSWORD = " " + PREFIX_PASSWORD + DEFAULT_PASSWORD;
 
     public static final String ADMINPASSWORD_DESC_DEFAULT = " " + PREFIX_PASSWORD + DEFAULT_PASSWORD;
-  
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
