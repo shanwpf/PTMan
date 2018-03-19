@@ -94,4 +94,14 @@ public class Shift {
     public Capacity getCapacity() {
         return capacity;
     }
+
+    public int compareTo(Shift other) {
+        if (day.equals(other.getDay())) {
+            return startTime.compareTo(other.getStartTime());
+        } else if (day.compareTo(other.getDay()) < 0) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }

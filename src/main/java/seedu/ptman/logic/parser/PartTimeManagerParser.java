@@ -19,6 +19,7 @@ import seedu.ptman.logic.commands.AddShiftCommand;
 import seedu.ptman.logic.commands.ClearCommand;
 import seedu.ptman.logic.commands.Command;
 import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.DeleteShiftCommand;
 import seedu.ptman.logic.commands.EditCommand;
 import seedu.ptman.logic.commands.ExitCommand;
 import seedu.ptman.logic.commands.FindCommand;
@@ -76,6 +77,10 @@ public class PartTimeManagerParser {
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteShiftCommand.COMMAND_WORD:
+        case DeleteShiftCommand.COMMAND_ALIAS:
+            return new DeleteShiftCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:

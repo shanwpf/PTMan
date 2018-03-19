@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.ptman.commons.core.ComponentManager;
 import seedu.ptman.commons.core.LogsCenter;
 import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
@@ -17,6 +18,7 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 
 /**
@@ -81,6 +83,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void addShift(Shift shift) throws DuplicateShiftException {
         partTimeManager.addShift(shift);
         updateFilteredShiftList(PREDICATE_SHOW_ALL_SHIFTS);
+        indicatePartTimeManagerChanged();
+    }
+
+    @Override
+    public ObservableList<Shift> getFilteredShiftList() {
+        SortedList<Shift> sortedShiftList = new SortedList<>(filteredShifts, Shift::compareTo);
+        return FXCollections.unmodifiableObservableList(sortedShiftList);
+    }
+
+    @Override
+    public void deleteShift(Shift target) throws ShiftNotFoundException {
+        partTimeManager.removeShift(target);
         indicatePartTimeManagerChanged();
     }
 
