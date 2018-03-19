@@ -1,5 +1,8 @@
 package seedu.ptman.logic.commands;
 
+/**
+ * Displays the details of outlet in the ptman.
+ */
 public class ViewOutletCommand extends Command {
 
     public static final String COMMAND_WORD = "viewoutlet";

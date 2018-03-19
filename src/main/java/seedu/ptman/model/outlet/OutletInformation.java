@@ -2,9 +2,9 @@ package seedu.ptman.model.outlet;
 
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Objects;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Objects;
 
 import seedu.ptman.model.Password;
 
@@ -29,7 +29,8 @@ public class OutletInformation {
      * @param masterPassword a valid master password
      * @param operatingHours a valid operating hours
      */
-    public OutletInformation(OutletName name, Password masterPassword, OperatingHours operatingHours, Timetable timetable) {
+    public OutletInformation(OutletName name, Password masterPassword, OperatingHours operatingHours,
+                             Timetable timetable) {
         requireAllNonNull(name, masterPassword, operatingHours, timetable);
         this.name = name;
         this.masterPassword = masterPassword;

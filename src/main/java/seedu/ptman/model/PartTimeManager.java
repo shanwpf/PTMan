@@ -15,9 +15,9 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
-import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletInformation;
+import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.model.tag.UniqueTagList;
 

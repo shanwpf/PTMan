@@ -3,17 +3,16 @@ package seedu.ptman.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_MASTER_PASSWORD;
-import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 
+import java.util.NoSuchElementException;
 import seedu.ptman.commons.exceptions.IllegalValueException;
-import seedu.ptman.logic.commands.EditOutletCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
+import seedu.ptman.logic.commands.EditOutletCommand;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletName;
-
-import java.util.NoSuchElementException;
 
 /**
  * Parses input arguments and creates a new EditOutletCommand object

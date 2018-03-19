@@ -16,8 +16,8 @@ import seedu.ptman.model.employee.Email;
 import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.Salary;
-import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.tag.Tag;
 
 /**

@@ -2,15 +2,15 @@ package seedu.ptman.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_MASTER_PASSWORD;
-import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 
 import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletName;
 
 /**
- * Edits the details of an existing employee in the ptman.
+ * Edits the details of outlet in the ptman.
  */
 public class EditOutletCommand extends UndoableCommand {
 
