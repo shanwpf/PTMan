@@ -16,7 +16,6 @@ import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-
 import org.junit.Test;
 
 import seedu.ptman.logic.commands.EditOutletCommand;

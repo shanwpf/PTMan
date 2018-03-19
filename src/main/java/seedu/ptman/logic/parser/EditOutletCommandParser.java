@@ -7,9 +7,10 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 
 import java.util.NoSuchElementException;
+
 import seedu.ptman.commons.exceptions.IllegalValueException;
-import seedu.ptman.logic.parser.exceptions.ParseException;
 import seedu.ptman.logic.commands.EditOutletCommand;
+import seedu.ptman.logic.parser.exceptions.ParseException;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletName;
