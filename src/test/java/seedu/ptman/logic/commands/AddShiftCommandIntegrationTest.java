@@ -12,13 +12,13 @@ import seedu.ptman.logic.UndoRedoStack;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.ModelManager;
 import seedu.ptman.model.UserPrefs;
-import seedu.ptman.model.employee.Employee;
-import seedu.ptman.testutil.EmployeeBuilder;
+import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.testutil.ShiftBuilder;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code AddCommand}.
+ * Contains integration tests (interaction with the Model) for {@code AddShiftCommand}.
  */
-public class AddCommandIntegrationTest {
+public class AddShiftCommandIntegrationTest {
 
     private Model model;
 
@@ -28,27 +28,27 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newEmployee_success() throws Exception {
-        Employee validEmployee = new EmployeeBuilder().build();
+    public void execute_newShift_success() throws Exception {
+        Shift validShift = new ShiftBuilder().build();
 
         Model expectedModel = new ModelManager(model.getPartTimeManager(), new UserPrefs());
-        expectedModel.addEmployee(validEmployee);
+        expectedModel.addShift(validShift);
 
-        assertCommandSuccess(prepareCommand(validEmployee, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validEmployee), expectedModel);
+        assertCommandSuccess(prepareCommand(validShift, model), model,
+                String.format(AddShiftCommand.MESSAGE_SUCCESS, validShift), expectedModel);
     }
 
     @Test
-    public void execute_duplicateEmployee_throwsCommandException() {
-        Employee employeeInList = model.getPartTimeManager().getEmployeeList().get(0);
-        assertCommandFailure(prepareCommand(employeeInList, model), model, AddCommand.MESSAGE_DUPLICATE_EMPLOYEE);
+    public void execute_duplicateShift_throwsCommandException() {
+        Shift shiftInList = model.getPartTimeManager().getShiftList().get(0);
+        assertCommandFailure(prepareCommand(shiftInList, model), model, AddShiftCommand.MESSAGE_DUPLICATE_SHIFT);
     }
 
     /**
      * Generates a new {@code AddCommand} which upon execution, adds {@code employee} into the {@code model}.
      */
-    private AddCommand prepareCommand(Employee employee, Model model) {
-        AddCommand command = new AddCommand(employee);
+    private AddShiftCommand prepareCommand(Shift shift, Model model) {
+        AddShiftCommand command = new AddShiftCommand(shift);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

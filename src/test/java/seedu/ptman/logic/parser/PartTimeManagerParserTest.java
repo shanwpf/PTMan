@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.ptman.logic.commands.CommandTestUtil.DEFAULT_DESC_ADMINPASSWORD;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_MASTER_PASSWORD;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
@@ -21,8 +21,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.ptman.logic.commands.AddCommand;
+import seedu.ptman.logic.commands.AddShiftCommand;
 import seedu.ptman.logic.commands.ClearCommand;
 import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.DeleteShiftCommand;
 import seedu.ptman.logic.commands.EditCommand;
 import seedu.ptman.logic.commands.EditCommand.EditEmployeeDescriptor;
 import seedu.ptman.logic.commands.EditOutletCommand;
@@ -35,65 +37,90 @@ import seedu.ptman.logic.commands.RedoCommand;
 import seedu.ptman.logic.commands.SelectCommand;
 import seedu.ptman.logic.commands.UndoCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
-import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
+import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.testutil.EditEmployeeDescriptorBuilder;
 import seedu.ptman.testutil.EmployeeBuilder;
 import seedu.ptman.testutil.EmployeeUtil;
+import seedu.ptman.testutil.ShiftBuilder;
+import seedu.ptman.testutil.ShiftUtil;
 
 public class PartTimeManagerParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    private final PartTimeManagerParser parser = new PartTimeManagerParser();
 
-    private Password defaultPassword = new Password();
+    private final PartTimeManagerParser parser = new PartTimeManagerParser();
 
     @Test
     public void parseCommand_add() throws Exception {
         Employee employee = new EmployeeBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(EmployeeUtil.getAddCommand(employee));
-        assertEquals(new AddCommand(employee, defaultPassword), command);
+        assertEquals(new AddCommand(employee), command);
     }
 
     @Test
     public void parseCommand_addAlias() throws Exception {
         Employee employee = new EmployeeBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(EmployeeUtil.getAliasedAddCommand(employee));
-        assertEquals(new AddCommand(employee, defaultPassword), command);
+        assertEquals(new AddCommand(employee), command);
+    }
+
+    @Test
+    public void parseCommand_addShift() throws Exception {
+        Shift shift = new ShiftBuilder().build();
+        AddShiftCommand command = (AddShiftCommand) parser.parseCommand(ShiftUtil.getAddShiftCommand(shift));
+        assertEquals(new AddShiftCommand(shift), command);
+    }
+
+    @Test
+    public void parseCommand_addShiftAlias() throws Exception {
+        Shift shift = new ShiftBuilder().build();
+        AddShiftCommand command = (AddShiftCommand) parser.parseCommand(ShiftUtil.getAliasedAddShiftCommand(shift));
+        assertEquals(new AddShiftCommand(shift), command);
     }
 
     @Test
     public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD
-                + DEFAULT_DESC_ADMINPASSWORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD
-                + " 3" + DEFAULT_DESC_ADMINPASSWORD) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_clearAlias() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS
-                + DEFAULT_DESC_ADMINPASSWORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3"
-                + DEFAULT_DESC_ADMINPASSWORD) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_EMPLOYEE.getOneBased() + DEFAULT_DESC_ADMINPASSWORD);
-        assertEquals(new DeleteCommand(INDEX_FIRST_EMPLOYEE, defaultPassword), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_EMPLOYEE.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_EMPLOYEE), command);
     }
 
     @Test
     public void parseCommand_deleteAlias() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_EMPLOYEE.getOneBased() + DEFAULT_DESC_ADMINPASSWORD);
-        assertEquals(new DeleteCommand(INDEX_FIRST_EMPLOYEE, defaultPassword), command);
+                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_EMPLOYEE.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_EMPLOYEE), command);
+    }
+
+    @Test
+    public void parseCommand_deleteShift() throws Exception {
+        DeleteShiftCommand command = (DeleteShiftCommand) parser.parseCommand(
+                DeleteShiftCommand.COMMAND_WORD + " " + INDEX_FIRST_SHIFT.getOneBased());
+        assertEquals(new DeleteShiftCommand(INDEX_FIRST_EMPLOYEE), command);
+    }
+
+    @Test
+    public void parseCommand_deleteShiftAlias() throws Exception {
+        DeleteShiftCommand command = (DeleteShiftCommand) parser.parseCommand(
+                DeleteShiftCommand.COMMAND_ALIAS + " " + INDEX_FIRST_SHIFT.getOneBased());
+        assertEquals(new DeleteShiftCommand(INDEX_FIRST_EMPLOYEE), command);
     }
 
     @Test
@@ -102,7 +129,7 @@ public class PartTimeManagerParserTest {
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder(employee).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_EMPLOYEE.getOneBased() + " " + EmployeeUtil.getEmployeeDetails(employee));
-        assertEquals(new EditCommand(INDEX_FIRST_EMPLOYEE, descriptor, defaultPassword), command);
+        assertEquals(new EditCommand(INDEX_FIRST_EMPLOYEE, descriptor), command);
     }
 
     @Test
@@ -111,7 +138,7 @@ public class PartTimeManagerParserTest {
         EditEmployeeDescriptor descriptor = new EditEmployeeDescriptorBuilder(employee).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_EMPLOYEE.getOneBased() + " " + EmployeeUtil.getEmployeeDetails(employee));
-        assertEquals(new EditCommand(INDEX_FIRST_EMPLOYEE, descriptor, defaultPassword), command);
+        assertEquals(new EditCommand(INDEX_FIRST_EMPLOYEE, descriptor), command);
     }
 
     @Test
@@ -220,26 +247,26 @@ public class PartTimeManagerParserTest {
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD + DEFAULT_DESC_ADMINPASSWORD) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1" + DEFAULT_DESC_ADMINPASSWORD) instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS + DEFAULT_DESC_ADMINPASSWORD) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("r 1" + DEFAULT_DESC_ADMINPASSWORD) instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("r 1") instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD + DEFAULT_DESC_ADMINPASSWORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3" + DEFAULT_DESC_ADMINPASSWORD) instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS + DEFAULT_DESC_ADMINPASSWORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("u 3" + DEFAULT_DESC_ADMINPASSWORD) instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("u 3") instanceof UndoCommand);
     }
 
     @Test

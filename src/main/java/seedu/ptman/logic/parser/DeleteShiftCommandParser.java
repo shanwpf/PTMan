@@ -5,26 +5,26 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.commons.exceptions.IllegalValueException;
-import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.DeleteShiftCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object
  */
-public class DeleteCommandParser implements Parser<DeleteCommand> {
+public class DeleteShiftCommandParser implements Parser<DeleteShiftCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
      * and returns an DeleteCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DeleteCommand parse(String args) throws ParseException {
+    public DeleteShiftCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(clearPasswordFromCommand(args));
-            return new DeleteCommand(index);
+            return new DeleteShiftCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteShiftCommand.MESSAGE_USAGE));
         }
     }
 

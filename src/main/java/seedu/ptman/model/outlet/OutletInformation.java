@@ -7,6 +7,7 @@ import java.time.Month;
 import java.util.Objects;
 
 import seedu.ptman.model.Password;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 
 /**
  * Represents an outlet in PTMan.
@@ -45,7 +46,11 @@ public class OutletInformation {
         this.name = new OutletName(DEFAULT_OUTLET_NAME);
         this.masterPassword = new Password();
         this.operatingHours = new OperatingHours(DEFAULT_OPERATING_HOURS);
-        this.timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        this.timetable = new Timetable(LocalDate.now());
+    }
+
+    public void addShift(Shift shift) throws DuplicateShiftException {
+        timetable.addShift(shift);
     }
 
     public OutletName getName() {

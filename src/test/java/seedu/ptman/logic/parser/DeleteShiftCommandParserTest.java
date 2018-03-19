@@ -3,11 +3,11 @@ package seedu.ptman.logic.parser;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 
 import org.junit.Test;
 
-import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.DeleteShiftCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -16,17 +16,18 @@ import seedu.ptman.logic.commands.DeleteCommand;
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class DeleteCommandParserTest {
+public class DeleteShiftCommandParserTest {
 
-    private DeleteCommandParser parser = new DeleteCommandParser();
+    private DeleteShiftCommandParser parser = new DeleteShiftCommandParser();
 
     @Test
-    public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new DeleteCommand(INDEX_FIRST_EMPLOYEE));
+    public void parse_validArgs_returnsDeleteShiftCommand() {
+        assertParseSuccess(parser, "1", new DeleteShiftCommand(INDEX_FIRST_SHIFT));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteShiftCommand.MESSAGE_USAGE));
     }
 }
