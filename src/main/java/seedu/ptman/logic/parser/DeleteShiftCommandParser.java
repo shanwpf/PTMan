@@ -5,7 +5,6 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.commons.exceptions.IllegalValueException;
-import seedu.ptman.logic.commands.DeleteCommand;
 import seedu.ptman.logic.commands.DeleteShiftCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 

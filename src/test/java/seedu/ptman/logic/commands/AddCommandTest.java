@@ -26,6 +26,7 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.testutil.EmployeeBuilder;
 
@@ -148,7 +149,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Shift> getFilteredShiftList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredEmployeeList(Predicate<Employee> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteShift(Shift shiftToDelete) throws ShiftNotFoundException {
             fail("This method should not be called.");
         }
     }

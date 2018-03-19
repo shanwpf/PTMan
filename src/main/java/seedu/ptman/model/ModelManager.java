@@ -82,7 +82,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addShift(Shift shift) throws DuplicateShiftException {
         partTimeManager.addShift(shift);
-        updateFilteredShiftList(PREDICATE_SHOW_ALL_SHIFTS);
         indicatePartTimeManagerChanged();
     }
 
@@ -96,11 +95,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteShift(Shift target) throws ShiftNotFoundException {
         partTimeManager.removeShift(target);
         indicatePartTimeManagerChanged();
-    }
-
-    private void updateFilteredShiftList(Predicate<Shift> predicate) {
-        requireNonNull(predicate);
-        filteredShifts.setPredicate(predicate);
     }
 
     public synchronized boolean isAdmin(String password) {
