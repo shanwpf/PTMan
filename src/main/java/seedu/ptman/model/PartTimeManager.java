@@ -21,6 +21,7 @@ import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.UniqueShiftList;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.model.tag.UniqueTagList;
 
@@ -180,6 +181,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         }
     }
 
+    public boolean removeShift(Shift key) throws ShiftNotFoundException {
+        return shifts.remove(key);
+    }
+
     /**
      * Adds a shift to the address book.
      *
@@ -284,5 +289,4 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(employees, tags);
     }
-
 }

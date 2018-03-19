@@ -39,6 +39,14 @@ public class TypicalShifts {
             .withStartTime("1200")
             .withEndTime("2200")
             .withCapacity("3").build();
+    public static final Shift THURSDAY_AM = new ShiftBuilder().withDay("thursday")
+            .withStartTime("0900")
+            .withEndTime("1200")
+            .withCapacity("5").build();
+    public static final Shift THURSDAY_PM = new ShiftBuilder().withDay("thursday")
+            .withStartTime("1200")
+            .withEndTime("2200")
+            .withCapacity("3").build();
 
     private TypicalShifts() {} // prevents instantiation
 
