@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
+import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,7 @@ import seedu.ptman.logic.commands.AddCommand;
 import seedu.ptman.logic.commands.AddShiftCommand;
 import seedu.ptman.logic.commands.ClearCommand;
 import seedu.ptman.logic.commands.DeleteCommand;
+import seedu.ptman.logic.commands.DeleteShiftCommand;
 import seedu.ptman.logic.commands.EditCommand;
 import seedu.ptman.logic.commands.EditCommand.EditEmployeeDescriptor;
 import seedu.ptman.logic.commands.ExitCommand;
@@ -97,6 +99,20 @@ public class PartTimeManagerParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_EMPLOYEE.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_EMPLOYEE), command);
+    }
+
+    @Test
+    public void parseCommand_deleteShift() throws Exception {
+        DeleteShiftCommand command = (DeleteShiftCommand) parser.parseCommand(
+                DeleteShiftCommand.COMMAND_WORD + " " + INDEX_FIRST_SHIFT.getOneBased());
+        assertEquals(new DeleteShiftCommand(INDEX_FIRST_EMPLOYEE), command);
+    }
+
+    @Test
+    public void parseCommand_deleteShiftAlias() throws Exception {
+        DeleteShiftCommand command = (DeleteShiftCommand) parser.parseCommand(
+                DeleteShiftCommand.COMMAND_ALIAS + " " + INDEX_FIRST_SHIFT.getOneBased());
+        assertEquals(new DeleteShiftCommand(INDEX_FIRST_EMPLOYEE), command);
     }
 
     @Test
