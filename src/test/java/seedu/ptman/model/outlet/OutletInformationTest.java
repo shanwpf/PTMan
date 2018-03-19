@@ -3,9 +3,9 @@ package seedu.ptman.model.outlet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Objects;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Objects;
 
 import org.junit.Test;
 

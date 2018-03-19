@@ -7,7 +7,6 @@ import static seedu.ptman.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.ptman.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import seedu.ptman.logic.CommandHistory;

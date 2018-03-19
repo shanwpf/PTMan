@@ -1,5 +1,6 @@
 package seedu.ptman.logic.parser;
 
+import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_MASTER_PASSWORD_DESC;
 import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_OPERATING_HOURS_DESC;
 import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_OUTLET_NAME_DESC;
@@ -14,7 +15,6 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import org.junit.Test;
 
@@ -31,39 +31,39 @@ public class EditOutletCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        String command_missingPassword = EditOutletCommand.COMMAND_WORD + " "
+        String commandMissingPassword = EditOutletCommand.COMMAND_WORD + " "
                 + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME + " "
                 + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
-        assertParseFailure(parser, command_missingPassword, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, commandMissingPassword, MESSAGE_INVALID_FORMAT);
 
-        String command_missingOutletName = EditOutletCommand.COMMAND_WORD + " "
+        String commandMissingOutletName = EditOutletCommand.COMMAND_WORD + " "
                 + PREFIX_MASTER_PASSWORD + VALID_MASTER_PASSWORD + " "
                 + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
-        assertParseFailure(parser, command_missingOutletName, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, commandMissingOutletName, MESSAGE_INVALID_FORMAT);
 
-        String command_missingOperatingHours = EditOutletCommand.COMMAND_WORD + " "
+        String commandMissingOperatingHours = EditOutletCommand.COMMAND_WORD + " "
                 + PREFIX_MASTER_PASSWORD + VALID_MASTER_PASSWORD + " "
                 + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME;
-        assertParseFailure(parser, command_missingOperatingHours, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, commandMissingOperatingHours, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        String command_invalidPassword = EditOutletCommand.COMMAND_WORD
+        String commandInvalidPassword = EditOutletCommand.COMMAND_WORD
                 + INVALID_MASTER_PASSWORD_DESC + " "
                 + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME + " "
                 + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
-        assertParseFailure(parser, command_invalidPassword, Password.MESSAGE_PASSWORD_CONSTRAINTS);
+        assertParseFailure(parser, commandInvalidPassword, Password.MESSAGE_PASSWORD_CONSTRAINTS);
 
-        String command_invalidName = EditOutletCommand.COMMAND_WORD + " "
+        String commandInvalidName = EditOutletCommand.COMMAND_WORD + " "
                 + PREFIX_MASTER_PASSWORD + VALID_MASTER_PASSWORD + INVALID_OUTLET_NAME_DESC + " "
                 + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
-        assertParseFailure(parser, command_invalidName, OutletName.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser, commandInvalidName, OutletName.MESSAGE_NAME_CONSTRAINTS);
 
-        String command_invalidOperatingHours = EditOutletCommand.COMMAND_WORD + " "
+        String commandInvalidOperatingHours = EditOutletCommand.COMMAND_WORD + " "
                 + PREFIX_MASTER_PASSWORD + VALID_MASTER_PASSWORD + " "
                 + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME + INVALID_OPERATING_HOURS_DESC;
-        assertParseFailure(parser, command_invalidOperatingHours, OperatingHours.MESSAGE_OPERATING_HOUR_CONSTRAINTS);
+        assertParseFailure(parser, commandInvalidOperatingHours, OperatingHours.MESSAGE_OPERATING_HOUR_CONSTRAINTS);
     }
 
     @Test
