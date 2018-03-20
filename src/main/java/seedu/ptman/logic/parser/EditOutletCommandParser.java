@@ -45,9 +45,6 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
                     : null;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
-        } catch (NoSuchElementException nsee) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditOutletCommand.MESSAGE_USAGE));
         }
 
         return new EditOutletCommand(outletName, operatingHours, outletContact);

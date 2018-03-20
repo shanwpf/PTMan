@@ -1,6 +1,5 @@
 package seedu.ptman.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -15,21 +14,15 @@ import org.junit.Test;
 
 import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
-import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.ModelManager;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
-import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class EditOutletCommandTest {
 
