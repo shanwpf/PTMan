@@ -63,6 +63,12 @@ public class EditOutletCommandTest {
     }
 
     @Test
+    public void execute_nonAdminModeNonFieldSpecified_failure() {
+        EditOutletCommand command = prepareCommand(null, null, null);
+        assertCommandFailure(command, model, MESSAGE_ACCESS_DENIED);
+    }
+
+    @Test
     public void executeUndoRedo_adminModeAllFieldsValid_success() throws Exception {
         model.setTrueAdminMode(new Password());
         UndoRedoStack undoRedoStack = new UndoRedoStack();
