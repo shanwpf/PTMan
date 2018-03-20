@@ -1,6 +1,7 @@
 package seedu.ptman.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BENSON;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
@@ -18,6 +19,9 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.testutil.EmployeeBuilder;
@@ -125,6 +129,24 @@ public class PartTimeManagerTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public OutletName getOutletName() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public OperatingHours getOperatingHours() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public OutletContact getOutletContact() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 
