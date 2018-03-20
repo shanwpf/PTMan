@@ -1,6 +1,5 @@
 package seedu.ptman.logic.parser;
 
-import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_OPERATING_HOURS_DESC;
 import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_OUTLET_CONTACT_DESC;
 import static seedu.ptman.logic.commands.CommandTestUtil.INVALID_OUTLET_NAME_DESC;
@@ -25,13 +24,7 @@ import seedu.ptman.model.outlet.OutletName;
 
 public class EditOutletCommandParserTest {
 
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditOutletCommand.MESSAGE_USAGE);
     private EditOutletCommandParser parser = new EditOutletCommandParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-    }
 
     @Test
     public void parse_invalidValue_failure() {
