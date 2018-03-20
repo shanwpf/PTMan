@@ -34,17 +34,14 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
         OperatingHours operatingHours;
         OutletContact outletContact;
         try {
-            outletName = ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME))
-                    .isPresent() ?
-                    ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).get()
+            outletName = ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).isPresent()
+                    ? ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).get()
                     : null;
-            operatingHours = ParserUtil.parseOperatingHours(argMultimap.getValue(PREFIX_OPERATING_HOURS))
-                    .isPresent() ?
-                    ParserUtil.parseOperatingHours(argMultimap.getValue(PREFIX_OPERATING_HOURS)).get()
+            operatingHours = ParserUtil.parseOperatingHours(argMultimap.getValue(PREFIX_OPERATING_HOURS)).isPresent()
+                    ? ParserUtil.parseOperatingHours(argMultimap.getValue(PREFIX_OPERATING_HOURS)).get()
                     : null;
-            outletContact = ParserUtil.parseOutletContact(argMultimap.getValue(PREFIX_OUTLET_CONTACT))
-                    .isPresent() ?
-                    ParserUtil.parseOutletContact(argMultimap.getValue(PREFIX_OUTLET_CONTACT)).get()
+            outletContact = ParserUtil.parseOutletContact(argMultimap.getValue(PREFIX_OUTLET_CONTACT)).isPresent()
+                    ? ParserUtil.parseOutletContact(argMultimap.getValue(PREFIX_OUTLET_CONTACT)).get()
                     : null;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

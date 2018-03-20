@@ -78,16 +78,16 @@ public class OutletInformation {
 
     public void setOutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact)
             throws NoOutletInformationFieldChangeException {
-        if(name == null && operatingHours == null && outletContact == null) {
+        if (name == null && operatingHours == null && outletContact == null) {
             throw new NoOutletInformationFieldChangeException();
         }
-        if(name != null) {
+        if (name != null) {
             this.name = name;
         }
-        if(operatingHours != null) {
+        if (operatingHours != null) {
             this.operatingHours = operatingHours;
         }
-        if(outletContact != null) {
+        if (outletContact != null) {
             this.outletContact = outletContact;
         }
     }
