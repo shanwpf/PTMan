@@ -1,7 +1,6 @@
 package seedu.ptman.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BENSON;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
@@ -21,6 +20,7 @@ import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.tag.Tag;
@@ -69,6 +69,17 @@ public class PartTimeManagerTest {
     }
 
     @Test
+    public void resetData_withEmptyOutletInformation_throwsAssertionError() {
+        List<Employee> newEmployees = Arrays.asList(ALICE);
+        List<Shift> newShifts = new ArrayList<>();
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts);
+
+        thrown.expect(AssertionError.class);
+        partTimeManager.resetData(newData);
+    }
+
+    @Test
     public void getEmployeeList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         partTimeManager.getEmployeeList().remove(0);
@@ -102,6 +113,13 @@ public class PartTimeManagerTest {
         assertEquals(expectedPartTimeManager, partTimeManagerWithAliceAndBenson);
     }
 
+    @Test
+    public void getOutletInformationMessage_defaultData_returnCorrectMessage() {
+        String actualMessage = partTimeManager.getOutletInformationMessage();
+        String expectedMessage = new OutletInformation().toString();
+        assertEquals(actualMessage, expectedMessage);
+    }
+
     /**
      * A stub ReadOnlyPartTimeManager whose employees and tags lists can violate interface constraints.
      */
@@ -133,19 +151,16 @@ public class PartTimeManagerTest {
 
         @Override
         public OutletName getOutletName() {
-            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public OperatingHours getOperatingHours() {
-            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public OutletContact getOutletContact() {
-            fail("This method should not be called.");
             return null;
         }
     }
