@@ -1,12 +1,9 @@
 package seedu.ptman.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_CONTACT;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
-
-import java.util.NoSuchElementException;
 
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.logic.commands.EditOutletCommand;
