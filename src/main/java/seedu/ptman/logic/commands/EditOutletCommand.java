@@ -55,7 +55,7 @@ public class EditOutletCommand extends UndoableCommand {
         try {
             model.updateOutlet(name, operatingHours, outletContact);
         } catch (NoOutletInformationFieldChangeException e) {
-            return new CommandResult(String.format(MESSAGE_EDIT_OUTLET_FAILURE));
+            throw new CommandException(MESSAGE_EDIT_OUTLET_FAILURE);
         }
         return new CommandResult(String.format(MESSAGE_EDIT_OUTLET_SUCCESS));
     }
