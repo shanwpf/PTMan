@@ -120,6 +120,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void addEmployeeToShift(Employee employee, Shift shift)
+            throws ShiftNotFoundException, DuplicateEmployeeException {
+        partTimeManager.addEmployeeToShift(employee, shift);
+        indicatePartTimeManagerChanged();
+    }
+
+    @Override
     public void updateEmployee(Employee target, Employee editedEmployee)
             throws DuplicateEmployeeException, EmployeeNotFoundException {
         requireAllNonNull(target, editedEmployee);

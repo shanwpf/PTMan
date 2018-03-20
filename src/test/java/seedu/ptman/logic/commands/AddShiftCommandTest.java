@@ -192,6 +192,12 @@ public class AddShiftCommandTest {
         public void deleteShift(Shift shiftToDelete) throws ShiftNotFoundException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void addEmployeeToShift(Employee employee, Shift shift)
+                throws ShiftNotFoundException, EmployeeNotFoundException, DuplicateEmployeeException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

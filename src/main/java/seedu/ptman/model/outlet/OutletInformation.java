@@ -3,10 +3,15 @@ package seedu.ptman.model.outlet;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
+import javafx.collections.ObservableList;
 import seedu.ptman.model.Password;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 
 /**
  * Represents an outlet in PTMan.
@@ -21,6 +26,7 @@ public class OutletInformation {
     private Password masterPassword;
     private OperatingHours operatingHours;
     private Timetable timetable;
+    private UniqueShiftList uniqueShiftList;
 
     /**
      * Constructs an {@code OutletInformation}.
@@ -30,12 +36,13 @@ public class OutletInformation {
      * @param operatingHours a valid operating hours
      */
     public OutletInformation(OutletName name, Password masterPassword, OperatingHours operatingHours,
-                             Timetable timetable) {
+                             Timetable timetable, UniqueShiftList uniqueShiftList) {
         requireAllNonNull(name, masterPassword, operatingHours, timetable);
         this.name = name;
         this.masterPassword = masterPassword;
         this.operatingHours = operatingHours;
         this.timetable = timetable;
+        this.uniqueShiftList = uniqueShiftList;
     }
 
     /**
@@ -46,10 +53,12 @@ public class OutletInformation {
         this.masterPassword = new Password();
         this.operatingHours = new OperatingHours(DEFAULT_OPERATING_HOURS);
         this.timetable = new Timetable(LocalDate.now());
+        this.uniqueShiftList = new UniqueShiftList();
     }
 
     public void addShift(Shift shift) throws DuplicateShiftException {
         timetable.addShift(shift);
+        uniqueShiftList.add(shift);
     }
 
     public OutletName getName() {
@@ -100,4 +109,19 @@ public class OutletInformation {
         return builder.toString();
     }
 
+    public boolean removeShift(Shift key) throws ShiftNotFoundException {
+        return uniqueShiftList.remove(key);
+    }
+
+    public ObservableList<Shift> getShiftList() {
+        return uniqueShiftList.asObservableList();
+    }
+
+    public void addEmployeeToShift(Employee employee, Shift shift) throws ShiftNotFoundException, DuplicateEmployeeException {
+        uniqueShiftList.addEmployeeToShift(employee, shift);
+    }
+
+    public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
+        uniqueShiftList.setShifts(shifts);
+    }
 }

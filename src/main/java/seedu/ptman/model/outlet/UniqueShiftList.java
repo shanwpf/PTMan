@@ -9,6 +9,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.ptman.commons.util.CollectionUtil;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 
@@ -43,6 +45,23 @@ public class UniqueShiftList implements Iterable<Shift> {
             throw new DuplicateShiftException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Adds an employee to the specified shift.
+     * @param employee
+     * @param target
+     * @throws ShiftNotFoundException
+     * @throws DuplicateEmployeeException
+     */
+    public void addEmployeeToShift(Employee employee, Shift target)
+            throws ShiftNotFoundException, DuplicateEmployeeException {
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new ShiftNotFoundException();
+        }
+
+        internalList.get(index).addEmployee(employee);
     }
 
     /**

@@ -19,7 +19,6 @@ import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
-import seedu.ptman.model.outlet.UniqueShiftList;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
@@ -32,7 +31,6 @@ import seedu.ptman.model.tag.UniqueTagList;
 public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     private final UniqueEmployeeList employees;
-    private final UniqueShiftList shifts;
     private final UniqueTagList tags;
     private boolean isAdminMode;
     private final OutletInformation outlet;
@@ -45,7 +43,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      */
     {
         employees = new UniqueEmployeeList();
-        shifts = new UniqueShiftList();
         tags = new UniqueTagList();
         outlet = new OutletInformation();
         isAdminMode = false;
@@ -82,7 +79,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
-        this.shifts.setShifts(shifts);
+        this.outlet.setShifts(shifts);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -198,7 +195,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     public boolean removeShift(Shift key) throws ShiftNotFoundException {
-        return shifts.remove(key);
+        return outlet.removeShift(key);
     }
 
     /**
@@ -208,7 +205,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      */
     public void addShift(Shift p) throws DuplicateShiftException {
         outlet.addShift(p);
-        shifts.add(p);
     }
 
     //// tag-level operations
@@ -288,7 +284,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     @Override
     public ObservableList<Shift> getShiftList() {
-        return shifts.asObservableList();
+        return outlet.getShiftList();
     }
 
     @Override
@@ -308,5 +304,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(employees, tags);
+    }
+
+    public void addEmployeeToShift(Employee employee, Shift shift)
+            throws ShiftNotFoundException, DuplicateEmployeeException {
+        outlet.addEmployeeToShift(employee, shift);
     }
 }
