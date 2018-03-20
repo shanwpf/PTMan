@@ -5,6 +5,7 @@ import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.Model;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
