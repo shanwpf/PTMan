@@ -1,14 +1,11 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.ptman.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.ptman.ui.StatusBarFooter.NUM_EMPLOYEES_STATUS;
 import static seedu.ptman.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.ptman.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.ptman.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.ptman.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
@@ -27,9 +24,10 @@ import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.EmployeeListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.OutletDetailsPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.ptman.MainApp;
+import guitests.guihandles.TimetableViewHandle;
 import seedu.ptman.TestApp;
 import seedu.ptman.commons.core.EventsCenter;
 import seedu.ptman.commons.core.index.Index;
@@ -77,8 +75,6 @@ public abstract class PartTimeManagerSystemTest {
         defaultStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
         errorStyleOfResultDisplay = mainWindowHandle.getResultDisplay().getStyleClass();
         errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -118,8 +114,12 @@ public abstract class PartTimeManagerSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    public OutletDetailsPanelHandle getOutletDetailsPanel() {
+        return mainWindowHandle.getOutletDetailsPanel();
+    }
+
+    public TimetableViewHandle getTimetableView() {
+        return mainWindowHandle.getTimetableView();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -142,7 +142,6 @@ public abstract class PartTimeManagerSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -194,12 +193,14 @@ public abstract class PartTimeManagerSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code EmployeeListPanelHandle} and {@code StatusBarFooterHandle} to remember
-     * their current state.
+     * Calls {@code OutletDetailsPanelHandle}, {@code EmployeeListPanelHandle} and {@code StatusBarFooterHandle} to
+     * remember their current state.
      */
     private void rememberStates() {
+        OutletDetailsPanelHandle outletDetailsPanelHandle = getOutletDetailsPanel();
+        outletDetailsPanelHandle.rememberOutletInformation();
+        outletDetailsPanelHandle.rememberOutletName();
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         statusBarFooterHandle.rememberNumEmployees();
@@ -212,7 +213,6 @@ public abstract class PartTimeManagerSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getEmployeeListPanel().isAnyCardSelected());
     }
 
@@ -230,7 +230,6 @@ public abstract class PartTimeManagerSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getEmployeeListPanel().getSelectedCardIndex());
     }
@@ -241,7 +240,6 @@ public abstract class PartTimeManagerSystemTest {
      * @see EmployeeListPanelHandle#isSelectedEmployeeCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getEmployeeListPanel().isSelectedEmployeeCardChanged());
     }
 
@@ -259,6 +257,15 @@ public abstract class PartTimeManagerSystemTest {
     protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
         assertEquals(errorStyleOfResultDisplay, getResultDisplay().getStyleClass());
+    }
+
+    /**
+     * Asserts that the entire outlet panel remains the same.
+     */
+    protected void assertOutletDetailsPanelUnchanged() {
+        OutletDetailsPanelHandle handle = getOutletDetailsPanel();
+        assertFalse(handle.isOutletInformationChanged());
+        assertFalse(handle.isOutletNameChanged());
     }
 
     /**
@@ -294,9 +301,10 @@ public abstract class PartTimeManagerSystemTest {
     private void assertApplicationStartingStateIsCorrect() {
         try {
             assertEquals("", getCommandBox().getInput());
-            assertEquals("", getResultDisplay().getText());
+            assertEquals("Welcome to PTMan. Type a command in the search bar above to get started. "
+                    + "If you need somewhere to start, search “help” to view the user guide.",
+                    getResultDisplay().getText());
             assertListMatching(getEmployeeListPanel(), getModel().getFilteredEmployeeList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
             assertEquals(String.format(NUM_EMPLOYEES_STATUS,

@@ -17,7 +17,6 @@ import seedu.ptman.logic.commands.DeleteCommand;
 import seedu.ptman.logic.commands.HelpCommand;
 import seedu.ptman.logic.commands.LogInAdminCommand;
 import seedu.ptman.logic.commands.SelectCommand;
-import seedu.ptman.ui.BrowserPanel;
 import seedu.ptman.ui.StatusBarFooter;
 
 /**
@@ -47,10 +46,6 @@ public class HelpCommandSystemTest extends PartTimeManagerSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
-
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
@@ -68,7 +63,6 @@ public class HelpCommandSystemTest extends PartTimeManagerSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertListMatching(getEmployeeListPanel(), getModel().getFilteredEmployeeList());
 
         // assert that the status bar too is updated correctly while the help window is open

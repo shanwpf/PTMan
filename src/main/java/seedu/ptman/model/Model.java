@@ -60,6 +60,7 @@ public interface Model {
      * Delete tag from all employees
      */
     void deleteTagFromAllEmployee(Tag tag);
+
     /**
      * Replaces the given employee {@code target} with {@code editedEmployee}.
      *

@@ -36,8 +36,9 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     private final UniqueEmployeeList employees;
     private final UniqueShiftList shifts;
     private final UniqueTagList tags;
-    private boolean isAdminMode;
     private final OutletInformation outlet;
+    private boolean isAdminMode;
+
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html

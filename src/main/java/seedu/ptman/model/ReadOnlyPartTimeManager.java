@@ -36,5 +36,4 @@ public interface ReadOnlyPartTimeManager {
     OperatingHours getOperatingHours();
 
     OutletContact getOutletContact();
-
 }

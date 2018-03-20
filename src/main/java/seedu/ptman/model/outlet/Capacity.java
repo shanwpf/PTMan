@@ -26,6 +26,10 @@ public class Capacity {
         return test.matches(CAPACITY_VALIDATION_REGEX);
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(capacity);
