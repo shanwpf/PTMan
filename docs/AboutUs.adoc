@@ -23,7 +23,7 @@ image::koo1993.jpg[width="150", align="left"]
 {empty}[http://github.com/koo1993[github]] [<<koo1993#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Logic + Documentation + Integration 
+Responsibilities: Logic + Documentation + Integration
 
 * Features Implemented : +
 ** https://github.com/CS2103JAN2018-W14-B2/main/pull/32[Create Additional Salary Parameter]
