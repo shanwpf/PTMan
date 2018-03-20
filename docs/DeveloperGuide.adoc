@@ -386,6 +386,11 @@ This section highlights the considerations behind our application's design choic
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+=== Outlet Feature
+
+==== Current Implementation
+The basic outlet information is stored in a separate file and managed by OutletInformation class.
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
