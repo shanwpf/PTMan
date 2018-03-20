@@ -7,7 +7,6 @@ import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.ReadOnlyPartTimeManager;
-import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
 /**
  * Represents a command which can be undone and redone.
