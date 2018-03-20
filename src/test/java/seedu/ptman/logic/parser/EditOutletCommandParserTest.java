@@ -19,7 +19,6 @@ import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import org.junit.Test;
 
 import seedu.ptman.logic.commands.EditOutletCommand;
-import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletName;

@@ -30,7 +30,7 @@ public class EditOutletCommandTest {
     private Model model = new ModelManager(getTypicalPartTimeManager(), new UserPrefs());
 
     @Test
-    public void execute_NonAdminMode_failure() {
+    public void execute_nonAdminMode_failure() {
         OutletName outletName = new OutletName("EditedOutlet");
         OperatingHours operatingHours = new OperatingHours("10:00-18:00");
         OutletContact outletContact = new OutletContact("912345678");
@@ -39,7 +39,7 @@ public class EditOutletCommandTest {
     }
 
     @Test
-    public void execute_AdminModeAllFieldsValid_success() {
+    public void execute_adminModeAllFieldsValid_success() {
         model.setTrueAdminMode(new Password());
         OutletName outletName = new OutletName("EditedOutlet");
         OperatingHours operatingHours = new OperatingHours("10:00-18:00");
@@ -47,7 +47,7 @@ public class EditOutletCommandTest {
         EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact);
         String expectedMessage = EditOutletCommand.MESSAGE_EDIT_OUTLET_SUCCESS;
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
-        try{
+        try {
             expectedModel.updateOutlet(outletName, operatingHours, outletContact);
         } catch (NoOutletInformationFieldChangeException e) {
             fail("This should not fail because all outlet information fields are specified.");
@@ -56,7 +56,7 @@ public class EditOutletCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_AdminModeAllFieldsValid_success() throws Exception {
+    public void executeUndoRedo_adminModeAllFieldsValid_success() throws Exception {
         model.setTrueAdminMode(new Password());
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
