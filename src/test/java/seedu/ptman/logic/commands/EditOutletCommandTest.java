@@ -21,6 +21,7 @@ import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
@@ -33,7 +34,8 @@ public class EditOutletCommandTest {
         OutletName outletName = new OutletName("EditedOutlet");
         OperatingHours operatingHours = new OperatingHours("10:00-18:00");
         OutletContact outletContact = new OutletContact("912345678");
-        EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact);
+        OutletEmail outletEmail = new OutletEmail("EditedOutlet@gmail.com");
+        EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact, outletEmail);
         assertCommandFailure(command, model, MESSAGE_ACCESS_DENIED);
     }
 
@@ -43,11 +45,12 @@ public class EditOutletCommandTest {
         OutletName outletName = new OutletName("EditedOutlet");
         OperatingHours operatingHours = new OperatingHours("10:00-18:00");
         OutletContact outletContact = new OutletContact("912345678");
-        EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact);
+        OutletEmail outletEmail = new OutletEmail("EditedOutlet@gmail.com");
+        EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact, outletEmail);
         String expectedMessage = EditOutletCommand.MESSAGE_EDIT_OUTLET_SUCCESS;
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
         try {
-            expectedModel.updateOutlet(outletName, operatingHours, outletContact);
+            expectedModel.updateOutlet(outletName, operatingHours, outletContact, outletEmail);
         } catch (NoOutletInformationFieldChangeException e) {
             fail("This should not fail because all outlet information fields are specified.");
         }
@@ -57,14 +60,14 @@ public class EditOutletCommandTest {
     @Test
     public void execute_adminModeNonFieldsSpecified_failure() {
         model.setTrueAdminMode(new Password());
-        EditOutletCommand command = prepareCommand(null, null, null);
+        EditOutletCommand command = prepareCommand(null, null, null, null);
         String expectedMessage = EditOutletCommand.MESSAGE_EDIT_OUTLET_FAILURE;
         assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
     public void execute_nonAdminModeNonFieldSpecified_failure() {
-        EditOutletCommand command = prepareCommand(null, null, null);
+        EditOutletCommand command = prepareCommand(null, null, null, null);
         assertCommandFailure(command, model, MESSAGE_ACCESS_DENIED);
     }
 
@@ -78,7 +81,8 @@ public class EditOutletCommandTest {
         OutletName outletName = new OutletName("EditedOutlet");
         OperatingHours operatingHours = new OperatingHours("10:00-18:00");
         OutletContact outletContact = new OutletContact("912345678");
-        EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact);
+        OutletEmail outletEmail = new OutletEmail("EditedOutlet@gmail.com");
+        EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact, outletEmail);
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
 
         // edit -> outlet edited
@@ -89,7 +93,7 @@ public class EditOutletCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first employee edited again
-        expectedModel.updateOutlet(outletName, operatingHours, outletContact);
+        expectedModel.updateOutlet(outletName, operatingHours, outletContact, outletEmail);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -98,13 +102,17 @@ public class EditOutletCommandTest {
         OutletName outletName = new OutletName("EditedOutlet");
         OperatingHours operatingHours = new OperatingHours("10:00-18:00");
         OutletContact outletContact = new OutletContact("912345678");
-        final EditOutletCommand standardCommand = prepareCommand(outletName, operatingHours, outletContact);
+        OutletEmail outletEmail = new OutletEmail("EditedOutlet@gmail.com");
+        final EditOutletCommand standardCommand = prepareCommand(outletName, operatingHours,
+                outletContact, outletEmail);
 
         // same values -> returns true
         OutletName sameName = new OutletName("EditedOutlet");
         OperatingHours sameOperatingHours = new OperatingHours("10:00-18:00");
         OutletContact sameOutletContact = new OutletContact("912345678");
-        EditOutletCommand commandWithSameValues = prepareCommand(sameName, sameOperatingHours, sameOutletContact);
+        OutletEmail sameOutletEmail = new OutletEmail("EditedOutlet@gmail.com");
+        EditOutletCommand commandWithSameValues = prepareCommand(sameName, sameOperatingHours,
+                sameOutletContact, sameOutletEmail);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -119,23 +127,32 @@ public class EditOutletCommandTest {
         OutletName differentName = new OutletName("different");
         OperatingHours differentOperatingHours = new OperatingHours("09:00-10:00");
         OutletContact differentOutletContact = new OutletContact("123456789");
+        OutletEmail differentOutletEmail = new OutletEmail("different@gmail.com");
 
         // different outlet name -> returns false
-        assertFalse(standardCommand.equals(new EditOutletCommand(differentName, operatingHours, outletContact)));
+        assertFalse(standardCommand.equals(new EditOutletCommand(differentName, operatingHours,
+                outletContact, outletEmail)));
 
         // different operating hours -> returns false
-        assertFalse(standardCommand.equals(new EditOutletCommand(outletName, differentOperatingHours, outletContact)));
+        assertFalse(standardCommand.equals(new EditOutletCommand(outletName, differentOperatingHours,
+                outletContact, outletEmail)));
 
         // different outlet contact -> returns false
-        assertFalse(standardCommand.equals(new EditOutletCommand(outletName, operatingHours, differentOutletContact)));
+        assertFalse(standardCommand.equals(new EditOutletCommand(outletName, operatingHours,
+                differentOutletContact, outletEmail)));
+
+        // different outlet contact -> returns false
+        assertFalse(standardCommand.equals(new EditOutletCommand(outletName, operatingHours,
+                outletContact, differentOutletEmail)));
     }
 
     /**
      * Returns an {@code EditOutletCommand}
      */
     private EditOutletCommand prepareCommand(OutletName outletName, OperatingHours operatingHours,
-                                             OutletContact outletContact) {
-        EditOutletCommand editOutletCommand = new EditOutletCommand(outletName, operatingHours, outletContact);
+                                             OutletContact outletContact, OutletEmail outletEmail) {
+        EditOutletCommand editOutletCommand = new EditOutletCommand(outletName, operatingHours,
+                outletContact, outletEmail);
         editOutletCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editOutletCommand;
     }

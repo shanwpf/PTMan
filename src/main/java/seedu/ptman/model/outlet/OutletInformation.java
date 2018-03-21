@@ -18,11 +18,13 @@ public class OutletInformation {
     private static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
     private static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
     private static final String DEFAULT_OUTLET_CONTACT = "91234567";
+    private static final String DEFAULT_OUTLET_EMAIL = "DefaultOutlet@gmail.com";
 
     private OutletName name;
     private Password masterPassword;
     private OperatingHours operatingHours;
     private OutletContact outletContact;
+    private OutletEmail outletEmail;
     private Timetable timetable;
 
     /**
@@ -32,12 +34,14 @@ public class OutletInformation {
      * @param operatingHours a valid operating hours
      */
     public OutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
-                             Timetable timetable) {
-        requireAllNonNull(name, operatingHours, outletContact, timetable);
+                             OutletEmail outletEmail) {
+        requireAllNonNull(name, operatingHours, outletContact, outletEmail);
         this.name = name;
         this.operatingHours = operatingHours;
         this.outletContact = outletContact;
-        this.timetable = timetable;
+        this.outletEmail = outletEmail;
+        //default values
+        this.timetable = new Timetable(LocalDate.now());
         this.masterPassword = new Password();
     }
 
@@ -49,6 +53,7 @@ public class OutletInformation {
         this.masterPassword = new Password();
         this.operatingHours = new OperatingHours(DEFAULT_OPERATING_HOURS);
         this.outletContact = new OutletContact(DEFAULT_OUTLET_CONTACT);
+        this.outletEmail = new OutletEmail(DEFAULT_OUTLET_EMAIL);
         this.timetable = new Timetable(LocalDate.now());
     }
 
@@ -72,13 +77,18 @@ public class OutletInformation {
         return outletContact;
     }
 
+    public OutletEmail getOutletEmail() {
+        return outletEmail;
+    }
+
     public Timetable getTimetable() {
         return timetable;
     }
 
-    public void setOutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact)
+    public void setOutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
+                                     OutletEmail outletEmail)
             throws NoOutletInformationFieldChangeException {
-        if (name == null && operatingHours == null && outletContact == null) {
+        if (name == null && operatingHours == null && outletContact == null && outletEmail == null) {
             throw new NoOutletInformationFieldChangeException();
         }
         if (name != null) {
@@ -90,6 +100,9 @@ public class OutletInformation {
         if (outletContact != null) {
             this.outletContact = outletContact;
         }
+        if (outletEmail != null) {
+            this.outletEmail = outletEmail;
+        }
     }
 
     @Override
@@ -99,13 +112,14 @@ public class OutletInformation {
                 && ((OutletInformation) other).getName().equals(this.getName())
                 && ((OutletInformation) other).getMasterPassword().equals(this.getMasterPassword())
                 && ((OutletInformation) other).getOperatingHours().equals(this.getOperatingHours())
-                && ((OutletInformation) other).getTimetable().equals(this.getTimetable()));
+                && ((OutletInformation) other).getOutletContact().equals(this.getOutletContact())
+                && ((OutletInformation) other).getOutletEmail().equals(this.getOutletEmail()));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, masterPassword, operatingHours, timetable);
+        return Objects.hash(name, masterPassword, operatingHours, outletContact, outletEmail);
     }
 
     @Override
@@ -116,7 +130,9 @@ public class OutletInformation {
                 .append(" Operating Hour: ")
                 .append(getOperatingHours())
                 .append(" Contact: ")
-                .append(getOutletContact());
+                .append(getOutletContact())
+                .append(" Email: ")
+                .append(getOutletEmail());
         return builder.toString();
     }
 

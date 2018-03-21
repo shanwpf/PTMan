@@ -17,6 +17,7 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
@@ -84,11 +85,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         this.employees.setEmployees(employees);
     }
 
-    public void setOutletInformation(OutletName outletName, OperatingHours operatingHours,
-                                     OutletContact outletContact) throws NoOutletInformationFieldChangeException {
-        this.outlet.setOutletInformation(outletName, operatingHours, outletContact);
-    }
-
     public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
         this.shifts.setShifts(shifts);
     }
@@ -111,11 +107,12 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         OutletName syncedOutletName = newData.getOutletName();
         OperatingHours syncedOperatingHours = newData.getOperatingHours();
         OutletContact syncedOutletContact = newData.getOutletContact();
+        OutletEmail syncedOutletEmail = newData.getOutletEmail();
 
         try {
             setEmployees(syncedEmployeeList);
             setShifts(syncedShiftList);
-            setOutletInformation(syncedOutletName, syncedOperatingHours, syncedOutletContact);
+            updateOutlet(syncedOutletName, syncedOperatingHours, syncedOutletContact, syncedOutletEmail);
         } catch (DuplicateEmployeeException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate employees");
         } catch (DuplicateShiftException e) {
@@ -163,9 +160,9 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         employees.setEmployee(target, syncedEditedEmployee);
     }
 
-    public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact)
-            throws NoOutletInformationFieldChangeException {
-        outlet.setOutletInformation(name, operatingHours, outletContact);
+    public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
+                             OutletEmail outletEmail) throws NoOutletInformationFieldChangeException {
+        outlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
     }
 
     public String getOutletInformationMessage() {
@@ -325,6 +322,11 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     @Override
     public OutletContact getOutletContact() {
         return outlet.getOutletContact();
+    }
+
+    @Override
+    public OutletEmail getOutletEmail() {
+        return outlet.getOutletEmail();
     }
 
     @Override

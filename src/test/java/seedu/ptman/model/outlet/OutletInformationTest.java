@@ -3,8 +3,6 @@ package seedu.ptman.model.outlet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Objects;
 
 import org.junit.Test;
@@ -18,31 +16,31 @@ public class OutletInformationTest {
     public void constructor_nullName_throwsNullPointerException() {
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(null, operatingHours,
-                outletContact, timetable));
+                outletContact, outletEmail));
     }
 
     @Test
     public void constructor_nullOperatingHours_throwsNullPointerException() {
         OutletName name = new OutletName("outlet");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
         OutletContact outletContact = new OutletContact("91234567");
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
-                null, outletContact, timetable));
+                null, outletContact, outletEmail));
     }
 
     @Test
     public void constructor_nullOutletContact_throwsNullPointerException() {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
-                operatingHours, null, timetable));
+                operatingHours, null, outletEmail));
     }
 
     @Test
-    public void constructor_nullTimetable_throwsNullPointerException() {
+    public void constructor_nullOutletEmail_throwsNullPointerException() {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
@@ -51,33 +49,13 @@ public class OutletInformationTest {
     }
 
     @Test
-    public void getName_validInput_returnsTrue() {
-        OutletName name = new OutletName("outlet");
-        OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletContact outletContact = new OutletContact("91234567");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, timetable);
-        assertEquals(outlet.getName(), name);
-    }
-
-    @Test
-    public void getOperatingHours_validInput_returnsTrue() {
-        OutletName name = new OutletName("outlet");
-        OperatingHours operatingHours = new OperatingHours("09:00-22:00");
-        OutletContact outletContact = new OutletContact("91234567");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, timetable);
-        assertEquals(outlet.getOperatingHours(), operatingHours);
-    }
-
-    @Test
     public void equals_sameOutletInformation_returnsTrue() {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, timetable);
-        OutletInformation other = new OutletInformation(name, operatingHours, outletContact, timetable);
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
+        OutletInformation other = new OutletInformation(name, operatingHours, outletContact, outletEmail);
         assertTrue(outlet.equals(other));
     }
 
@@ -87,9 +65,9 @@ public class OutletInformationTest {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, timetable);
-        assertEquals(outlet.hashCode(), Objects.hash(name, masterPassword, operatingHours, timetable));
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
+        assertEquals(outlet.hashCode(), Objects.hash(name, masterPassword, operatingHours, outletContact, outletEmail));
     }
 
     @Test
@@ -97,9 +75,10 @@ public class OutletInformationTest {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
-        Timetable timetable = new Timetable(LocalDate.of(2018, Month.MARCH, 10));
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, timetable);
-        String expected = "Outlet Name: outlet Operating Hour: 09:00-22:00 Contact: 91234567";
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
+        String expected = "Outlet Name: outlet Operating Hour: 09:00-22:00 Contact: 91234567 "
+                + "Email: outlet@gmail.com";
         assertEquals(outlet.toString(), expected);
     }
 }

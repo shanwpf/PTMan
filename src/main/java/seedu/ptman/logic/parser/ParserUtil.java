@@ -21,6 +21,7 @@ import seedu.ptman.model.outlet.Capacity;
 import seedu.ptman.model.outlet.Day;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Time;
 import seedu.ptman.model.tag.Tag;
@@ -296,6 +297,31 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(outletContact);
         return outletContact.isPresent() ? Optional.of(parseOutletContact(outletContact.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String outletEmail} into an {@code OutletEmail}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code outletEmail} is invalid.
+     */
+    public static OutletEmail parseOutletEmail(String outletEmail) throws IllegalValueException {
+        requireNonNull(outletEmail);
+        String trimmedOutletEmail = outletEmail.trim();
+        if (!OutletEmail.isValidOutletEmail(trimmedOutletEmail)) {
+            throw new IllegalValueException(OutletEmail.MESSAGE_OUTLET_EMAIL_CONSTRAINTS);
+        }
+        return new OutletEmail(trimmedOutletEmail);
+    }
+
+    /**
+     * Parses a {@code Optional<String> outletEmail} into an {@code Optional<OutletEmail>}
+     * if {@code outletEmail} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<OutletEmail> parseOutletEmail(Optional<String> outletEmail) throws IllegalValueException {
+        requireNonNull(outletEmail);
+        return outletEmail.isPresent() ? Optional.of(parseOutletEmail(outletEmail.get())) : Optional.empty();
     }
 
     /**
