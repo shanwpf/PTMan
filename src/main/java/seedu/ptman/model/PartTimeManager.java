@@ -346,7 +346,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         return other == this // short circuit if same object
                 || (other instanceof PartTimeManager // instanceof handles nulls
                 && this.employees.equals(((PartTimeManager) other).employees)
-                && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags));
+                && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags))
+                && this.outlet.equals(((PartTimeManager) other).outlet);
     }
 
     @Override

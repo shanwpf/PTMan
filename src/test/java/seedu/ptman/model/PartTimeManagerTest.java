@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BENSON;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+import static seedu.ptman.testutil.TypicalShifts.MONDAY_AM;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,6 +63,18 @@ public class PartTimeManagerTest {
         // Repeat ALICE twice
         List<Employee> newEmployees = Arrays.asList(ALICE, ALICE);
         List<Shift> newShifts = new ArrayList<>();
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        OutletInformation outlet = new OutletInformation();
+        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts, outlet);
+
+        thrown.expect(AssertionError.class);
+        partTimeManager.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withDuplicateShifts_throwsAssertionError() {
+        List<Employee> newEmployees = Arrays.asList(ALICE);
+        List<Shift> newShifts = Arrays.asList(MONDAY_AM, MONDAY_AM);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         OutletInformation outlet = new OutletInformation();
         PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts, outlet);
