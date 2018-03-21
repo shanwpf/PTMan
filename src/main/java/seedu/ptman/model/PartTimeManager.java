@@ -18,6 +18,7 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
@@ -161,9 +162,14 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         employees.setEmployee(target, syncedEditedEmployee);
     }
 
-    public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact)
+    public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
+        outlet.setOutletInformation(editedOutlet);
+    }
+
+    public void updateOutlet(OutletName name, OperatingHours operatingHours,
+                             OutletContact outletContact, OutletEmail outletEmail)
             throws NoOutletInformationFieldChangeException {
-        outlet.setOutletInformation(name, operatingHours, outletContact);
+        outlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
     }
 
     public String getOutletInformationMessage() {
@@ -331,6 +337,11 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     @Override
+    public OutletEmail getOutletEmail() {
+        return outlet.getOutletEmail();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PartTimeManager // instanceof handles nulls
@@ -343,4 +354,5 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(employees, tags);
     }
+
 }

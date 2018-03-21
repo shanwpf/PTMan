@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
@@ -39,4 +40,6 @@ public interface ReadOnlyPartTimeManager {
     OutletContact getOutletContact();
 
     OutletInformation getOutletInformation();
+
+    OutletEmail getOutletEmail();
 }

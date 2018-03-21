@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
@@ -119,7 +120,8 @@ public class PartTimeManagerTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final OutletInformation outlet;
 
-        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags, Collection<Shift> shifts, OutletInformation outlet) {
+        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags,
+                            Collection<Shift> shifts, OutletInformation outlet) {
             this.employees.setAll(employees);
             this.tags.setAll(tags);
             this.shifts.setAll(shifts);
@@ -159,6 +161,11 @@ public class PartTimeManagerTest {
         @Override
         public OutletInformation getOutletInformation() {
             return outlet;
+        }
+
+        @Override
+        public OutletEmail getOutletEmail() {
+            return null;
         }
     }
 

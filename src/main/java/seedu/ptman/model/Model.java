@@ -8,6 +8,8 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
@@ -70,10 +72,11 @@ public interface Model {
      */
     void updateEmployee(Employee target, Employee editedEmployee)
             throws DuplicateEmployeeException, EmployeeNotFoundException;
-    /**
-     * Replaces the given employee {@code target} with {@code editedEmployee}.
-     */
-    void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact)
+
+    void updateOutlet(OutletInformation outlet) throws NoOutletInformationFieldChangeException;
+
+    void updateOutlet(OutletName name, OperatingHours operatingHours,
+                      OutletContact outletContact, OutletEmail outletEmail)
             throws NoOutletInformationFieldChangeException;
 
     String getOutletInformationMessage();
@@ -91,4 +94,5 @@ public interface Model {
     void updateFilteredEmployeeList(Predicate<Employee> predicate);
 
     void deleteShift(Shift shiftToDelete) throws ShiftNotFoundException;
+
 }
