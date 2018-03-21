@@ -7,6 +7,7 @@ import static seedu.ptman.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.ptman.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_CONTACT;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
@@ -41,6 +42,7 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.testutil.EditEmployeeDescriptorBuilder;
@@ -152,12 +154,14 @@ public class PartTimeManagerParserTest {
         String name = "EditedOutlet";
         String operatingHours = "10:00-17:00";
         String outletContact = "91234567";
+        String outletEmail = "EditedOutlet@gmail.com";
         EditOutletCommand command = (EditOutletCommand) parser.parseCommand(EditOutletCommand.COMMAND_WORD
                 + " " + PREFIX_OUTLET_NAME + name
                 + " " + PREFIX_OPERATING_HOURS + operatingHours
-                + " " + PREFIX_OUTLET_CONTACT + outletContact);
+                + " " + PREFIX_OUTLET_CONTACT + outletContact
+                + " " + PREFIX_OUTLET_EMAIL + outletEmail);
         assertEquals(new EditOutletCommand(new OutletName(name), new OperatingHours(operatingHours),
-                new OutletContact(outletContact)), command);
+                new OutletContact(outletContact), new OutletEmail(outletEmail)), command);
     }
 
     @Test
@@ -165,12 +169,14 @@ public class PartTimeManagerParserTest {
         String name = "EditedOutlet";
         String operatingHours = "10:00-17:00";
         String outletContact = "91234567";
+        String outletEmail = "EditedOutlet@gmail.com";
         EditOutletCommand command = (EditOutletCommand) parser.parseCommand(EditOutletCommand.COMMAND_ALIAS
                 + " " + PREFIX_OUTLET_NAME + name
                 + " " + PREFIX_OPERATING_HOURS + operatingHours
-                + " " + PREFIX_OUTLET_CONTACT + outletContact);
+                + " " + PREFIX_OUTLET_CONTACT + outletContact
+                + " " + PREFIX_OUTLET_EMAIL + outletEmail);
         assertEquals(new EditOutletCommand(new OutletName(name), new OperatingHours(operatingHours),
-                new OutletContact(outletContact)), command);
+                new OutletContact(outletContact), new OutletEmail(outletEmail)), command);
     }
 
     @Test

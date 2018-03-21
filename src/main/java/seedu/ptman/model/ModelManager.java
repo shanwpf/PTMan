@@ -18,6 +18,7 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
@@ -131,9 +132,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact)
-            throws NoOutletInformationFieldChangeException {
-        partTimeManager.updateOutlet(name, operatingHours, outletContact);
+    public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
+                             OutletEmail outletEmail) throws NoOutletInformationFieldChangeException {
+        partTimeManager.updateOutlet(name, operatingHours, outletContact, outletEmail);
         indicatePartTimeManagerChanged();
     }
 

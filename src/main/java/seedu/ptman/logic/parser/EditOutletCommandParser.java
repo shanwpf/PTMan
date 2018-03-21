@@ -3,6 +3,7 @@ package seedu.ptman.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_CONTACT;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 
 import seedu.ptman.commons.exceptions.IllegalValueException;
@@ -10,6 +11,7 @@ import seedu.ptman.logic.commands.EditOutletCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 
 /**
@@ -25,11 +27,13 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_OUTLET_NAME, PREFIX_OPERATING_HOURS,
-                        PREFIX_OUTLET_CONTACT);
+                        PREFIX_OUTLET_CONTACT, PREFIX_OUTLET_EMAIL);
 
         OutletName outletName;
         OperatingHours operatingHours;
         OutletContact outletContact;
+        OutletEmail outletEmail;
+
         try {
             outletName = ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).isPresent()
                     ? ParserUtil.parseOutletName(argMultimap.getValue(PREFIX_OUTLET_NAME)).get()
@@ -40,10 +44,13 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
             outletContact = ParserUtil.parseOutletContact(argMultimap.getValue(PREFIX_OUTLET_CONTACT)).isPresent()
                     ? ParserUtil.parseOutletContact(argMultimap.getValue(PREFIX_OUTLET_CONTACT)).get()
                     : null;
+            outletEmail = ParserUtil.parseOutletEmail(argMultimap.getValue(PREFIX_OUTLET_EMAIL)).isPresent()
+                    ? ParserUtil.parseOutletEmail(argMultimap.getValue(PREFIX_OUTLET_EMAIL)).get()
+                    : null;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        return new EditOutletCommand(outletName, operatingHours, outletContact);
+        return new EditOutletCommand(outletName, operatingHours, outletContact, outletEmail);
     }
 }

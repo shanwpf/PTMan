@@ -29,6 +29,7 @@ import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
@@ -162,7 +163,8 @@ public class AddShiftCommandTest {
         }
 
         @Override
-        public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact) {
+        public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
+                                 OutletEmail outletEmail) {
             fail("This method should not be called.");
         }
 

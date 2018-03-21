@@ -10,6 +10,7 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OPERATING_HOURS;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_CONTACT;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
@@ -54,6 +55,7 @@ public class CommandTestUtil {
     public static final String VALID_OUTLET_NAME = "ValidOutlet";
     public static final String VALID_OPERATING_HOURS = "09:00-22:00";
     public static final String VALID_OUTLET_CONTACT = "912345678";
+    public static final String VALID_OUTLET_EMAIL = "ValidOutlet@gmail.com";
     public static final String DEFAULT1_HASH = "wkqTFuX6NX3hucWqn2ZxB24cRo73LssRq7IDOk6Zx00=";
     public static final String DEFAULT_PASSWORD = "DEFAULT1";
 
@@ -97,6 +99,7 @@ public class CommandTestUtil {
     public static final String OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + VALID_OUTLET_NAME;
     public static final String OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + VALID_OPERATING_HOURS;
     public static final String OUTLET_CONTACT_DESC = " " + PREFIX_OUTLET_CONTACT + VALID_OUTLET_CONTACT;
+    public static final String OUTLET_EMAIL_DESC = " " + PREFIX_OUTLET_EMAIL + VALID_OUTLET_EMAIL;
     public static final String DEFAULT_DESC_ADMINPASSWORD = " " + PREFIX_PASSWORD + DEFAULT_PASSWORD;
 
     public static final String ADMINPASSWORD_DESC_DEFAULT = " " + PREFIX_PASSWORD + DEFAULT_PASSWORD;
@@ -109,6 +112,7 @@ public class CommandTestUtil {
     public static final String INVALID_OUTLET_NAME_DESC = " " + PREFIX_OUTLET_NAME + "Invalid@Outlet";
     public static final String INVALID_OPERATING_HOURS_DESC = " " + PREFIX_OPERATING_HOURS + "09:00/22:00";
     public static final String INVALID_OUTLET_CONTACT_DESC = " " + PREFIX_OUTLET_CONTACT + "91234567@";
+    public static final String INVALID_OUTLET_EMAIL_DESC = " " + PREFIX_OUTLET_EMAIL + "Invalid!gmail";
     public static final String INVALID_DESC_ADMINPASSWORD = " " + PREFIX_PASSWORD + "wrongpassword";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
