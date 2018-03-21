@@ -34,7 +34,10 @@ public class TimetableTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () ->
-                new Timetable(null)
+                new Timetable((LocalDate) null)
+        );
+        Assert.assertThrows(NullPointerException.class, () ->
+                new Timetable((Timetable) null)
         );
     }
 

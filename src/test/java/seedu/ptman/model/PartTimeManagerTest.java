@@ -62,18 +62,8 @@ public class PartTimeManagerTest {
         List<Employee> newEmployees = Arrays.asList(ALICE, ALICE);
         List<Shift> newShifts = new ArrayList<>();
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts);
-
-        thrown.expect(AssertionError.class);
-        partTimeManager.resetData(newData);
-    }
-
-    @Test
-    public void resetData_withEmptyOutletInformation_throwsAssertionError() {
-        List<Employee> newEmployees = Arrays.asList(ALICE);
-        List<Shift> newShifts = new ArrayList<>();
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts);
+        OutletInformation outlet = new OutletInformation();
+        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts, outlet);
 
         thrown.expect(AssertionError.class);
         partTimeManager.resetData(newData);
@@ -127,11 +117,13 @@ public class PartTimeManagerTest {
         private final ObservableList<Employee> employees = FXCollections.observableArrayList();
         private final ObservableList<Shift> shifts = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final OutletInformation outlet;
 
-        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags, Collection<Shift> shifts) {
+        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags, Collection<Shift> shifts, OutletInformation outlet) {
             this.employees.setAll(employees);
             this.tags.setAll(tags);
             this.shifts.setAll(shifts);
+            this.outlet = outlet;
         }
 
         @Override
@@ -162,6 +154,11 @@ public class PartTimeManagerTest {
         @Override
         public OutletContact getOutletContact() {
             return null;
+        }
+
+        @Override
+        public OutletInformation getOutletInformation() {
+            return outlet;
         }
     }
 

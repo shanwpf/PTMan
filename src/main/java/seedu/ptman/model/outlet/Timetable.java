@@ -37,6 +37,13 @@ public class Timetable {
         }
     }
 
+    public Timetable(Timetable timetable) {
+        this.dayList = new ArrayList<>(timetable.getDayList());
+        this.uniqueShiftList = new UniqueShiftList();
+        this.uniqueShiftList.setShifts(timetable.getUniqueShiftList());
+        this.mondayDate = timetable.getMondayDate();
+    }
+
     /**
      * Gets the date for the Monday of this timetable week
      * @return LocalDate of Monday
@@ -125,4 +132,11 @@ public class Timetable {
                 .with(weekFields.dayOfWeek(), 1);
     }
 
+    public ArrayList<TimetableDay> getDayList() {
+        return dayList;
+    }
+
+    public UniqueShiftList getUniqueShiftList() {
+        return uniqueShiftList;
+    }
 }

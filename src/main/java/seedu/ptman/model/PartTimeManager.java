@@ -2,6 +2,7 @@ package seedu.ptman.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -84,9 +85,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         this.employees.setEmployees(employees);
     }
 
-    public void setOutletInformation(OutletName outletName, OperatingHours operatingHours,
-                                     OutletContact outletContact) throws NoOutletInformationFieldChangeException {
-        this.outlet.setOutletInformation(outletName, operatingHours, outletContact);
+    public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
+        this.outlet.setOutletInformation(outlet);
     }
 
     public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
@@ -107,20 +107,18 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
-        List<Shift> syncedShiftList = newData.getShiftList();
-        OutletName syncedOutletName = newData.getOutletName();
-        OperatingHours syncedOperatingHours = newData.getOperatingHours();
-        OutletContact syncedOutletContact = newData.getOutletContact();
+        List<Shift> syncedShiftList = new ArrayList<>(newData.getShiftList());
+        OutletInformation syncedOutlet = new OutletInformation(newData.getOutletInformation());
 
         try {
             setEmployees(syncedEmployeeList);
             setShifts(syncedShiftList);
-            setOutletInformation(syncedOutletName, syncedOperatingHours, syncedOutletContact);
+            setOutletInformation(syncedOutlet);
         } catch (DuplicateEmployeeException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate employees");
         } catch (DuplicateShiftException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate shifts");
-        } catch (NoOutletInformationFieldChangeException noifce) {
+        } catch (NoOutletInformationFieldChangeException e) {
             throw new AssertionError("PartTimeManagers should not have empty outlet information");
         }
     }
@@ -325,6 +323,11 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     @Override
     public OutletContact getOutletContact() {
         return outlet.getOutletContact();
+    }
+
+    @Override
+    public OutletInformation getOutletInformation() {
+        return outlet;
     }
 
     @Override

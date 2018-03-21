@@ -41,6 +41,14 @@ public class OutletInformation {
         this.masterPassword = new Password();
     }
 
+    public OutletInformation(OutletInformation outlet) {
+        this.name = new OutletName(outlet.getName().toString());
+        this.masterPassword = new Password(outlet.getMasterPassword());
+        this.outletContact = new OutletContact(outlet.getOutletContact().toString());
+        this.timetable = new Timetable(outlet.getTimetable());
+        this.operatingHours = new OperatingHours(outlet.getOperatingHours().toString());
+    }
+
     /**
      * Default constructor with default values
      */
@@ -120,4 +128,9 @@ public class OutletInformation {
         return builder.toString();
     }
 
+    public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
+        this.setOutletInformation(outlet.getName(), outlet.getOperatingHours(), outlet.getOutletContact());
+        this.timetable = outlet.getTimetable();
+        this.masterPassword = outlet.getMasterPassword();
+    }
 }
