@@ -95,4 +95,5 @@ public interface Model {
 
     void deleteShift(Shift shiftToDelete) throws ShiftNotFoundException;
 
+    OutletInformation getOutletInformation();
 }

@@ -123,7 +123,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        outletPanel = new OutletDetailsPanel();
+        outletPanel = new OutletDetailsPanel(logic.getOutletInformation());
         outletDetailsPanelPlaceholder.getChildren().add(outletPanel.getRoot());
 
         timetablePanel = new TimetablePanel(logic.getFilteredShiftList());

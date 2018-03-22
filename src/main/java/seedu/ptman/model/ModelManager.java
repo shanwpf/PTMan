@@ -172,6 +172,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public OutletInformation getOutletInformation() {
+        return partTimeManager.getOutletInformation();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
