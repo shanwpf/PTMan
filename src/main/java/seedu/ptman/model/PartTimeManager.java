@@ -311,28 +311,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     @Override
-    public OutletName getOutletName() {
-        return outlet.getName();
-    }
-
-    @Override
-    public OperatingHours getOperatingHours() {
-        return outlet.getOperatingHours();
-    }
-
-    @Override
-    public OutletContact getOutletContact() {
-        return outlet.getOutletContact();
-    }
-
-    @Override
     public OutletInformation getOutletInformation() {
         return outlet;
-    }
-
-    @Override
-    public OutletEmail getOutletEmail() {
-        return outlet.getOutletEmail();
     }
 
     @Override

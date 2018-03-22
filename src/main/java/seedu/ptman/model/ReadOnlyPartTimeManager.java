@@ -33,13 +33,5 @@ public interface ReadOnlyPartTimeManager {
      */
     ObservableList<Tag> getTagList();
 
-    OutletName getOutletName();
-
-    OperatingHours getOperatingHours();
-
-    OutletContact getOutletContact();
-
     OutletInformation getOutletInformation();
-
-    OutletEmail getOutletEmail();
 }
