@@ -20,9 +20,9 @@ public class OutletDetailsPanel extends UiPart<Region> {
 
     private static final String FXML = "OutletDetailsPanel.fxml";
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     public final OutletInformation outlet;
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private Label outletNamePanelHeader;
