@@ -22,6 +22,7 @@ import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
@@ -48,9 +49,15 @@ public class EditOutletCommandTest {
         OutletEmail outletEmail = new OutletEmail("EditedOutlet@gmail.com");
         EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact, outletEmail);
         String expectedMessage = EditOutletCommand.MESSAGE_EDIT_OUTLET_SUCCESS;
+        OutletInformation expectedOutlet = new OutletInformation();
+        try {
+            expectedOutlet.setOutletInformation(outletName, operatingHours, outletContact, outletEmail);
+        } catch (NoOutletInformationFieldChangeException e) {
+            fail("This should not fail because all outlet information fields are specified.");
+        }
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
         try {
-            expectedModel.updateOutlet(outletName, operatingHours, outletContact, outletEmail);
+            expectedModel.updateOutlet(expectedOutlet);
         } catch (NoOutletInformationFieldChangeException e) {
             fail("This should not fail because all outlet information fields are specified.");
         }
@@ -84,7 +91,12 @@ public class EditOutletCommandTest {
         OutletEmail outletEmail = new OutletEmail("EditedOutlet@gmail.com");
         EditOutletCommand command = prepareCommand(outletName, operatingHours, outletContact, outletEmail);
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs());
-
+        OutletInformation expectedOutlet = new OutletInformation();
+        try {
+            expectedOutlet.setOutletInformation(outletName, operatingHours, outletContact, outletEmail);
+        } catch (NoOutletInformationFieldChangeException e) {
+            fail("This should not fail because all outlet information fields are specified.");
+        }
         // edit -> outlet edited
         command.execute();
         undoRedoStack.push(command);
@@ -93,7 +105,11 @@ public class EditOutletCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first employee edited again
-        expectedModel.updateOutlet(outletName, operatingHours, outletContact, outletEmail);
+        try {
+            expectedModel.updateOutlet(expectedOutlet);
+        } catch (NoOutletInformationFieldChangeException e) {
+            fail("This should not fail because all outlet information fields are specified.");
+        }
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

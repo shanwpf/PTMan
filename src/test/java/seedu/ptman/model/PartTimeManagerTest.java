@@ -1,10 +1,6 @@
 package seedu.ptman.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OPERATING_HOURS;
-import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_CONTACT;
-import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_EMAIL;
-import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_NAME;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BENSON;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
@@ -23,11 +19,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.outlet.OperatingHours;
-import seedu.ptman.model.outlet.OutletContact;
-import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
-import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.testutil.EmployeeBuilder;
@@ -128,26 +120,6 @@ public class PartTimeManagerTest {
         assertEquals(actualMessage, expectedMessage);
     }
 
-    @Test
-    public void getOutletName_defaultData_returnOutletName() {
-        assertEquals(new OutletName(DEFAULT_OUTLET_NAME), partTimeManager.getOutletName());
-    }
-
-    @Test
-    public void getOperatingHours_defaultData_returnOperatingHours() {
-        assertEquals(new OperatingHours(DEFAULT_OPERATING_HOURS), partTimeManager.getOperatingHours());
-    }
-
-    @Test
-    public void getOutletContact_defaultData_returnOutletContact() {
-        assertEquals(new OutletContact(DEFAULT_OUTLET_CONTACT), partTimeManager.getOutletContact());
-    }
-
-    @Test
-    public void getOutletEmail_defaultData_returnOutletEmail() {
-        assertEquals(new OutletEmail(DEFAULT_OUTLET_EMAIL), partTimeManager.getOutletEmail());
-    }
-
     /**
      * A stub ReadOnlyPartTimeManager whose employees and tags lists can violate interface constraints.
      */
@@ -181,28 +153,8 @@ public class PartTimeManagerTest {
         }
 
         @Override
-        public OutletName getOutletName() {
-            return null;
-        }
-
-        @Override
-        public OperatingHours getOperatingHours() {
-            return null;
-        }
-
-        @Override
-        public OutletContact getOutletContact() {
-            return null;
-        }
-
-        @Override
         public OutletInformation getOutletInformation() {
             return outlet;
-        }
-
-        @Override
-        public OutletEmail getOutletEmail() {
-            return null;
         }
     }
 

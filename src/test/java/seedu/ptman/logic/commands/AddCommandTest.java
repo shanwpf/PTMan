@@ -171,12 +171,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
-                                 OutletEmail outletEmail) {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public String getOutletInformationMessage() {
             fail("This method should not be called.");
             return null;
