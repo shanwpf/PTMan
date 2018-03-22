@@ -10,6 +10,7 @@ import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
@@ -60,7 +61,9 @@ public class EditOutletCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
         try {
-            model.updateOutlet(name, operatingHours, outletContact, outletEmail);
+            OutletInformation editedOutlet = new OutletInformation(model.getOutletInformation());
+            editedOutlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
+            model.updateOutlet(editedOutlet);
         } catch (NoOutletInformationFieldChangeException e) {
             throw new CommandException(MESSAGE_EDIT_OUTLET_FAILURE);
         }

@@ -139,13 +139,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateOutlet(OutletName name, OperatingHours operatingHours,
-                             OutletContact outletContact, OutletEmail outletEmail)
-            throws NoOutletInformationFieldChangeException {
-        partTimeManager.updateOutlet(name, operatingHours, outletContact, outletEmail);
-    }
-
-    @Override
     public String getOutletInformationMessage() {
         return partTimeManager.getOutletInformationMessage();
     }

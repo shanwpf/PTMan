@@ -195,6 +195,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public OutletInformation getOutletInformation() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredEmployeeList(Predicate<Employee> predicate) {
             fail("This method should not be called.");
         }

@@ -166,12 +166,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         outlet.setOutletInformation(editedOutlet);
     }
 
-    public void updateOutlet(OutletName name, OperatingHours operatingHours,
-                             OutletContact outletContact, OutletEmail outletEmail)
-            throws NoOutletInformationFieldChangeException {
-        outlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
-    }
-
     public String getOutletInformationMessage() {
         return outlet.toString();
     }

@@ -75,10 +75,6 @@ public interface Model {
 
     void updateOutlet(OutletInformation outlet) throws NoOutletInformationFieldChangeException;
 
-    void updateOutlet(OutletName name, OperatingHours operatingHours,
-                      OutletContact outletContact, OutletEmail outletEmail)
-            throws NoOutletInformationFieldChangeException;
-
     String getOutletInformationMessage();
 
     /** Returns an unmodifiable view of the filtered employee list */
