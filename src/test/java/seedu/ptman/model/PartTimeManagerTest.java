@@ -1,9 +1,14 @@
 package seedu.ptman.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OPERATING_HOURS;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_CONTACT;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_EMAIL;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_NAME;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BENSON;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+import static seedu.ptman.testutil.TypicalShifts.MONDAY_AM;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,18 +68,20 @@ public class PartTimeManagerTest {
         List<Employee> newEmployees = Arrays.asList(ALICE, ALICE);
         List<Shift> newShifts = new ArrayList<>();
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts);
+        OutletInformation outlet = new OutletInformation();
+        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts, outlet);
 
         thrown.expect(AssertionError.class);
         partTimeManager.resetData(newData);
     }
 
     @Test
-    public void resetData_withEmptyOutletInformation_throwsAssertionError() {
+    public void resetData_withDuplicateShifts_throwsAssertionError() {
         List<Employee> newEmployees = Arrays.asList(ALICE);
-        List<Shift> newShifts = new ArrayList<>();
+        List<Shift> newShifts = Arrays.asList(MONDAY_AM, MONDAY_AM);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts);
+        OutletInformation outlet = new OutletInformation();
+        PartTimeManagerStub newData = new PartTimeManagerStub(newEmployees, newTags, newShifts, outlet);
 
         thrown.expect(AssertionError.class);
         partTimeManager.resetData(newData);
@@ -121,6 +128,26 @@ public class PartTimeManagerTest {
         assertEquals(actualMessage, expectedMessage);
     }
 
+    @Test
+    public void getOutletName_defaultData_returnOutletName() {
+        assertEquals(new OutletName(DEFAULT_OUTLET_NAME), partTimeManager.getOutletName());
+    }
+
+    @Test
+    public void getOperatingHours_defaultData_returnOperatingHours() {
+        assertEquals(new OperatingHours(DEFAULT_OPERATING_HOURS), partTimeManager.getOperatingHours());
+    }
+
+    @Test
+    public void getOutletContact_defaultData_returnOutletContact() {
+        assertEquals(new OutletContact(DEFAULT_OUTLET_CONTACT), partTimeManager.getOutletContact());
+    }
+
+    @Test
+    public void getOutletEmail_defaultData_returnOutletEmail() {
+        assertEquals(new OutletEmail(DEFAULT_OUTLET_EMAIL), partTimeManager.getOutletEmail());
+    }
+
     /**
      * A stub ReadOnlyPartTimeManager whose employees and tags lists can violate interface constraints.
      */
@@ -128,11 +155,14 @@ public class PartTimeManagerTest {
         private final ObservableList<Employee> employees = FXCollections.observableArrayList();
         private final ObservableList<Shift> shifts = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final OutletInformation outlet;
 
-        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags, Collection<Shift> shifts) {
+        PartTimeManagerStub(Collection<Employee> employees, Collection<? extends Tag> tags,
+                            Collection<Shift> shifts, OutletInformation outlet) {
             this.employees.setAll(employees);
             this.tags.setAll(tags);
             this.shifts.setAll(shifts);
+            this.outlet = outlet;
         }
 
         @Override
@@ -163,6 +193,11 @@ public class PartTimeManagerTest {
         @Override
         public OutletContact getOutletContact() {
             return null;
+        }
+
+        @Override
+        public OutletInformation getOutletInformation() {
+            return outlet;
         }
 
         @Override

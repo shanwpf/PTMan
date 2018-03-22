@@ -24,9 +24,11 @@ import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 
@@ -134,6 +136,11 @@ public class LogInAdminCommandTest {
         @Override
         public void updateEmployee(Employee target, Employee editedEmployee)
                 throws DuplicateEmployeeException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateOutlet(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
             fail("This method should not be called.");
         }
 

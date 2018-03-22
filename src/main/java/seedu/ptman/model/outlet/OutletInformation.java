@@ -15,10 +15,10 @@ import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeExcepti
  */
 public class OutletInformation {
 
-    private static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
-    private static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
-    private static final String DEFAULT_OUTLET_CONTACT = "91234567";
-    private static final String DEFAULT_OUTLET_EMAIL = "DefaultOutlet@gmail.com";
+    public static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
+    public static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
+    public static final String DEFAULT_OUTLET_CONTACT = "91234567";
+    public static final String DEFAULT_OUTLET_EMAIL = "DefaultOutlet@gmail.com";
 
     private OutletName name;
     private Password masterPassword;
@@ -43,6 +43,15 @@ public class OutletInformation {
         //default values
         this.timetable = new Timetable(LocalDate.now());
         this.masterPassword = new Password();
+    }
+
+    public OutletInformation(OutletInformation outlet) {
+        this.name = new OutletName(outlet.getName().toString());
+        this.masterPassword = new Password(outlet.getMasterPassword());
+        this.outletContact = new OutletContact(outlet.getOutletContact().toString());
+        this.timetable = new Timetable(outlet.getTimetable());
+        this.operatingHours = new OperatingHours(outlet.getOperatingHours().toString());
+        this.outletEmail = new OutletEmail(outlet.getOutletEmail().toString());
     }
 
     /**
@@ -103,6 +112,21 @@ public class OutletInformation {
         if (outletEmail != null) {
             this.outletEmail = outletEmail;
         }
+    }
+
+    public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
+        try {
+            requireAllNonNull(outlet.getName(), outlet.getOperatingHours(), outlet.getMasterPassword(),
+                    outlet.getTimetable(), outlet.getOutletEmail(), outlet.getOutletContact());
+        } catch (NullPointerException e) {
+            throw new NoOutletInformationFieldChangeException();
+        }
+        this.name = outlet.getName();
+        this.operatingHours = outlet.getOperatingHours();
+        this.outletContact = outlet.getOutletContact();
+        this.outletEmail = outlet.getOutletEmail();
+        this.timetable = outlet.getTimetable();
+        this.masterPassword = outlet.getMasterPassword();
     }
 
     @Override

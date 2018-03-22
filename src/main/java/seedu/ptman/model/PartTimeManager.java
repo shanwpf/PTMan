@@ -2,6 +2,7 @@ package seedu.ptman.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -85,6 +86,10 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         this.employees.setEmployees(employees);
     }
 
+    public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
+        this.outlet.setOutletInformation(outlet);
+    }
+
     public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
         this.shifts.setShifts(shifts);
     }
@@ -103,21 +108,18 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
-        List<Shift> syncedShiftList = newData.getShiftList();
-        OutletName syncedOutletName = newData.getOutletName();
-        OperatingHours syncedOperatingHours = newData.getOperatingHours();
-        OutletContact syncedOutletContact = newData.getOutletContact();
-        OutletEmail syncedOutletEmail = newData.getOutletEmail();
+        List<Shift> syncedShiftList = new ArrayList<>(newData.getShiftList());
+        OutletInformation syncedOutlet = new OutletInformation(newData.getOutletInformation());
 
         try {
             setEmployees(syncedEmployeeList);
             setShifts(syncedShiftList);
-            updateOutlet(syncedOutletName, syncedOperatingHours, syncedOutletContact, syncedOutletEmail);
+            setOutletInformation(syncedOutlet);
         } catch (DuplicateEmployeeException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate employees");
         } catch (DuplicateShiftException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate shifts");
-        } catch (NoOutletInformationFieldChangeException noifce) {
+        } catch (NoOutletInformationFieldChangeException e) {
             throw new AssertionError("PartTimeManagers should not have empty outlet information");
         }
     }
@@ -160,8 +162,13 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         employees.setEmployee(target, syncedEditedEmployee);
     }
 
-    public void updateOutlet(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
-                             OutletEmail outletEmail) throws NoOutletInformationFieldChangeException {
+    public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
+        outlet.setOutletInformation(editedOutlet);
+    }
+
+    public void updateOutlet(OutletName name, OperatingHours operatingHours,
+                             OutletContact outletContact, OutletEmail outletEmail)
+            throws NoOutletInformationFieldChangeException {
         outlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
     }
 
@@ -325,6 +332,11 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     @Override
+    public OutletInformation getOutletInformation() {
+        return outlet;
+    }
+
+    @Override
     public OutletEmail getOutletEmail() {
         return outlet.getOutletEmail();
     }
@@ -334,7 +346,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         return other == this // short circuit if same object
                 || (other instanceof PartTimeManager // instanceof handles nulls
                 && this.employees.equals(((PartTimeManager) other).employees)
-                && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags));
+                && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags))
+                && this.outlet.equals(((PartTimeManager) other).outlet);
     }
 
     @Override
@@ -342,4 +355,5 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(employees, tags);
     }
+
 }
