@@ -15,10 +15,10 @@ import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeExcepti
  */
 public class OutletInformation {
 
-    private static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
-    private static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
-    private static final String DEFAULT_OUTLET_CONTACT = "91234567";
-    private static final String DEFAULT_OUTLET_EMAIL = "DefaultOutlet@gmail.com";
+    public static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
+    public static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
+    public static final String DEFAULT_OUTLET_CONTACT = "91234567";
+    public static final String DEFAULT_OUTLET_EMAIL = "DefaultOutlet@gmail.com";
 
     private OutletName name;
     private Password masterPassword;

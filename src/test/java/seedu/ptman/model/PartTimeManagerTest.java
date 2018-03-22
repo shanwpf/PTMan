@@ -1,6 +1,10 @@
 package seedu.ptman.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OPERATING_HOURS;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_CONTACT;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_EMAIL;
+import static seedu.ptman.model.outlet.OutletInformation.DEFAULT_OUTLET_NAME;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BENSON;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
@@ -122,6 +126,26 @@ public class PartTimeManagerTest {
         String actualMessage = partTimeManager.getOutletInformationMessage();
         String expectedMessage = new OutletInformation().toString();
         assertEquals(actualMessage, expectedMessage);
+    }
+
+    @Test
+    public void getOutletName_defaultData_returnOutletName() {
+        assertEquals(new OutletName(DEFAULT_OUTLET_NAME), partTimeManager.getOutletName());
+    }
+
+    @Test
+    public void getOperatingHours_defaultData_returnOperatingHours() {
+        assertEquals(new OperatingHours(DEFAULT_OPERATING_HOURS), partTimeManager.getOperatingHours());
+    }
+
+    @Test
+    public void getOutletContact_defaultData_returnOutletContact() {
+        assertEquals(new OutletContact(DEFAULT_OUTLET_CONTACT), partTimeManager.getOutletContact());
+    }
+
+    @Test
+    public void getOutletEmail_defaultData_returnOutletEmail() {
+        assertEquals(new OutletEmail(DEFAULT_OUTLET_EMAIL), partTimeManager.getOutletEmail());
     }
 
     /**
