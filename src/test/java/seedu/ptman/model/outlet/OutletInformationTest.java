@@ -77,7 +77,7 @@ public class OutletInformationTest {
         OutletContact outletContact = new OutletContact("91234567");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
         OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
-        String expected = "Outlet Name: outlet Operating Hour: 09:00-22:00 Contact: 91234567 "
+        String expected = "Operating Hour: 09:00-22:00 Contact: 91234567 "
                 + "Email: outlet@gmail.com";
         assertEquals(outlet.toString(), expected);
     }

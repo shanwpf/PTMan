@@ -9,6 +9,7 @@ import org.junit.Test;
 import guitests.guihandles.OutletDetailsPanelHandle;
 import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
 import seedu.ptman.commons.events.ui.OutletNameChangedEvent;
+import seedu.ptman.model.outlet.OutletInformation;
 
 //@@author hzxcaryn
 public class OutletDetailsPanelTest extends GuiUnitTest {
@@ -17,12 +18,13 @@ public class OutletDetailsPanelTest extends GuiUnitTest {
 
     private OutletDetailsPanel outletDetailsPanel;
     private OutletDetailsPanelHandle outletDetailsPanelHandle;
+    private OutletInformation outlet = new OutletInformation();
 
     @Before
     public void setUp() {
         outletInformationChangedEventStub = new OutletInformationChangedEvent("New Outlet Information");
         outletNameChangedEventStub = new OutletNameChangedEvent("New Outlet Name");
-        outletDetailsPanel = new OutletDetailsPanel();
+        outletDetailsPanel = new OutletDetailsPanel(outlet);
 
         uiPartRule.setUiPart(outletDetailsPanel);
         outletDetailsPanelHandle = new OutletDetailsPanelHandle(outletDetailsPanel.getRoot());
@@ -31,9 +33,9 @@ public class OutletDetailsPanelTest extends GuiUnitTest {
     @Test
     public void display() {
         // Default outlet name and information
-        String expectedDefaultOutletName = "Outlet Name";
-        String expectedDefaultOutletInformation = "No outlet information recorded. "
-                + "Please add outlet information with the editOutlet command.";
+        String expectedDefaultOutletName = "DefaultOutlet";
+        String expectedDefaultOutletInformation = "Operating Hour: 09:00-22:00 Contact: 91234567 "
+                + "Email: DefaultOutlet@gmail.com";
         assertEquals(expectedDefaultOutletInformation, outletDetailsPanelHandle.getOutletInformation());
         assertEquals(expectedDefaultOutletName, outletDetailsPanelHandle.getOutletName());
 

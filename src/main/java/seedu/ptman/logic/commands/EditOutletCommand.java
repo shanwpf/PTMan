@@ -6,10 +6,14 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_CONTACT;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_EMAIL;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_OUTLET_NAME;
 
+import seedu.ptman.commons.core.EventsCenter;
+import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
+import seedu.ptman.commons.events.ui.OutletNameChangedEvent;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
@@ -60,7 +64,11 @@ public class EditOutletCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
         try {
-            model.updateOutlet(name, operatingHours, outletContact, outletEmail);
+            OutletInformation editedOutlet = new OutletInformation(model.getOutletInformation());
+            editedOutlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
+            model.updateOutlet(editedOutlet);
+            EventsCenter.getInstance().post(new OutletInformationChangedEvent(editedOutlet.toString()));
+            EventsCenter.getInstance().post(new OutletNameChangedEvent(editedOutlet.getName().toString()));
         } catch (NoOutletInformationFieldChangeException e) {
             throw new CommandException(MESSAGE_EDIT_OUTLET_FAILURE);
         }

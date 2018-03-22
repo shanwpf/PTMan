@@ -11,17 +11,16 @@ import javafx.scene.layout.Region;
 import seedu.ptman.commons.core.LogsCenter;
 import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
 import seedu.ptman.commons.events.ui.OutletNameChangedEvent;
+import seedu.ptman.model.outlet.OutletInformation;
 
 /**
  * The Outlet Panel of the App, which displays the Outlet name and details
  */
 public class OutletDetailsPanel extends UiPart<Region> {
 
-    public static final String OUTLET_NAME_INITIAL = "Outlet Name";
-    public static final String OUTLET_INFO_INITIAL =
-            "No outlet information recorded. Please add outlet information with the editOutlet command.";
-
     private static final String FXML = "OutletDetailsPanel.fxml";
+
+    public final OutletInformation outlet;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -32,11 +31,12 @@ public class OutletDetailsPanel extends UiPart<Region> {
     private Label outletInformation;
 
 
-    public OutletDetailsPanel() {
+    public OutletDetailsPanel(OutletInformation outlet) {
         super(FXML);
+        this.outlet = outlet;
         outletInformation.setWrapText(true);
-        setOutletInformation(OUTLET_INFO_INITIAL);
-        setOutletName(OUTLET_NAME_INITIAL);
+        setOutletInformation(outlet.toString());
+        setOutletName(outlet.getName().toString());
 
         registerAsAnEventHandler(this);
     }
