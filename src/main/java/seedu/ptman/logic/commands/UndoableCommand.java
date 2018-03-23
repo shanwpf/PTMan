@@ -5,9 +5,13 @@ import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
 import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_SHIFTS;
 
+import seedu.ptman.commons.core.EventsCenter;
+import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
+import seedu.ptman.commons.events.ui.OutletNameChangedEvent;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.ReadOnlyPartTimeManager;
+import seedu.ptman.model.outlet.OutletInformation;
 
 /**
  * Represents a command which can be undone and redone.
@@ -41,6 +45,9 @@ public abstract class UndoableCommand extends Command {
         model.resetData(previousPartTimeManager);
         model.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
         model.updateFilteredShiftList(PREDICATE_SHOW_ALL_SHIFTS);
+        OutletInformation previousOutlet = previousPartTimeManager.getOutletInformation();
+        EventsCenter.getInstance().post(new OutletInformationChangedEvent(previousOutlet.toString()));
+        EventsCenter.getInstance().post(new OutletNameChangedEvent(previousOutlet.getName().toString()));
     }
 
     /**

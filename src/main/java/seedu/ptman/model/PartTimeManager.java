@@ -16,11 +16,7 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
-import seedu.ptman.model.outlet.OperatingHours;
-import seedu.ptman.model.outlet.OutletContact;
-import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
-import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.UniqueShiftList;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
@@ -164,12 +160,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
         outlet.setOutletInformation(editedOutlet);
-    }
-
-    public void updateOutlet(OutletName name, OperatingHours operatingHours,
-                             OutletContact outletContact, OutletEmail outletEmail)
-            throws NoOutletInformationFieldChangeException {
-        outlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
     }
 
     public String getOutletInformationMessage() {
@@ -316,28 +306,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     @Override
-    public OutletName getOutletName() {
-        return outlet.getName();
-    }
-
-    @Override
-    public OperatingHours getOperatingHours() {
-        return outlet.getOperatingHours();
-    }
-
-    @Override
-    public OutletContact getOutletContact() {
-        return outlet.getOutletContact();
-    }
-
-    @Override
     public OutletInformation getOutletInformation() {
         return outlet;
-    }
-
-    @Override
-    public OutletEmail getOutletEmail() {
-        return outlet.getOutletEmail();
     }
 
     @Override
