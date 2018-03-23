@@ -207,7 +207,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateShift(Shift shiftToApply, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException {
+        public void updateShift(Shift shiftToApply, Shift editedShift)
+                throws ShiftNotFoundException, DuplicateShiftException {
             fail("This method should not be called.");
         }
 

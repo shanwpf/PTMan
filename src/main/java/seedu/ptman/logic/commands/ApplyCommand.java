@@ -6,8 +6,6 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import java.util.List;
 import java.util.Objects;
 
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
 import seedu.ptman.commons.core.Messages;
 import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.logic.commands.exceptions.CommandException;
@@ -15,7 +13,6 @@ import seedu.ptman.model.Model;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
-import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
