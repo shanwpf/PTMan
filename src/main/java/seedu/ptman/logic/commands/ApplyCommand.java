@@ -11,12 +11,14 @@ import org.omg.CORBA.DynAnyPackage.Invalid;
 import seedu.ptman.commons.core.Messages;
 import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.logic.commands.exceptions.CommandException;
+import seedu.ptman.model.Model;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 
 /**
@@ -42,6 +44,7 @@ public class ApplyCommand extends UndoableCommand {
 
     private Employee applicant;
     private Shift shiftToApply;
+    private Shift editedShift;
 
     public ApplyCommand(Index employeeIndex, Index shiftIndex, Password password) {
         this.password = password;
@@ -59,15 +62,15 @@ public class ApplyCommand extends UndoableCommand {
         }
 
         try {
-            model.addEmployeeToShift(applicant, shiftToApply);
-        } catch (EmployeeNotFoundException pnfe) {
-            throw new AssertionError("The employee cannot be missing");
+            model.updateShift(shiftToApply, editedShift);
         } catch (ShiftNotFoundException e) {
-            throw new AssertionError("The target shift cannot be missing");
-        } catch (DuplicateEmployeeException e) {
-            throw new CommandException("The employee is already in the shift");
+            throw new AssertionError("Shift not found");
+        } catch (DuplicateShiftException e) {
+            throw new AssertionError("Duplicate shift");
         }
+        //model.addEmployeeToShift(applicant, shiftToApply);
 
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         return new CommandResult(String.format(MESSAGE_APPLY_SHIFT_SUCCESS,
                 applicant.getName(), shiftIndex.getOneBased()));
     }
@@ -86,6 +89,12 @@ public class ApplyCommand extends UndoableCommand {
 
         applicant = lastShownList.get(employeeIndex.getZeroBased());
         shiftToApply = shiftList.get(shiftIndex.getZeroBased());
+        editedShift = new Shift(shiftToApply);
+        try {
+            editedShift.addEmployee(applicant);
+        } catch (DuplicateEmployeeException e) {
+            throw new CommandException("Employee already exists in the shift");
+        }
 
     }
 

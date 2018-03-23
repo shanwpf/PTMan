@@ -17,9 +17,13 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 
@@ -127,6 +131,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateShift(Shift target, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException {
+        partTimeManager.updateShift(target, editedShift);
+        indicatePartTimeManagerChanged();
+    }
+
+    @Override
+    public void updateFilteredShiftList(Predicate<Shift> predicate) {
+        requireNonNull(predicate);
+        filteredShifts.setPredicate(predicate);
+    }
+
+    @Override
     public void updateEmployee(Employee target, Employee editedEmployee)
             throws DuplicateEmployeeException, EmployeeNotFoundException {
         requireAllNonNull(target, editedEmployee);
@@ -136,9 +152,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateOutlet(OutletName name, OperatingHours operatingHours) {
-        partTimeManager.updateOutlet(name, operatingHours);
+    public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
+        partTimeManager.updateOutlet(editedOutlet);
         indicatePartTimeManagerChanged();
+    }
+
+    @Override
+    public void updateOutlet(OutletName name, OperatingHours operatingHours,
+                             OutletContact outletContact, OutletEmail outletEmail)
+            throws NoOutletInformationFieldChangeException {
+        partTimeManager.updateOutlet(name, operatingHours, outletContact, outletEmail);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package seedu.ptman.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
@@ -13,6 +15,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
+import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
+import seedu.ptman.model.outlet.OutletName;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 import seedu.ptman.testutil.PartTimeManagerBuilder;
 
 public class ModelManagerTest {
@@ -24,6 +32,23 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredEmployeeList().remove(0);
+    }
+
+    @Test
+    public void updateOutlet() throws NoOutletInformationFieldChangeException {
+        PartTimeManager partTimeManager = new PartTimeManager();
+        PartTimeManager differentPartTimeManager = new PartTimeManager();
+        UserPrefs userPrefs = new UserPrefs();
+
+        OutletInformation outlet = new OutletInformation(new OutletName("test"), new OperatingHours("10:00-15:00"),
+                new OutletContact("123"), new OutletEmail("test@test.com"));
+
+        ModelManager modelManager = new ModelManager(differentPartTimeManager, userPrefs);
+        ModelManager differentModelManager = new ModelManager(partTimeManager, userPrefs);
+
+        assertEquals(modelManager, differentModelManager);
+        modelManager.updateOutlet(outlet);
+        assertNotEquals(modelManager, differentModelManager);
     }
 
     @Test

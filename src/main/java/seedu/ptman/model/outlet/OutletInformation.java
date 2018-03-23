@@ -3,15 +3,11 @@ package seedu.ptman.model.outlet;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
-import javafx.collections.ObservableList;
 import seedu.ptman.model.Password;
-import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
-import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
 /**
  * Represents an outlet in PTMan.
@@ -19,30 +15,43 @@ import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
  */
 public class OutletInformation {
 
-    private static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
-    private static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
+    public static final String DEFAULT_OUTLET_NAME = "DefaultOutlet";
+    public static final String DEFAULT_OPERATING_HOURS = "09:00-22:00";
+    public static final String DEFAULT_OUTLET_CONTACT = "91234567";
+    public static final String DEFAULT_OUTLET_EMAIL = "DefaultOutlet@gmail.com";
 
     private OutletName name;
     private Password masterPassword;
     private OperatingHours operatingHours;
+    private OutletContact outletContact;
+    private OutletEmail outletEmail;
     private Timetable timetable;
-    private UniqueShiftList uniqueShiftList;
 
     /**
      * Constructs an {@code OutletInformation}.
      *
      * @param name a valid outlet name
-     * @param masterPassword a valid master password
      * @param operatingHours a valid operating hours
      */
-    public OutletInformation(OutletName name, Password masterPassword, OperatingHours operatingHours,
-                             Timetable timetable, UniqueShiftList uniqueShiftList) {
-        requireAllNonNull(name, masterPassword, operatingHours, timetable);
+    public OutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
+                             OutletEmail outletEmail) {
+        requireAllNonNull(name, operatingHours, outletContact, outletEmail);
         this.name = name;
-        this.masterPassword = masterPassword;
         this.operatingHours = operatingHours;
-        this.timetable = timetable;
-        this.uniqueShiftList = uniqueShiftList;
+        this.outletContact = outletContact;
+        this.outletEmail = outletEmail;
+        //default values
+        this.timetable = new Timetable(LocalDate.now());
+        this.masterPassword = new Password();
+    }
+
+    public OutletInformation(OutletInformation outlet) {
+        this.name = new OutletName(outlet.getName().toString());
+        this.masterPassword = new Password(outlet.getMasterPassword());
+        this.outletContact = new OutletContact(outlet.getOutletContact().toString());
+        this.timetable = new Timetable(outlet.getTimetable());
+        this.operatingHours = new OperatingHours(outlet.getOperatingHours().toString());
+        this.outletEmail = new OutletEmail(outlet.getOutletEmail().toString());
     }
 
     /**
@@ -52,13 +61,13 @@ public class OutletInformation {
         this.name = new OutletName(DEFAULT_OUTLET_NAME);
         this.masterPassword = new Password();
         this.operatingHours = new OperatingHours(DEFAULT_OPERATING_HOURS);
+        this.outletContact = new OutletContact(DEFAULT_OUTLET_CONTACT);
+        this.outletEmail = new OutletEmail(DEFAULT_OUTLET_EMAIL);
         this.timetable = new Timetable(LocalDate.now());
-        this.uniqueShiftList = new UniqueShiftList();
     }
 
     public void addShift(Shift shift) throws DuplicateShiftException {
         timetable.addShift(shift);
-        uniqueShiftList.add(shift);
     }
 
     public OutletName getName() {
@@ -73,14 +82,51 @@ public class OutletInformation {
         return operatingHours;
     }
 
+    public OutletContact getOutletContact() {
+        return outletContact;
+    }
+
+    public OutletEmail getOutletEmail() {
+        return outletEmail;
+    }
+
     public Timetable getTimetable() {
         return timetable;
     }
 
-    public void setOutletInformation(OutletName name, OperatingHours operatingHours) {
-        requireAllNonNull(name, operatingHours);
-        this.name = name;
-        this.operatingHours = operatingHours;
+    public void setOutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
+                                     OutletEmail outletEmail)
+            throws NoOutletInformationFieldChangeException {
+        if (name == null && operatingHours == null && outletContact == null && outletEmail == null) {
+            throw new NoOutletInformationFieldChangeException();
+        }
+        if (name != null) {
+            this.name = name;
+        }
+        if (operatingHours != null) {
+            this.operatingHours = operatingHours;
+        }
+        if (outletContact != null) {
+            this.outletContact = outletContact;
+        }
+        if (outletEmail != null) {
+            this.outletEmail = outletEmail;
+        }
+    }
+
+    public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
+        try {
+            requireAllNonNull(outlet.getName(), outlet.getOperatingHours(), outlet.getMasterPassword(),
+                    outlet.getTimetable(), outlet.getOutletEmail(), outlet.getOutletContact());
+        } catch (NullPointerException e) {
+            throw new NoOutletInformationFieldChangeException();
+        }
+        this.name = outlet.getName();
+        this.operatingHours = outlet.getOperatingHours();
+        this.outletContact = outlet.getOutletContact();
+        this.outletEmail = outlet.getOutletEmail();
+        this.timetable = outlet.getTimetable();
+        this.masterPassword = outlet.getMasterPassword();
     }
 
     @Override
@@ -90,13 +136,14 @@ public class OutletInformation {
                 && ((OutletInformation) other).getName().equals(this.getName())
                 && ((OutletInformation) other).getMasterPassword().equals(this.getMasterPassword())
                 && ((OutletInformation) other).getOperatingHours().equals(this.getOperatingHours())
-                && ((OutletInformation) other).getTimetable().equals(this.getTimetable()));
+                && ((OutletInformation) other).getOutletContact().equals(this.getOutletContact())
+                && ((OutletInformation) other).getOutletEmail().equals(this.getOutletEmail()));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, masterPassword, operatingHours, timetable);
+        return Objects.hash(name, masterPassword, operatingHours, outletContact, outletEmail);
     }
 
     @Override
@@ -105,23 +152,12 @@ public class OutletInformation {
         builder.append("Outlet Name: ")
                 .append(getName())
                 .append(" Operating Hour: ")
-                .append(getOperatingHours());
+                .append(getOperatingHours())
+                .append(" Contact: ")
+                .append(getOutletContact())
+                .append(" Email: ")
+                .append(getOutletEmail());
         return builder.toString();
     }
 
-    public boolean removeShift(Shift key) throws ShiftNotFoundException {
-        return uniqueShiftList.remove(key);
-    }
-
-    public ObservableList<Shift> getShiftList() {
-        return uniqueShiftList.asObservableList();
-    }
-
-    public void addEmployeeToShift(Employee employee, Shift shift) throws ShiftNotFoundException, DuplicateEmployeeException {
-        uniqueShiftList.addEmployeeToShift(employee, shift);
-    }
-
-    public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
-        uniqueShiftList.setShifts(shifts);
-    }
 }

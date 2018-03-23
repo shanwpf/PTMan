@@ -7,9 +7,13 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
+import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 
@@ -58,6 +62,7 @@ public interface Model {
      * Delete tag from all employees
      */
     void deleteTagFromAllEmployee(Tag tag);
+
     /**
      * Replaces the given employee {@code target} with {@code editedEmployee}.
      *
@@ -67,10 +72,12 @@ public interface Model {
      */
     void updateEmployee(Employee target, Employee editedEmployee)
             throws DuplicateEmployeeException, EmployeeNotFoundException;
-    /**
-     * Replaces the given employee {@code target} with {@code editedEmployee}.
-     */
-    void updateOutlet(OutletName name, OperatingHours operatingHours);
+
+    void updateOutlet(OutletInformation outlet) throws NoOutletInformationFieldChangeException;
+
+    void updateOutlet(OutletName name, OperatingHours operatingHours,
+                      OutletContact outletContact, OutletEmail outletEmail)
+            throws NoOutletInformationFieldChangeException;
 
     String getOutletInformationMessage();
 
@@ -89,4 +96,8 @@ public interface Model {
     void deleteShift(Shift shiftToDelete) throws ShiftNotFoundException;
 
     void addEmployeeToShift(Employee employee, Shift shift) throws ShiftNotFoundException, EmployeeNotFoundException, DuplicateEmployeeException;
+
+    void updateShift(Shift shiftToApply, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException;
+
+    void updateFilteredShiftList(Predicate<Shift> predicate);
 }

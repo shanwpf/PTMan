@@ -44,7 +44,10 @@ public class Password {
         passwordHash = hashCode;
     }
 
-
+    public Password(Password masterPassword) {
+        requireNonNull(masterPassword);
+        this.passwordHash = masterPassword.getPasswordHash();
+    }
 
 
     /**

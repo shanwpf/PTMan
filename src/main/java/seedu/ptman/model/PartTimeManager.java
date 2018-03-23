@@ -2,6 +2,7 @@ package seedu.ptman.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,10 +17,14 @@ import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
 import seedu.ptman.model.outlet.OperatingHours;
+import seedu.ptman.model.outlet.OutletContact;
+import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.Shift;
+import seedu.ptman.model.outlet.UniqueShiftList;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
 import seedu.ptman.model.tag.UniqueTagList;
@@ -31,9 +36,11 @@ import seedu.ptman.model.tag.UniqueTagList;
 public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     private final UniqueEmployeeList employees;
+    private final UniqueShiftList shifts;
     private final UniqueTagList tags;
-    private boolean isAdminMode;
     private final OutletInformation outlet;
+    private boolean isAdminMode;
+
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -43,6 +50,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      */
     {
         employees = new UniqueEmployeeList();
+        shifts = new UniqueShiftList();
         tags = new UniqueTagList();
         outlet = new OutletInformation();
         isAdminMode = false;
@@ -78,8 +86,12 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         this.employees.setEmployees(employees);
     }
 
+    public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
+        this.outlet.setOutletInformation(outlet);
+    }
+
     public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
-        this.outlet.setShifts(shifts);
+        this.shifts.setShifts(shifts);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -96,14 +108,19 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
-        List<Shift> syncedShiftList = newData.getShiftList();
+        List<Shift> syncedShiftList = new ArrayList<>(newData.getShiftList());
+        OutletInformation syncedOutlet = new OutletInformation(newData.getOutletInformation());
+
         try {
             setEmployees(syncedEmployeeList);
             setShifts(syncedShiftList);
+            setOutletInformation(syncedOutlet);
         } catch (DuplicateEmployeeException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate employees");
         } catch (DuplicateShiftException e) {
             throw new AssertionError("PartTimeManagers should not have duplicate shifts");
+        } catch (NoOutletInformationFieldChangeException e) {
+            throw new AssertionError("PartTimeManagers should not have empty outlet information");
         }
     }
 
@@ -145,8 +162,14 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         employees.setEmployee(target, syncedEditedEmployee);
     }
 
-    public void updateOutlet(OutletName name, OperatingHours operatingHours) {
-        outlet.setOutletInformation(name, operatingHours);
+    public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
+        outlet.setOutletInformation(editedOutlet);
+    }
+
+    public void updateOutlet(OutletName name, OperatingHours operatingHours,
+                             OutletContact outletContact, OutletEmail outletEmail)
+            throws NoOutletInformationFieldChangeException {
+        outlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
     }
 
     public String getOutletInformationMessage() {
@@ -195,7 +218,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     public boolean removeShift(Shift key) throws ShiftNotFoundException {
-        return outlet.removeShift(key);
+        return shifts.remove(key);
     }
 
     /**
@@ -204,7 +227,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      * @throws DuplicateShiftException if a equivalent shift already exists.
      */
     public void addShift(Shift p) throws DuplicateShiftException {
-        outlet.addShift(p);
+        shifts.add(p);
     }
 
     //// tag-level operations
@@ -284,7 +307,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
 
     @Override
     public ObservableList<Shift> getShiftList() {
-        return outlet.getShiftList();
+        return shifts.asObservableList();
     }
 
     @Override
@@ -293,11 +316,37 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     @Override
+    public OutletName getOutletName() {
+        return outlet.getName();
+    }
+
+    @Override
+    public OperatingHours getOperatingHours() {
+        return outlet.getOperatingHours();
+    }
+
+    @Override
+    public OutletContact getOutletContact() {
+        return outlet.getOutletContact();
+    }
+
+    @Override
+    public OutletInformation getOutletInformation() {
+        return outlet;
+    }
+
+    @Override
+    public OutletEmail getOutletEmail() {
+        return outlet.getOutletEmail();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PartTimeManager // instanceof handles nulls
                 && this.employees.equals(((PartTimeManager) other).employees)
-                && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags));
+                && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags))
+                && this.outlet.equals(((PartTimeManager) other).outlet);
     }
 
     @Override
@@ -307,7 +356,11 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     }
 
     public void addEmployeeToShift(Employee employee, Shift shift)
-            throws ShiftNotFoundException, DuplicateEmployeeException {
-        outlet.addEmployeeToShift(employee, shift);
+            throws DuplicateEmployeeException, ShiftNotFoundException {
+        shifts.addEmployeeToShift(employee, shift);
+    }
+
+    public void updateShift(Shift target, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException {
+        shifts.setShift(target, editedShift);
     }
 }

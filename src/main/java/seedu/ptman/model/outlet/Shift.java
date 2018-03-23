@@ -5,6 +5,8 @@ import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import com.google.common.collect.Iterables;
+
 import javafx.collections.ObservableList;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
@@ -32,6 +34,15 @@ public class Shift {
         this.uniqueEmployeeList = new UniqueEmployeeList();
     }
 
+    public Shift(Shift shift) {
+        this.startTime = shift.getStartTime();
+        this.endTime = shift.getEndTime();
+        this.capacity = shift.getCapacity();
+        this.day = shift.getDay();
+        this.uniqueEmployeeList = new UniqueEmployeeList();
+        setEmployees(shift);
+    }
+
     protected boolean contains(Employee employee) {
         return uniqueEmployeeList.contains(employee);
     }
@@ -41,7 +52,7 @@ public class Shift {
      * @param employee
      * @throws DuplicateEmployeeException
      */
-    protected void addEmployee(Employee employee) throws DuplicateEmployeeException {
+    public void addEmployee(Employee employee) throws DuplicateEmployeeException {
         uniqueEmployeeList.add(employee);
     }
 
@@ -95,6 +106,12 @@ public class Shift {
         return capacity;
     }
 
+    public int getSlotsLeft() {
+        int numEmployees = Iterables.size(uniqueEmployeeList);
+        return capacity.getCapacity() - numEmployees;
+
+    }
+
     /**
      * Compares this shift to another. Returns a negative integer if the argument is a later shift,
      * 0 if the shifts are equal, or a positive integer if the argument is a later shift.
@@ -108,6 +125,20 @@ public class Shift {
             return -1;
         } else {
             return 1;
+        }
+    }
+
+    public UniqueEmployeeList getUniqueEmployeeList() {
+        return uniqueEmployeeList;
+    }
+
+    public void setEmployees(Shift shift) {
+        for (final Employee employee : shift.getEmployeeList()) {
+            try {
+                uniqueEmployeeList.add(employee);
+            } catch (DuplicateEmployeeException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

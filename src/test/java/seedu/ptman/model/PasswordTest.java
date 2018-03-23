@@ -14,7 +14,8 @@ public class PasswordTest {
     public static final String DEFAULT2_HASH = "j9R1Y0IIRVI052lxIOkweVd88O+EiSLGJvnXAZXKD40=";
     @Test
     public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Password(null));
+        Assert.assertThrows(NullPointerException.class, () -> new Password((Password) null));
+        Assert.assertThrows(NullPointerException.class, () -> new Password((String) null));
     }
 
     @Test

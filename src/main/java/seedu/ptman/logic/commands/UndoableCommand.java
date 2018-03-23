@@ -3,6 +3,7 @@ package seedu.ptman.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_EMPLOYEES;
+import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_SHIFTS;
 
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.PartTimeManager;
@@ -39,6 +40,7 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousPartTimeManager);
         model.resetData(previousPartTimeManager);
         model.updateFilteredEmployeeList(PREDICATE_SHOW_ALL_EMPLOYEES);
+        model.updateFilteredShiftList(PREDICATE_SHOW_ALL_SHIFTS);
     }
 
     /**

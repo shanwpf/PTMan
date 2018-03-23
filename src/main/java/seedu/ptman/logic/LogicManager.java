@@ -12,6 +12,7 @@ import seedu.ptman.logic.parser.PartTimeManagerParser;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.outlet.Shift;
 
 /**
  * The main LogicManager of the app.
@@ -48,6 +49,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Employee> getFilteredEmployeeList() {
         return model.getFilteredEmployeeList();
+    }
+
+    @Override
+    public ObservableList<Shift> getFilteredShiftList() {
+        return model.getFilteredShiftList();
     }
 
     @Override
