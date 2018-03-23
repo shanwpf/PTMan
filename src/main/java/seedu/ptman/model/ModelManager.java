@@ -205,7 +205,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return partTimeManager.equals(other.partTimeManager)
-                && filteredEmployees.equals(other.filteredEmployees);
+                && filteredEmployees.equals(other.filteredEmployees)
+                && filteredShifts.equals(other.filteredShifts);
     }
 
 }

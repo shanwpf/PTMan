@@ -346,7 +346,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
                 || (other instanceof PartTimeManager // instanceof handles nulls
                 && this.employees.equals(((PartTimeManager) other).employees)
                 && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags))
-                && this.outlet.equals(((PartTimeManager) other).outlet);
+                && this.outlet.equals(((PartTimeManager) other).outlet)
+                && this.shifts.equals(((PartTimeManager) other).shifts);
     }
 
     @Override

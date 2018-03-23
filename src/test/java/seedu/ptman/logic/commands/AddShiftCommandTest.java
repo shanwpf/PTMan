@@ -208,6 +208,16 @@ public class AddShiftCommandTest {
                 throws ShiftNotFoundException, EmployeeNotFoundException, DuplicateEmployeeException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateShift(Shift shiftToApply, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredShiftList(Predicate<Shift> predicate) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

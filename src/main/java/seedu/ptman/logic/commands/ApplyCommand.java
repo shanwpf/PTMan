@@ -68,7 +68,6 @@ public class ApplyCommand extends UndoableCommand {
         } catch (DuplicateShiftException e) {
             throw new AssertionError("Duplicate shift");
         }
-        //model.addEmployeeToShift(applicant, shiftToApply);
 
         model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         return new CommandResult(String.format(MESSAGE_APPLY_SHIFT_SUCCESS,

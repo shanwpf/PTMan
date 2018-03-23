@@ -74,11 +74,11 @@ public class Shift {
             return false;
         }
         Shift shift = (Shift) o;
-        return Objects.equals(startTime, shift.startTime)
-                && Objects.equals(endTime, shift.endTime)
-                && Objects.equals(day, shift.day)
-                && Objects.equals(uniqueEmployeeList, shift.uniqueEmployeeList)
-                && Objects.equals(capacity, shift.capacity);
+        return startTime.equals(shift.startTime)
+                && endTime.equals(shift.endTime)
+                && day.equals(shift.day)
+                && uniqueEmployeeList.equals(shift.uniqueEmployeeList)
+                && capacity.equals(shift.capacity);
     }
 
     @Override
