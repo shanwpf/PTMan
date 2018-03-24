@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.ReadOnlyPartTimeManager;
+import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
 /**
  * An Immutable PartTimeManager that is serializable to XML format

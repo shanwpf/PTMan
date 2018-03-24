@@ -12,6 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String partTimeManagerFilePath = "data/parttimemanager.xml";
     private String partTimeManagerName = "MyPartTimeManager";
+    private String outletInformationFilePath = "data/outletinformation.xml";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -35,6 +36,14 @@ public class UserPrefs {
 
     public void setPartTimeManagerFilePath(String partTimeManagerFilePath) {
         this.partTimeManagerFilePath = partTimeManagerFilePath;
+    }
+
+    public String getOutletInformationFilePath() {
+        return outletInformationFilePath;
+    }
+
+    public void setOutletInformationFilePath(String outletInformationFilePath) {
+        this.outletInformationFilePath = outletInformationFilePath;
     }
 
     public String getPartTimeManagerName() {
