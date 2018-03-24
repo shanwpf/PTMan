@@ -41,7 +41,7 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
 
         OutletInformation outlet = new OutletInformation(new OutletName("test"), new OperatingHours("10:00-15:00"),
-                new OutletContact("123"), new OutletEmail("test@test.com"));
+                new OutletContact("123"), new OutletEmail("test@test.com"), new Password());
 
         ModelManager modelManager = new ModelManager(differentPartTimeManager, userPrefs, new OutletInformation());
         ModelManager differentModelManager = new ModelManager(partTimeManager, userPrefs, new OutletInformation());

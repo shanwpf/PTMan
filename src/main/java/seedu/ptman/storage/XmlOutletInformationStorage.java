@@ -20,7 +20,6 @@ import seedu.ptman.model.outlet.OutletInformation;
 public class XmlOutletInformationStorage implements OutletInformationStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlOutletInformationStorage.class);
-    private static final String BACKUP_FILE_EXTENSION = ".backup";
 
     private String filePath;
 

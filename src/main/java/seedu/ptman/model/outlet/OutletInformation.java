@@ -34,15 +34,14 @@ public class OutletInformation {
      * @param operatingHours a valid operating hours
      */
     public OutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
-                             OutletEmail outletEmail) {
+                             OutletEmail outletEmail, Password masterPassword) {
         requireAllNonNull(name, operatingHours, outletContact, outletEmail);
         this.name = name;
         this.operatingHours = operatingHours;
         this.outletContact = outletContact;
         this.outletEmail = outletEmail;
-        //default values
+        this.masterPassword = masterPassword;
         this.timetable = new Timetable(LocalDate.now());
-        this.masterPassword = new Password();
     }
 
     public OutletInformation(OutletInformation outlet) {

@@ -17,8 +17,9 @@ public class OutletInformationTest {
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        Password password = new Password();
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(null, operatingHours,
-                outletContact, outletEmail));
+                outletContact, outletEmail, password));
     }
 
     @Test
@@ -26,8 +27,9 @@ public class OutletInformationTest {
         OutletName name = new OutletName("outlet");
         OutletContact outletContact = new OutletContact("91234567");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        Password password = new Password();
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
-                null, outletContact, outletEmail));
+                null, outletContact, outletEmail, password));
     }
 
     @Test
@@ -35,8 +37,9 @@ public class OutletInformationTest {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        Password password = new Password();
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name,
-                operatingHours, null, outletEmail));
+                operatingHours, null, outletEmail, password));
     }
 
     @Test
@@ -44,8 +47,9 @@ public class OutletInformationTest {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
+        Password password = new Password();
         Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name, operatingHours,
-                outletContact, null));
+                outletContact, null, password));
     }
 
     @Test
@@ -54,8 +58,9 @@ public class OutletInformationTest {
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
-        OutletInformation other = new OutletInformation(name, operatingHours, outletContact, outletEmail);
+        Password password = new Password();
+        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail, password);
+        OutletInformation other = new OutletInformation(name, operatingHours, outletContact, outletEmail, password);
         assertTrue(outlet.equals(other));
     }
 
@@ -66,7 +71,8 @@ public class OutletInformationTest {
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
+        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail,
+                masterPassword);
         assertEquals(outlet.hashCode(), Objects.hash(name, masterPassword, operatingHours, outletContact, outletEmail));
     }
 
@@ -76,7 +82,8 @@ public class OutletInformationTest {
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
         OutletContact outletContact = new OutletContact("91234567");
         OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
-        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail);
+        Password password = new Password();
+        OutletInformation outlet = new OutletInformation(name, operatingHours, outletContact, outletEmail, password);
         String expected = "Operating Hour: 09:00-22:00 Contact: 91234567 "
                 + "Email: outlet@gmail.com";
         assertEquals(outlet.toString(), expected);

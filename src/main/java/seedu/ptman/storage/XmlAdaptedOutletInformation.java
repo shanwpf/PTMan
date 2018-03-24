@@ -1,6 +1,7 @@
 package seedu.ptman.storage;
 
 import seedu.ptman.commons.exceptions.IllegalValueException;
+import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
@@ -18,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "outletinformation")
 public class XmlAdaptedOutletInformation {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Outlet's %s field is missing!";
+    public static final String FAIL_MESSAGE = "Outlet's %s field is missing!";
 
     @XmlElement(required = true)
     private String outletName;
@@ -55,47 +56,44 @@ public class XmlAdaptedOutletInformation {
      * Converts this jaxb-friendly adapted outlet object into the model's OutletInformation object
      */
     public OutletInformation toModelType() throws IllegalValueException {
-        //handle outlet name
         if (this.outletName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    OutletName.class.getSimpleName()));
+            throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletName.class.getSimpleName()));
         }
         if (!OutletName.isValidName(this.outletName)) {
             throw new IllegalValueException(OutletName.MESSAGE_NAME_CONSTRAINTS);
         }
         final OutletName outletName = new OutletName(this.outletName);
 
-        //handle operating hours
         if (this.operatingHours == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    OperatingHours.class.getSimpleName()));
+            throw new IllegalValueException(String.format(FAIL_MESSAGE, OperatingHours.class.getSimpleName()));
         }
         if (!OperatingHours.isValidOperatingHours(this.operatingHours)) {
             throw new IllegalValueException(OperatingHours.MESSAGE_OPERATING_HOUR_CONSTRAINTS);
         }
         final OperatingHours operatingHours = new OperatingHours(this.operatingHours);
 
-        //handle outlet contact
         if (this.outletContact == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    OutletContact.class.getSimpleName()));
+            throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletContact.class.getSimpleName()));
         }
         if (!OutletContact.isValidOutletContact(this.outletContact)) {
             throw new IllegalValueException(OutletContact.MESSAGE_OUTLET_CONTACT_CONSTRAINTS);
         }
         final OutletContact outletContact = new OutletContact(this.outletContact);
 
-        //handle outlet email
         if (this.outletEmail == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    OutletEmail.class.getSimpleName()));
+            throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletEmail.class.getSimpleName()));
         }
         if (!OutletEmail.isValidOutletEmail(this.outletEmail)) {
             throw new IllegalValueException(OutletEmail.MESSAGE_OUTLET_EMAIL_CONSTRAINTS);
         }
         final OutletEmail outletEmail = new OutletEmail(this.outletEmail);
 
-        return new OutletInformation(outletName, operatingHours, outletContact, outletEmail);
+        if (this.passwordHash == null) {
+            throw new IllegalValueException(String.format(FAIL_MESSAGE, Password.class.getSimpleName()));
+        }
+        final Password masterPassword = new Password(this.passwordHash);
+
+        return new OutletInformation(outletName, operatingHours, outletContact, outletEmail, masterPassword);
     }
 
     @Override
