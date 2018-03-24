@@ -32,7 +32,9 @@ public class StorageManagerTest {
     public void setUp() {
         XmlPartTimeManagerStorage partTimeManagerStorage = new XmlPartTimeManagerStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(partTimeManagerStorage, userPrefsStorage);
+        XmlOutletInformationStorage outletInformationStorage =
+                new XmlOutletInformationStorage(getTempFilePath("outlet"));
+        storageManager = new StorageManager(partTimeManagerStorage, userPrefsStorage, outletInformationStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -76,7 +78,8 @@ public class StorageManagerTest {
     public void handlePartTimeManagerChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlPartTimeManagerStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"));
+                                             new JsonUserPrefsStorage("dummy"),
+                new XmlOutletInformationStorage("dummy"));
         storage.handlePartTimeManagerChangedEvent(new PartTimeManagerChangedEvent(new PartTimeManager()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
