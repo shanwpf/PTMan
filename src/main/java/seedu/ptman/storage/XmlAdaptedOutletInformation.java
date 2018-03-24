@@ -52,47 +52,67 @@ public class XmlAdaptedOutletInformation {
         passwordHash = source.getMasterPassword().getPasswordHash();
     }
 
-    /**
-     * Converts this jaxb-friendly adapted outlet object into the model's OutletInformation object
-     */
-    public OutletInformation toModelType() throws IllegalValueException {
+    private OutletName setOutletName() throws IllegalValueException {
         if (this.outletName == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletName.class.getSimpleName()));
         }
         if (!OutletName.isValidName(this.outletName)) {
             throw new IllegalValueException(OutletName.MESSAGE_NAME_CONSTRAINTS);
         }
-        final OutletName outletName = new OutletName(this.outletName);
+        OutletName outletName = new OutletName(this.outletName);
+        return outletName;
+    }
 
+    private OperatingHours setOperatingHours() throws IllegalValueException {
         if (this.operatingHours == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OperatingHours.class.getSimpleName()));
         }
         if (!OperatingHours.isValidOperatingHours(this.operatingHours)) {
             throw new IllegalValueException(OperatingHours.MESSAGE_OPERATING_HOUR_CONSTRAINTS);
         }
-        final OperatingHours operatingHours = new OperatingHours(this.operatingHours);
+        OperatingHours operatingHours = new OperatingHours(this.operatingHours);
+        return operatingHours;
+    }
 
+    private OutletContact setOutletContact() throws IllegalValueException {
         if (this.outletContact == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletContact.class.getSimpleName()));
         }
         if (!OutletContact.isValidOutletContact(this.outletContact)) {
             throw new IllegalValueException(OutletContact.MESSAGE_OUTLET_CONTACT_CONSTRAINTS);
         }
-        final OutletContact outletContact = new OutletContact(this.outletContact);
+        OutletContact outletContact = new OutletContact(this.outletContact);
+        return outletContact;
+    }
 
+    private OutletEmail setOutletEmail() throws IllegalValueException {
         if (this.outletEmail == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletEmail.class.getSimpleName()));
         }
         if (!OutletEmail.isValidOutletEmail(this.outletEmail)) {
             throw new IllegalValueException(OutletEmail.MESSAGE_OUTLET_EMAIL_CONSTRAINTS);
         }
-        final OutletEmail outletEmail = new OutletEmail(this.outletEmail);
+        OutletEmail outletEmail = new OutletEmail(this.outletEmail);
+        return outletEmail;
+    }
 
+    private Password setPassword() throws IllegalValueException {
         if (this.passwordHash == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, Password.class.getSimpleName()));
         }
-        final Password masterPassword = new Password(this.passwordHash);
+        Password masterPassword = new Password(this.passwordHash);
+        return masterPassword;
+    }
 
+    /**
+     * Converts this jaxb-friendly adapted outlet object into the model's OutletInformation object
+     */
+    public OutletInformation toModelType() throws IllegalValueException {
+        final OutletName outletName = setOutletName();
+        final OperatingHours operatingHours = setOperatingHours();
+        final OutletContact outletContact = setOutletContact();
+        final OutletEmail outletEmail = setOutletEmail();
+        final Password masterPassword = setPassword();
         return new OutletInformation(outletName, operatingHours, outletContact, outletEmail, masterPassword);
     }
 
