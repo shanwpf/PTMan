@@ -1,7 +1,6 @@
 package seedu.ptman.commons.events.ui;
 
 import seedu.ptman.commons.events.BaseEvent;
-import seedu.ptman.model.outlet.Announcement;
 
 /**
  * Represents an announcement change in the Outlet Information

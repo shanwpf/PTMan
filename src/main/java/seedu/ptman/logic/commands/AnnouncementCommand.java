@@ -2,7 +2,6 @@ package seedu.ptman.logic.commands;
 
 import seedu.ptman.commons.core.EventsCenter;
 import seedu.ptman.commons.events.ui.AnnouncementChangedEvent;
-import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.outlet.Announcement;
 import seedu.ptman.model.outlet.OutletInformation;

@@ -71,7 +71,7 @@ public class OutletDetailsPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleAnnouncementChangedEvent(AnnouncementChangedEvent event) {
+    public void handleAnnouncementChangedEvent(AnnouncementChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> setAnnouncement(event.information));
     }
