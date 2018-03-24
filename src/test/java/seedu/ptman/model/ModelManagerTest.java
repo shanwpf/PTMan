@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.ptman.model.employee.NameContainsKeywordsPredicate;
+import seedu.ptman.model.outlet.Announcement;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
@@ -41,7 +42,8 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
 
         OutletInformation outlet = new OutletInformation(new OutletName("test"), new OperatingHours("10:00-15:00"),
-                new OutletContact("123"), new OutletEmail("test@test.com"), new Password());
+                new OutletContact("123"), new OutletEmail("test@test.com"),
+                new Password(), new Announcement("New Announcement."));
 
         ModelManager modelManager = new ModelManager(differentPartTimeManager, userPrefs, new OutletInformation());
         ModelManager differentModelManager = new ModelManager(partTimeManager, userPrefs, new OutletInformation());

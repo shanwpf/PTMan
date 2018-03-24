@@ -15,5 +15,9 @@
                    xmlns:fx="http://javafx.com/fxml/1">
             <Label fx:id="outletInformation" styleClass="outlet-information"/>
         </StackPane>
+        <StackPane fx:id="placeHolder2" xmlns="http://javafx.com/javafx/8"
+                   xmlns:fx="http://javafx.com/fxml/1">
+            <Label fx:id="announcement" styleClass="announcement"/>
+        </StackPane>
     </VBox>
 </StackPane>

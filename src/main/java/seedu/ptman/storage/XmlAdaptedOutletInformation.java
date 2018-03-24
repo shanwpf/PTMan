@@ -2,6 +2,7 @@ package seedu.ptman.storage;
 
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.Password;
+import seedu.ptman.model.outlet.Announcement;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
@@ -31,6 +32,8 @@ public class XmlAdaptedOutletInformation {
     private String outletEmail;
     @XmlElement(required = true)
     private String passwordHash;
+    @XmlElement(required = true)
+    private String announcement;
 
     public XmlAdaptedOutletInformation() {
         this.outletName = null;
@@ -38,6 +41,7 @@ public class XmlAdaptedOutletInformation {
         this.outletContact = null;
         this.outletEmail = null;
         this.passwordHash = null;
+        this.announcement = null;
     }
 
     /**
@@ -50,6 +54,7 @@ public class XmlAdaptedOutletInformation {
         outletContact = source.getOutletContact().value;
         outletEmail = source.getOutletEmail().value;
         passwordHash = source.getMasterPassword().getPasswordHash();
+        announcement = source.getAnnouncement().value;
     }
 
     private OutletName setOutletName() throws IllegalValueException {
@@ -104,6 +109,14 @@ public class XmlAdaptedOutletInformation {
         return masterPassword;
     }
 
+    private Announcement setAnnouncement() throws IllegalValueException {
+        if (this.announcement == null) {
+            throw new IllegalValueException(String.format(FAIL_MESSAGE, Announcement.class.getSimpleName()));
+        }
+        Announcement announcement = new Announcement(this.announcement);
+        return announcement;
+    }
+
     /**
      * Converts this jaxb-friendly adapted outlet object into the model's OutletInformation object
      */
@@ -113,7 +126,9 @@ public class XmlAdaptedOutletInformation {
         final OutletContact outletContact = setOutletContact();
         final OutletEmail outletEmail = setOutletEmail();
         final Password masterPassword = setPassword();
-        return new OutletInformation(outletName, operatingHours, outletContact, outletEmail, masterPassword);
+        final Announcement announcement = setAnnouncement();
+        return new OutletInformation(outletName, operatingHours, outletContact, outletEmail,
+                masterPassword, announcement);
     }
 
     @Override
@@ -130,6 +145,8 @@ public class XmlAdaptedOutletInformation {
         return Objects.equals(outletName, otherOutlet.outletName)
                 && Objects.equals(operatingHours, otherOutlet.operatingHours)
                 && Objects.equals(outletContact, otherOutlet.outletContact)
-                && Objects.equals(outletEmail, otherOutlet.outletEmail);
+                && Objects.equals(outletEmail, otherOutlet.outletEmail)
+                && Objects.equals(passwordHash, otherOutlet.passwordHash)
+                && Objects.equals(announcement, otherOutlet.announcement);
     }
 }
