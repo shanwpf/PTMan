@@ -1,12 +1,12 @@
 package seedu.ptman.logic.parser;
 
-import seedu.ptman.logic.commands.AnnouncementCommand;
-import seedu.ptman.model.outlet.Announcement;
-
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
+
+import seedu.ptman.logic.commands.AnnouncementCommand;
+import seedu.ptman.model.outlet.Announcement;
 
 public class AnnouncementCommandParserTest {
 

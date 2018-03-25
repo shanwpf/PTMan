@@ -1,12 +1,13 @@
 package seedu.ptman.logic.commands;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.ptman.commons.core.Messages.MESSAGE_ACCESS_DENIED;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalPartTimeManager;
+
+import org.junit.Test;
 
 import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
@@ -16,10 +17,6 @@ import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.outlet.Announcement;
 import seedu.ptman.model.outlet.OutletInformation;
-
-import java.util.List;
-
-import org.junit.Test;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AnnouncementCommand}.
