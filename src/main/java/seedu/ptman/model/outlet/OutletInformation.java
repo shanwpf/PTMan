@@ -38,7 +38,7 @@ public class OutletInformation {
      */
     public OutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact,
                              OutletEmail outletEmail, Password masterPassword, Announcement announcement) {
-        requireAllNonNull(name, operatingHours, outletContact, outletEmail);
+        requireAllNonNull(name, operatingHours, outletContact, outletEmail, masterPassword, announcement);
         this.name = name;
         this.operatingHours = operatingHours;
         this.outletContact = outletContact;
