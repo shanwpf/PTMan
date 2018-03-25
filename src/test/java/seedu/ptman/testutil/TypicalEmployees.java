@@ -92,13 +92,6 @@ public class TypicalEmployees {
                 throw new AssertionError("not possible");
             }
         }
-        for (Shift shift : getTypicalShifts()) {
-            try {
-                ptman.addShift(shift);
-            } catch (DuplicateShiftException e) {
-                throw new AssertionError("not possible");
-            }
-        }
         return ptman;
     }
 

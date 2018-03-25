@@ -3,6 +3,7 @@ package seedu.ptman.model.outlet;
 import static seedu.ptman.commons.util.AppUtil.checkArgument;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.google.common.collect.Iterables;
@@ -25,7 +26,7 @@ public class Shift {
     private Capacity capacity;
 
     public Shift(Day day, Time startTime, Time endTime, Capacity capacity) {
-        requireAllNonNull(startTime, endTime, capacity);
+        requireAllNonNull(day, startTime, endTime, capacity);
         checkArgument(endTime.isAfter(startTime), MESSAGE_SHIFT_CONSTRAINTS);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -41,6 +42,21 @@ public class Shift {
         this.day = shift.getDay();
         this.uniqueEmployeeList = new UniqueEmployeeList();
         setEmployees(shift);
+    }
+
+    public Shift(Day day, Time startTime, Time endTime, Capacity capacity, List<Employee> employees) {
+        requireAllNonNull(day, startTime, endTime, capacity, employees);
+        checkArgument(endTime.isAfter(startTime), MESSAGE_SHIFT_CONSTRAINTS);
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.capacity = capacity;
+        this.day = day;
+        this.uniqueEmployeeList = new UniqueEmployeeList();
+        try {
+            this.uniqueEmployeeList.setEmployees(employees);
+        } catch (DuplicateEmployeeException e) {
+            e.printStackTrace();
+        }
     }
 
     protected boolean contains(Employee employee) {
