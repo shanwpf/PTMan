@@ -13,7 +13,7 @@ public class ViewOutletCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        String messageToDisplay = "Outlet Name: " + model.getOutletInformation().getName()
+        String messageToDisplay = "Outlet Name: " + model.getOutletInformation().getName() + " "
                 + model.getOutletInformationMessage() + " Announcement: "
                 + model.getOutletInformation().getAnnouncement();
         return new CommandResult(messageToDisplay);

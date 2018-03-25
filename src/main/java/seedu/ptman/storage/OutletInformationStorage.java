@@ -1,10 +1,10 @@
 package seedu.ptman.storage;
 
-import seedu.ptman.commons.exceptions.DataConversionException;
-import seedu.ptman.model.outlet.OutletInformation;
-
 import java.io.IOException;
 import java.util.Optional;
+
+import seedu.ptman.commons.exceptions.DataConversionException;
+import seedu.ptman.model.outlet.OutletInformation;
 
 /**
  * Represents a storage for {@link seedu.ptman.model.outlet.OutletInformation}.

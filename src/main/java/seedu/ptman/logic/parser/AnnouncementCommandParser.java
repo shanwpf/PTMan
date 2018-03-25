@@ -9,6 +9,12 @@ import seedu.ptman.model.outlet.Announcement;
  */
 public class AnnouncementCommandParser {
 
+    /**
+     * Constructs an AnnouncementCommand parser
+     * @param args
+     * @return
+     * @throws ParseException
+     */
     public AnnouncementCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {

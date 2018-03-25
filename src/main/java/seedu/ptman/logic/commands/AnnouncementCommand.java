@@ -1,13 +1,13 @@
 package seedu.ptman.logic.commands;
 
+import static seedu.ptman.commons.core.Messages.MESSAGE_ACCESS_DENIED;
+
 import seedu.ptman.commons.core.EventsCenter;
 import seedu.ptman.commons.events.ui.AnnouncementChangedEvent;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.model.outlet.Announcement;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
-
-import static seedu.ptman.commons.core.Messages.MESSAGE_ACCESS_DENIED;
 
 /**
  * Edits the announcement of outlet in the ptman.

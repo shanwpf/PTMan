@@ -36,6 +36,13 @@ public class XmlOutletInformationStorage implements OutletInformationStorage {
         return readOutletInformation(filePath);
     }
 
+    /**
+     * Reads outlet information from storage
+     * @param filePath
+     * @return
+     * @throws DataConversionException
+     * @throws FileNotFoundException
+     */
     public Optional<OutletInformation> readOutletInformation(String filePath) throws DataConversionException,
             FileNotFoundException {
         requireNonNull(filePath);
@@ -57,6 +64,11 @@ public class XmlOutletInformationStorage implements OutletInformationStorage {
         }
     }
 
+    /**
+     * Saves outlet information into storage
+     * @param outletInformation
+     * @throws IOException
+     */
     @Override
     public void saveOutletInformation(OutletInformation outletInformation) throws IOException {
         saveOutletInformation(outletInformation, filePath);

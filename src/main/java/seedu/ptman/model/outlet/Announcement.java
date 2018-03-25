@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Announcement {
 
-    public String value;
+    public final String value;
 
     public Announcement(String announcement) {
         requireNonNull(announcement);

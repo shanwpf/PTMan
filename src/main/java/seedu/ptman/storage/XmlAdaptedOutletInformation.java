@@ -1,5 +1,10 @@
 package seedu.ptman.storage;
 
+import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.Announcement;
@@ -8,11 +13,6 @@ import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
-
-import java.util.Objects;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * JAXB-friendly version of the OutletInformation.

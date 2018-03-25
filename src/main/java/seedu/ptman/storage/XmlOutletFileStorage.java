@@ -1,12 +1,12 @@
 package seedu.ptman.storage;
 
-import seedu.ptman.commons.exceptions.DataConversionException;
-import seedu.ptman.commons.util.XmlUtil;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
+
+import seedu.ptman.commons.exceptions.DataConversionException;
+import seedu.ptman.commons.util.XmlUtil;
 
 /**
  * Stores outlet information data in an XML file
