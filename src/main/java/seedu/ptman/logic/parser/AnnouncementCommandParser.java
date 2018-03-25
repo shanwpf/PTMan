@@ -7,7 +7,7 @@ import seedu.ptman.model.outlet.Announcement;
 /**
  * Parses input arguments and creates a new AnnouncementCommand object
  */
-public class AnnouncementCommandParser {
+public class AnnouncementCommandParser implements Parser {
 
     /**
      * Constructs an AnnouncementCommand parser

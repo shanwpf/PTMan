@@ -58,7 +58,6 @@ public class AnnouncementCommand extends UndoableCommand {
         }
 
         // state check
-        AnnouncementCommand e = (AnnouncementCommand) other;
-        return e.announcement.equals(((AnnouncementCommand) other).announcement);
+        return announcement.equals(((AnnouncementCommand) other).announcement);
     }
 }

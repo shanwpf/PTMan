@@ -42,10 +42,6 @@ public class UserPrefs {
         return outletInformationFilePath;
     }
 
-    public void setOutletInformationFilePath(String outletInformationFilePath) {
-        this.outletInformationFilePath = outletInformationFilePath;
-    }
-
     public String getPartTimeManagerName() {
         return partTimeManagerName;
     }

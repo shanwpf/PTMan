@@ -57,6 +57,28 @@ public class OutletInformationTest {
     }
 
     @Test
+    public void constructor_nullPassword_throwsNullPointerException() {
+        OutletName name = new OutletName("outlet");
+        OperatingHours operatingHours = new OperatingHours("09:00-22:00");
+        OutletContact outletContact = new OutletContact("91234567");
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        Announcement announcement = new Announcement("New Announcement.");
+        Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name, operatingHours,
+                outletContact, outletEmail, null, announcement));
+    }
+
+    @Test
+    public void constructor_nullAnnouncement_throwsNullPointerException() {
+        OutletName name = new OutletName("outlet");
+        OperatingHours operatingHours = new OperatingHours("09:00-22:00");
+        OutletContact outletContact = new OutletContact("91234567");
+        OutletEmail outletEmail = new OutletEmail("outlet@gmail.com");
+        Password password = new Password();
+        Assert.assertThrows(NullPointerException.class, () -> new OutletInformation(name, operatingHours,
+                outletContact, outletEmail, password, null));
+    }
+
+    @Test
     public void equals_sameOutletInformation_returnsTrue() {
         OutletName name = new OutletName("outlet");
         OperatingHours operatingHours = new OperatingHours("09:00-22:00");
@@ -69,6 +91,15 @@ public class OutletInformationTest {
         OutletInformation other = new OutletInformation(name, operatingHours, outletContact, outletEmail,
                 password, announcement);
         assertTrue(outlet.equals(other));
+    }
+
+    @Test
+    public void setAnnouncement_validAnnouncement_success() {
+        OutletInformation outlet = new OutletInformation();
+        Announcement editedAnnouncement = new Announcement("Edited Announcement.");
+        Announcement expectedAnnouncement = new Announcement("Edited Announcement.");
+        outlet.setAnnouncement(editedAnnouncement);
+        assertEquals(outlet.getAnnouncement(), expectedAnnouncement);
     }
 
     @Test
