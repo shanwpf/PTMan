@@ -44,6 +44,16 @@ public class XmlAdaptedOutletInformation {
         this.announcement = null;
     }
 
+    public XmlAdaptedOutletInformation(String outletName, String operatingHours, String outletContact,
+                                       String outletEmail, String passwordHash, String announcement) {
+        this.outletName = outletName;
+        this.operatingHours = operatingHours;
+        this.outletContact = outletContact;
+        this.outletEmail = outletEmail;
+        this.passwordHash = passwordHash;
+        this.announcement = announcement;
+    }
+
     /**
      * Converts a given OutletInformation into this class for JAXB use.
      */

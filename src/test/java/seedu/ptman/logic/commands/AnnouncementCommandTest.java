@@ -32,7 +32,7 @@ public class AnnouncementCommandTest {
         AnnouncementCommand secondAnnouncementCommand = new AnnouncementCommand(secondAnnouncement);
 
         // same object -> return true
-        assertTrue(firstAnnouncement.equals(firstAnnouncement));
+        assertTrue(firstAnnouncementCommand.equals(firstAnnouncementCommand));
 
         // same values -> return true
         AnnouncementCommand firstAnnouncementCommandCopy = new AnnouncementCommand(firstAnnouncement);
