@@ -64,16 +64,17 @@ public class XmlOutletInformationStorage implements OutletInformationStorage {
         }
     }
 
-    /**
-     * Saves outlet information into storage
-     * @param outletInformation
-     * @throws IOException
-     */
     @Override
     public void saveOutletInformation(OutletInformation outletInformation) throws IOException {
         saveOutletInformation(outletInformation, filePath);
     }
 
+    /**
+     * Saves outlet information into storage
+     * @param outletInformation
+     * @param filePath
+     * @throws IOException
+     */
     public void saveOutletInformation(OutletInformation outletInformation, String filePath) throws IOException {
         requireNonNull(outletInformation);
         requireNonNull(filePath);
