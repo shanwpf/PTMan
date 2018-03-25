@@ -3,6 +3,8 @@ package seedu.ptman.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,8 +18,6 @@ import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
-
-import java.io.IOException;
 
 public class XmlOutletInformationStorageTest {
     private static final String TEST_DATA_FOLDER =
