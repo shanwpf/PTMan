@@ -1,6 +1,8 @@
 package seedu.ptman.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.ptman.storage.XmlAdaptedOutletInformation.FAIL_MESSAGE;
 
 import org.junit.Test;
@@ -20,7 +22,6 @@ public class XmlAdaptedOutletInformationTest {
     private static final String INVALID_OPERATING_HOURS = "10:00/20:00";
     private static final String INVALID_OUTLET_CONTACT = "+6591112222";
     private static final String INVALID_OUTLET_EMAIL = "example.com";
-    private static final String INVALID_ANNOUNCEMENT = "";
 
     private static final String VALID_OUTLET_NAME = "AwesomeOutlet";
     private static final String VALID_OPERATING_HOURS = "10:00-20:00";
@@ -125,5 +126,31 @@ public class XmlAdaptedOutletInformationTest {
                 null);
         String expectedMessage = String.format(FAIL_MESSAGE, Announcement.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, outletInformation::toModelType);
+    }
+
+    @Test
+    public void equals() {
+        XmlAdaptedOutletInformation firstOutletInformation = new XmlAdaptedOutletInformation(VALID_OUTLET_NAME,
+                VALID_OPERATING_HOURS, VALID_OUTLET_CONTACT, VALID_OUTLET_EMAIL, DEFAULT_PASSWORD_HASH,
+                VALID_ANNOUNCEMENT);
+        XmlAdaptedOutletInformation secondOutletInformation = new XmlAdaptedOutletInformation(outlet);
+
+        // Same object -> return true
+        assertTrue(firstOutletInformation.equals(firstOutletInformation));
+
+        // Same values -> return true
+        XmlAdaptedOutletInformation firstOutletInformationCopy = new XmlAdaptedOutletInformation(VALID_OUTLET_NAME,
+                VALID_OPERATING_HOURS, VALID_OUTLET_CONTACT, VALID_OUTLET_EMAIL, DEFAULT_PASSWORD_HASH,
+                VALID_ANNOUNCEMENT);
+        assertTrue(firstOutletInformation.equals(firstOutletInformationCopy));
+
+        // Different types -> return false
+        assertFalse(firstOutletInformation.equals(1));
+
+        // Null type -> return false
+        assertFalse(firstOutletInformation.equals(null));
+
+        // Different values -> return false
+        assertFalse(firstOutletInformation.equals(secondOutletInformation));
     }
 }
