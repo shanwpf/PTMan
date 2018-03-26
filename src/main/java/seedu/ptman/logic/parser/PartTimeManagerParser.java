@@ -18,6 +18,8 @@ import seedu.ptman.logic.commands.AddCommand;
 import seedu.ptman.logic.commands.AddShiftCommand;
 import seedu.ptman.logic.commands.AnnouncementCommand;
 import seedu.ptman.logic.commands.ApplyCommand;
+import seedu.ptman.logic.commands.ChangeMasterPasswordCommand;
+import seedu.ptman.logic.commands.ChangePasswordCommand;
 import seedu.ptman.logic.commands.ClearCommand;
 import seedu.ptman.logic.commands.Command;
 import seedu.ptman.logic.commands.DeleteCommand;
@@ -69,6 +71,14 @@ public class PartTimeManagerParser {
 
         case LogInAdminCommand.COMMAND_WORD:
             return new LogInAdminCommandParser().parse(arguments);
+
+        case ChangePasswordCommand.COMMAND_WORD:
+        case ChangePasswordCommand.COMMAND_ALIAS:
+            return new ChangePasswordCommandParser().parse(arguments);
+
+        case ChangeMasterPasswordCommand.COMMAND_WORD:
+        case ChangeMasterPasswordCommand.COMMAND_ALIAS:
+            return new ChangeMasterPasswordCommandParser().parse(arguments);
 
         case ApplyCommand.COMMAND_WORD:
         case ApplyCommand.COMMAND_ALIAS:

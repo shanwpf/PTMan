@@ -86,6 +86,17 @@ public class LogInAdminCommandTest {
         }
 
         @Override
+        public boolean isAdminPassword(Password password) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void setAdminPassword(Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public boolean isAdminMode() {
             fail("This method should not be called.");
             return false;
@@ -102,6 +113,18 @@ public class LogInAdminCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public void storeResetPassword(Employee employee, Password tempPassword) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean isCorrectTempPwd(Employee employee, Password tempPassword) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
         public void addShift(Shift shift) throws DuplicateShiftException {
             fail("This method should not be called.");
         }

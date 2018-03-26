@@ -3,6 +3,7 @@ package seedu.ptman.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -34,6 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final PartTimeManager partTimeManager;
     private final FilteredList<Employee> filteredEmployees;
     private final FilteredList<Shift> filteredShifts;
+    private HashMap<Employee, Password> tempPasswordMap;
 
     /**
      * Initializes a ModelManager with the given partTimeManager and userPrefs.
@@ -53,6 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         filteredEmployees = new FilteredList<>(this.partTimeManager.getEmployeeList());
         filteredShifts = new FilteredList<>(this.partTimeManager.getShiftList());
+        tempPasswordMap = new HashMap<>();
     }
 
     public ModelManager() {
@@ -107,6 +110,30 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void setFalseAdminMode() {
         partTimeManager.setAdminMode(false);
+    }
+
+    @Override
+    public boolean isAdminPassword(Password password) {
+        return partTimeManager.isAdminPassword(password);
+    }
+
+    @Override
+    public void setAdminPassword(Password password) {
+        partTimeManager.setAdminPassword(password);
+    }
+
+    @Override
+    public void storeResetPassword(Employee employee, Password tempPassword) {
+        tempPasswordMap.put(employee, tempPassword);
+    }
+
+    @Override
+    public boolean isCorrectTempPwd(Employee employee, Password tempPassword) {
+        if (!tempPasswordMap.containsKey(employee)) {
+            return false;
+        } else {
+            return tempPasswordMap.get(employee).equals(tempPassword);
+        }
     }
 
     @Override
