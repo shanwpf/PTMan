@@ -26,7 +26,6 @@ import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.Shift;
@@ -40,7 +39,7 @@ public class ApplyCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalPartTimeManagerWithShifts(), new UserPrefs(),
+    private Model model = new ModelManager(new PartTimeManager(getTypicalPartTimeManagerWithShifts()), new UserPrefs(),
             new OutletInformation());
 
     @Before
@@ -114,14 +113,6 @@ public class ApplyCommandTest {
     @Test
     public void execute_employeeIndexOutOfRange_throwsCommandException() {
         ApplyCommand applyCommand = prepareCommand(Index.fromOneBased(99), INDEX_FIRST_SHIFT, model);
-        Assert.assertThrows(CommandException.class, applyCommand::execute);
-    }
-
-    @Test
-    public void execute_duplicateEmployee_throwsCommandException() throws DuplicateEmployeeException {
-        Shift shift = model.getFilteredShiftList().get(0);
-        shift.addEmployee(model.getFilteredEmployeeList().get(0));
-        ApplyCommand applyCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
         Assert.assertThrows(CommandException.class, applyCommand::execute);
     }
 

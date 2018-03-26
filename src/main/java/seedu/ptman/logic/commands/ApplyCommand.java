@@ -34,6 +34,7 @@ public class ApplyCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 1 " + PREFIX_PASSWORD + "hunter2";
 
     public static final String MESSAGE_APPLY_SHIFT_SUCCESS = "Employee %1$s applied for shift %2$s";
+    public static final String MESSAGE_DUPLICATE_EMPLOYEE = "Employee is already in the shift";
 
     private final Index employeeIndex;
     private final Index shiftIndex;
@@ -89,7 +90,7 @@ public class ApplyCommand extends UndoableCommand {
         try {
             editedShift.addEmployee(applicant);
         } catch (DuplicateEmployeeException e) {
-            throw new CommandException("Employee already exists in the shift");
+            throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEE);
         }
 
     }
