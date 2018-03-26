@@ -217,7 +217,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      * @throws DuplicateShiftException if a equivalent shift already exists.
      */
     public void addShift(Shift p) throws DuplicateShiftException {
-        outlet.addShift(p);
         shifts.add(p);
     }
 
@@ -317,7 +316,8 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
                 || (other instanceof PartTimeManager // instanceof handles nulls
                 && this.employees.equals(((PartTimeManager) other).employees)
                 && this.tags.equalsOrderInsensitive(((PartTimeManager) other).tags))
-                && this.outlet.equals(((PartTimeManager) other).outlet);
+                && this.outlet.equals(((PartTimeManager) other).outlet)
+                && this.shifts.equals(((PartTimeManager) other).shifts);
     }
 
     @Override
@@ -326,4 +326,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         return Objects.hash(employees, tags);
     }
 
+    public void updateShift(Shift target, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException {
+        shifts.setShift(target, editedShift);
+    }
 }
