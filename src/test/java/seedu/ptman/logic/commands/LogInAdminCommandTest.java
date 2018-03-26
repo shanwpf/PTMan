@@ -174,12 +174,6 @@ public class LogInAdminCommandTest {
         }
 
         @Override
-        public void addEmployeeToShift(Employee employee, Shift shift)
-                throws ShiftNotFoundException, EmployeeNotFoundException, DuplicateEmployeeException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void updateShift(Shift shiftToApply, Shift editedShift)
                 throws ShiftNotFoundException, DuplicateShiftException {
             fail("This method should not be called.");

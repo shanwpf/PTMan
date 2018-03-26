@@ -326,11 +326,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         return Objects.hash(employees, tags);
     }
 
-    public void addEmployeeToShift(Employee employee, Shift shift)
-            throws DuplicateEmployeeException, ShiftNotFoundException {
-        shifts.addEmployeeToShift(employee, shift);
-    }
-
     public void updateShift(Shift target, Shift editedShift) throws ShiftNotFoundException, DuplicateShiftException {
         shifts.setShift(target, editedShift);
     }
