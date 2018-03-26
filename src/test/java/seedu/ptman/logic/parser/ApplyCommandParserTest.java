@@ -9,7 +9,6 @@ import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 import org.junit.Test;
 
 import seedu.ptman.logic.commands.ApplyCommand;
-import seedu.ptman.logic.commands.DeleteCommand;
 import seedu.ptman.model.Password;
 
 /**
@@ -36,6 +35,7 @@ public class ApplyCommandParserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a b pw/DEFAULT1", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ApplyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a b pw/DEFAULT1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ApplyCommand.MESSAGE_USAGE));
     }
 }
