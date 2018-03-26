@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import seedu.ptman.logic.commands.AddCommand;
 import seedu.ptman.logic.commands.AddShiftCommand;
+import seedu.ptman.logic.commands.AnnouncementCommand;
 import seedu.ptman.logic.commands.ApplyCommand;
 import seedu.ptman.logic.commands.ClearCommand;
 import seedu.ptman.logic.commands.Command;
@@ -134,6 +135,10 @@ public class PartTimeManagerParser {
         case ViewOutletCommand.COMMAND_WORD:
         case ViewOutletCommand.COMMAND_ALIAS:
             return new ViewOutletCommand();
+
+        case AnnouncementCommand.COMMAND_WORD:
+        case AnnouncementCommand.COMMAND_ALIAS:
+            return new AnnouncementCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
