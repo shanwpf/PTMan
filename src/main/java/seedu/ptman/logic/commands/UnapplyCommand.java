@@ -118,6 +118,6 @@ public class UnapplyCommand extends UndoableCommand {
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeIndex, shiftIndex, applicant, shiftToUnapply);
+        return Objects.hash(employeeIndex, shiftIndex, applicant, shiftToUnapply, optionalPassword);
     }
 }
