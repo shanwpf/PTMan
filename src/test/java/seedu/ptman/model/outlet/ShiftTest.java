@@ -1,7 +1,9 @@
 package seedu.ptman.model.outlet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
+import static seedu.ptman.testutil.TypicalEmployees.BOB;
 
 import org.junit.Test;
 
@@ -26,6 +28,17 @@ public class ShiftTest {
         Assert.assertThrows(NullPointerException.class, () ->
                 new Shift(new Day("monday"), new Time("1000"), null, null)
         );
+    }
+
+    @Test
+    public void setEmployees() throws DuplicateEmployeeException {
+        Shift shift = new ShiftBuilder().build();
+        shift.addEmployee(ALICE);
+        shift.addEmployee(BOB);
+        Shift other = new ShiftBuilder().build();
+        other.setEmployees(shift);
+        assertTrue(other.contains(ALICE));
+        assertTrue(other.contains(BOB));
     }
 
     @Test
