@@ -72,10 +72,6 @@ public class OutletInformation {
         this.timetable = new Timetable(LocalDate.now());
     }
 
-    public void addShift(Shift shift) throws DuplicateShiftException {
-        timetable.addShift(shift);
-    }
-
     public OutletName getName() {
         return name;
     }

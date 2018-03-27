@@ -16,7 +16,7 @@ public class ShiftTest {
     @Test
     public void constructor_illegalTime_throwsIllegalArgumentException() {
         Assert.assertThrows(IllegalArgumentException.class, () ->
-                new Shift(new Day("monday"), new Time("2200"), new Time("1000"), new Capacity("4"))
+                new Shift(new Date("19-03-18"), new Time("2200"), new Time("1000"), new Capacity("4"))
         );
     }
 
@@ -26,7 +26,7 @@ public class ShiftTest {
                 new Shift(null, null, null, null)
         );
         Assert.assertThrows(NullPointerException.class, () ->
-                new Shift(new Day("monday"), new Time("1000"), null, null)
+                new Shift(new Date("19-03-18"), new Time("1000"), null, null)
         );
     }
 
@@ -43,11 +43,11 @@ public class ShiftTest {
 
     @Test
     public void equals_sameShift_returnsTrue() throws DuplicateEmployeeException {
-        Shift shift1 = new ShiftBuilder().withDay("monday")
+        Shift shift1 = new ShiftBuilder().withDate("19-03-18")
                 .withCapacity("4")
                 .withStartTime("1200")
                 .withEndTime("1600").build();
-        Shift shift2 = new ShiftBuilder().withDay("monday")
+        Shift shift2 = new ShiftBuilder().withDate("19-03-18")
                 .withCapacity("4")
                 .withStartTime("1200")
                 .withEndTime("1600").build();

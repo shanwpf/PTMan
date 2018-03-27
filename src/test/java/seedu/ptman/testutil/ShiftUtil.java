@@ -1,7 +1,7 @@
 package seedu.ptman.testutil;
 
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_CAPACITY;
-import static seedu.ptman.logic.parser.CliSyntax.PREFIX_DAY;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TIME_END;
 import static seedu.ptman.logic.parser.CliSyntax.PREFIX_TIME_START;
 
@@ -32,7 +32,7 @@ public class ShiftUtil {
      */
     public static String getShiftDetails(Shift shift) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_DAY + shift.getDay().toString() + " ");
+        sb.append(PREFIX_DATE + shift.getDate().toString() + " ");
         sb.append(PREFIX_TIME_START + shift.getStartTime().toString() + " ");
         sb.append(PREFIX_TIME_END + shift.getEndTime().toString() + " ");
         sb.append(PREFIX_CAPACITY + shift.getCapacity().toString() + " ");

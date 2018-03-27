@@ -2,7 +2,10 @@ package seedu.ptman.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.ptman.model.outlet.Timetable.findStartOfWeekDate;
+import static seedu.ptman.model.outlet.Timetable.getWeekFromDate;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -55,6 +58,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
         filteredEmployees = new FilteredList<>(this.partTimeManager.getEmployeeList());
         filteredShifts = new FilteredList<>(this.partTimeManager.getShiftList());
+
+        // Only display shifts in the current week
+        updateFilteredShiftList(shift ->
+                getWeekFromDate(shift.getDate().getLocalDate()) == getWeekFromDate(LocalDate.now()));
+
         tempPasswordMap = new HashMap<>();
     }
 

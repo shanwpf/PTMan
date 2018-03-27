@@ -1,7 +1,7 @@
 package seedu.ptman.testutil;
 
 import seedu.ptman.model.outlet.Capacity;
-import seedu.ptman.model.outlet.Day;
+import seedu.ptman.model.outlet.Date;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Time;
 
@@ -10,18 +10,18 @@ import seedu.ptman.model.outlet.Time;
  */
 public class ShiftBuilder {
 
-    public static final String DEFAULT_DAY = "tuesday";
+    public static final String DEFAULT_DATE = "04-03-18";
     public static final String DEFAULT_TIME_START = "0900";
     public static final String DEFAULT_TIME_END = "1600";
     public static final String DEFAULT_CAPACITY = "5";
 
-    private Day day;
+    private Date date;
     private Time startTime;
     private Time endTime;
     private Capacity capacity;
 
     public ShiftBuilder() {
-        day = new Day(DEFAULT_DAY);
+        date = new Date(DEFAULT_DATE);
         startTime = new Time(DEFAULT_TIME_START);
         endTime = new Time(DEFAULT_TIME_END);
         capacity = new Capacity(DEFAULT_CAPACITY);
@@ -31,7 +31,7 @@ public class ShiftBuilder {
      * Initializes the ShiftBuilder with the data of {@code shiftToCopy}.
      */
     public ShiftBuilder(Shift shiftToCopy) {
-        day = shiftToCopy.getDay();
+        date = shiftToCopy.getDate();
         startTime = shiftToCopy.getStartTime();
         endTime = shiftToCopy.getEndTime();
         capacity = shiftToCopy.getCapacity();
@@ -40,8 +40,8 @@ public class ShiftBuilder {
     /**
      * Sets the {@code Day} of the {@code Shift} that we are building.
      */
-    public ShiftBuilder withDay(String day) {
-        this.day = new Day(day);
+    public ShiftBuilder withDate(String date) {
+        this.date = new Date(date);
         return this;
     }
 
@@ -74,7 +74,7 @@ public class ShiftBuilder {
      * @return
      */
     public Shift build() {
-        return new Shift(day, startTime, endTime, capacity);
+        return new Shift(date, startTime, endTime, capacity);
     }
 
 }

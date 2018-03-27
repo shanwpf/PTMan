@@ -121,7 +121,7 @@ public class TimetablePanel extends UiPart<Region> {
     private void setShifts() {
         int index = 1;
         for (Shift shift: shiftObservableList) {
-            LocalDate date = getDateOfShift(shift.getDay().toDayOfWeek());
+            LocalDate date = shift.getDate().getLocalDate();
             Interval timeInterval = new Interval(date, shift.getStartTime().getLocalTime(),
                     date, shift.getEndTime().getLocalTime());
             Entry<String> shiftEntry = new Entry<>("SHIFT " + index + "\nSlots left: " + shift.getSlotsLeft(),

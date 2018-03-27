@@ -52,9 +52,15 @@ public class UnapplyCommandTest {
         model.setTrueAdminMode(new Password());
     }
 
+    @Before
+    public void showAllShifts() {
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
+    }
+
     @Test
     public void execute_employeeNotInShift_throwsCommandException() throws Exception {
         Model model = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         model.setTrueAdminMode(new Password());
         Employee employee = new EmployeeBuilder().withName("Absent").build();
         Shift shift = new ShiftBuilder().build();
@@ -69,6 +75,8 @@ public class UnapplyCommandTest {
     public void execute_adminModeEmployeeInShift_success() throws Exception {
         Model model = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
         Model expectedModel = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
+        expectedModel.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         model.setTrueAdminMode(new Password());
         expectedModel.setTrueAdminMode(new Password());
         Employee employee = new EmployeeBuilder().withName("Present").build();
@@ -93,7 +101,9 @@ public class UnapplyCommandTest {
         Model model = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
         Model expectedModel = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
         model.setFalseAdminMode();
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         expectedModel.setFalseAdminMode();
+        expectedModel.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         Employee employee = new EmployeeBuilder().withName("Present").build();
         Employee expectedEmployee = new EmployeeBuilder().withName("Present").build();
         Shift shift = new ShiftBuilder().build();
