@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import seedu.ptman.model.Password;
-import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
 /**
