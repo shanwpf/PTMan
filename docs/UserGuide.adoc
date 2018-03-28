@@ -245,10 +245,17 @@ Deletes the 2nd employee in PTMan.
 `delete 1` +
 Deletes the 1st employee in the results of the `find` command.
 
-==== Resetting an employee's password: `rp`
+==== Changing master password: `cmp`
+You should be given a default password when your entry is created by your employer.
+For security purposes, you are required to change your password the moment your account is created. +
+*Format:* `cmp` `pw/CURRENT_PASSWORD pw/NEW_PASSWORD pw/CONFIRM_NEW_PASSWORD`
+[NOTE]
+Password should be at least 8 character long.
+
+==== Resetting master password: `rmp`
 
 Resets the password of the specified employee. +
-*Format:* `rp INDEX` +
+*Format:* `rmp` +
 
 ****
 * The password will reset for employee at the specified INDEX.
@@ -258,12 +265,11 @@ Resets the password of the specified employee. +
 
 Examples:
 
-* `list` +
-`rp 2` +
-Reset password for the 2nd employee in PTMan.
-* `find Betsy` +
-`rp 1` +
-Reset password for the 1st employee in the results of the `find` command.
+* `rmp` +
+
+
+[NOTE]
+Password reset will be sent to your outlet email.
 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
@@ -397,7 +403,38 @@ Removes youreself from a shift. +
 ==== Changing your password: `cp`
 You should be given a default password when your entry is created by your employer.
 For security purposes, you are required to change your password the moment your account is created. +
-*Format:* `cp n/NAME` `pw/CURRENT_PASSWORD pw/NEW_PASSWORD`
+*Format:* `cp INDEX` `pw/CURRENT_PASSWORD pw/NEW_PASSWORD pw/CONFIRM_NEW_PASSWORD`
+
+****
+* The password will change for employee at the specified INDEX.
+* The INDEX refers to the index number shown in the most recent listing.
+* The INDEX *must be a positive integer* 1, 2, 3, ...
+****
+
+==== Resetting your password: `rp`
+
+Resets the password of the specified employee. +
+*Format:* `rp INDEX` +
+
+****
+* The password will reset for employee at the specified INDEX.
+* The INDEX refers to the index number shown in the most recent listing.
+* The INDEX *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`rp 2` +
+Reset password for the 2nd employee in PTMan.
+* `find Betsy` +
+`rp 1` +
+Reset password for the 1st employee in the results of the `find` command.
+
+[NOTE]
+Password reset will be sent to your email that you registered with your employer
+
+
 
 [NOTE]
 ====
