@@ -13,8 +13,6 @@ import seedu.ptman.commons.util.FileUtil;
 import seedu.ptman.commons.util.XmlUtil;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.util.SampleDataUtil;
-import seedu.ptman.testutil.TypicalEmployees;
-import systemtests.SampleDataTest;
 
 public class XmlSerializablePartTimeManagerTest {
 
@@ -34,7 +32,8 @@ public class XmlSerializablePartTimeManagerTest {
         XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(TYPICAL_EMPLOYEES_FILE,
                 XmlSerializablePartTimeManager.class);
         PartTimeManager partTimeManagerFromFile = dataFromFile.toModelType();
-        assertEquals(partTimeManagerFromFile.getEmployeeList(), SampleDataUtil.getSamplePartTimeManager().getEmployeeList());
+        assertEquals(partTimeManagerFromFile.getEmployeeList(), SampleDataUtil.getSamplePartTimeManager()
+                .getEmployeeList());
     }
 
     @Test

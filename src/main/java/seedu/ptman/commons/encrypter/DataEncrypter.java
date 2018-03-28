@@ -1,4 +1,4 @@
-package seedu.ptman.commons.DataEncrypter;
+package seedu.ptman.commons.encrypter;
 
 import java.security.Key;
 import java.util.Base64;

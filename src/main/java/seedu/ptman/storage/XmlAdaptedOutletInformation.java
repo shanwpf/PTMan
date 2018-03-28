@@ -1,7 +1,7 @@
 package seedu.ptman.storage;
 
-import static seedu.ptman.commons.DataEncrypter.DataEncrypter.decrypt;
-import static seedu.ptman.commons.DataEncrypter.DataEncrypter.encrypt;
+import static seedu.ptman.commons.encrypter.DataEncrypter.decrypt;
+import static seedu.ptman.commons.encrypter.DataEncrypter.encrypt;
 
 import java.util.Objects;
 

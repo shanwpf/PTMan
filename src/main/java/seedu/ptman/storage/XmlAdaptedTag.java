@@ -1,12 +1,12 @@
 package seedu.ptman.storage;
 
+import static seedu.ptman.commons.encrypter.DataEncrypter.decrypt;
+import static seedu.ptman.commons.encrypter.DataEncrypter.encrypt;
+
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.tag.Tag;
-
-import static seedu.ptman.commons.DataEncrypter.DataEncrypter.decrypt;
-import static seedu.ptman.commons.DataEncrypter.DataEncrypter.encrypt;
 
 /**
  * JAXB-friendly adapted version of the Tag.

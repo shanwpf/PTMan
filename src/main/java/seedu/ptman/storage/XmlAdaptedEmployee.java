@@ -1,5 +1,8 @@
 package seedu.ptman.storage;
 
+import static seedu.ptman.commons.encrypter.DataEncrypter.decrypt;
+import static seedu.ptman.commons.encrypter.DataEncrypter.encrypt;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,9 +20,6 @@ import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.Salary;
 import seedu.ptman.model.tag.Tag;
-
-import static seedu.ptman.commons.DataEncrypter.DataEncrypter.decrypt;
-import static seedu.ptman.commons.DataEncrypter.DataEncrypter.encrypt;
 
 /**
  * JAXB-friendly version of the Employee.
