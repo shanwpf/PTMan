@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.calendarfx.model.Calendar;
+import com.calendarfx.model.Calendar.Style;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -31,9 +32,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.transform.Transform;
 import seedu.ptman.commons.core.LogsCenter;
 import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
+import seedu.ptman.commons.events.ui.EmployeePanelSelectionChangedEvent;
 import seedu.ptman.commons.events.ui.ExportTimetableAsImageAndEmailRequestEvent;
 import seedu.ptman.commons.events.ui.ExportTimetableAsImageRequestEvent;
 import seedu.ptman.model.employee.Email;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Timetable;
@@ -51,9 +55,18 @@ public class TimetablePanel extends UiPart<Region> {
     private static final String FXML = "TimetableView.fxml";
     private static final int MAX_SLOTS_LEFT_RUNNING_OUT = 3;
 
-    private static final com.calendarfx.model.Calendar.Style ENTRY_GREEN_STYLE = Calendar.Style.STYLE1;
-    private static final com.calendarfx.model.Calendar.Style ENTRY_YELLOW_STYLE = Calendar.Style.STYLE3;
-    private static final com.calendarfx.model.Calendar.Style ENTRY_RED_STYLE = Calendar.Style.STYLE5;
+    private static final Style ENTRY_GREEN_STYLE = Style.STYLE1;
+    private static final Style ENTRY_BLUE_STYLE = Style.STYLE2;
+    private static final Style ENTRY_YELLOW_STYLE = Style.STYLE3;
+    private static final Style ENTRY_RED_STYLE = Style.STYLE5;
+    private static final Style ENTRY_BROWN_STYLE = Style.STYLE7;
+
+    private static Calendar timetableAvail;
+    private static Calendar timetableEmployee;
+    private static Calendar timetableFull;
+    private static Calendar timetableOthers;
+    private static Calendar timetableRunningOut;
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
@@ -63,9 +76,8 @@ public class TimetablePanel extends UiPart<Region> {
     private ObservableList<Shift> shiftObservableList;
     private OutletInformation outletInformation;
 
-    private Calendar timetableAvail = new Calendar("Available");
-    private Calendar timetableRunningOut = new Calendar("Running Out");
-    private Calendar timetableFull = new Calendar("Full");
+
+    private Employee currentEmployee = null;
 
     protected TimetablePanel(ObservableList<Shift> shiftObservableList, OutletInformation outletInformation) {
         super(FXML);
@@ -86,6 +98,26 @@ public class TimetablePanel extends UiPart<Region> {
 
     public CalendarView getRoot() {
         return this.timetableView;
+    }
+
+    public static Calendar getTimetableAvail() {
+        return timetableAvail;
+    }
+
+    public static Calendar getTimetableRunningOut() {
+        return timetableRunningOut;
+    }
+
+    public static Calendar getTimetableFull() {
+        return timetableFull;
+    }
+
+    public static Calendar getTimetableEmployee() {
+        return timetableEmployee;
+    }
+
+    public static Calendar getTimetableOthers() {
+        return timetableOthers;
     }
 
     /**
@@ -144,10 +176,39 @@ public class TimetablePanel extends UiPart<Region> {
                     date, shift.getEndTime().getLocalTime());
             Entry<String> shiftEntry = new Entry<>("SHIFT " + index + "\nSlots left: " + shift.getSlotsLeft(),
                     timeInterval);
-            Calendar entryType = getEntryType(shift);
-            entryType.addEntry(shiftEntry);
+            setEntryType(shift, shiftEntry);
             index++;
         }
+    }
+
+    /**
+     * Sets the entry type (aka the color) of the shift in the timetable
+     * @param shift
+     * @param shiftEntry
+     */
+    private void setEntryType(Shift shift, Entry<String> shiftEntry) {
+        Calendar entryType;
+        if (currentEmployee != null) {
+            entryType = getEntryTypeEmployee(shift);
+        } else {
+            entryType = getEntryTypeMain(shift);
+        }
+        entryType.addEntry(shiftEntry);
+    }
+
+    /**
+     * Checks if currentEmployee is in input shift
+     * @param shift
+     * @return true if currentEmployee is in input shift, false if not.
+     */
+    private boolean isCurrentEmployeeInShift(Shift shift) {
+        UniqueEmployeeList employees = shift.getUniqueEmployeeList();
+        for (Employee employee : employees) {
+            if (employee.equals(currentEmployee)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -160,10 +221,10 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * @return the entryType (a Calendar object) for the shift, which reflects
+     * @return the entryType (a Calendar object) for the shift in the main timetable view, which reflects
      * the color of the shift in the timetableView.
      */
-    private Calendar getEntryType(Shift shift) {
+    private Calendar getEntryTypeMain(Shift shift) {
         int ratio = shift.getSlotsLeft() / shift.getCapacity().getCapacity();
         if (ratio <= 0) {
             return timetableFull;
@@ -172,6 +233,27 @@ public class TimetablePanel extends UiPart<Region> {
         } else {
             return timetableAvail;
         }
+    }
+
+    /**
+     * @return the entryType (a Calendar object) for the shift in the employee timetable view, which reflects
+     * the color of the shift in the timetableView.
+     */
+    private Calendar getEntryTypeEmployee(Shift shift) {
+        if (isCurrentEmployeeInShift(shift)) {
+            return timetableEmployee;
+        } else {
+            return timetableOthers;
+        }
+    }
+
+    /**
+     * Replaces the timetable view with a new timetable, with shifts taken by the employee being highlighted
+     * @param employee
+     */
+    private void loadEmployeeTimetable(Employee employee) {
+        currentEmployee = employee;
+        updateTimetableView();
     }
 
     /**
@@ -190,14 +272,35 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Adds all relevant Calendars (entryTypes) to its source
+     * Initialises all the Calendar objects
      */
-    private void addCalendars(CalendarSource calendarSource) {
+    private void initialiseEntries() {
+        timetableAvail = new Calendar("Available");
+        timetableRunningOut = new Calendar("Running Out");
+        timetableFull = new Calendar("Full");
+        timetableEmployee = new Calendar("Employee's shift");
+        timetableOthers = new Calendar("Other shifts");
+    }
+
+    /**
+     * Sets the color styles of the entries
+     */
+    private void setEntryStyles() {
         timetableAvail.setStyle(ENTRY_GREEN_STYLE);
         timetableRunningOut.setStyle(ENTRY_YELLOW_STYLE);
         timetableFull.setStyle(ENTRY_RED_STYLE);
+        timetableEmployee.setStyle(ENTRY_BLUE_STYLE);
+        timetableOthers.setStyle(ENTRY_BROWN_STYLE);
+    }
 
-        calendarSource.getCalendars().addAll(timetableAvail, timetableRunningOut, timetableFull);
+    /**
+     * Adds all relevant Calendars (entryTypes) to its source
+     */
+    private void addCalendars(CalendarSource calendarSource) {
+        initialiseEntries();
+        setEntryStyles();
+        calendarSource.getCalendars().addAll(timetableAvail, timetableRunningOut, timetableFull,
+                timetableEmployee, timetableOthers);
     }
 
     /**
@@ -243,6 +346,12 @@ public class TimetablePanel extends UiPart<Region> {
     private void handleShiftChangedEvent(PartTimeManagerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event) + ": Updating timetable view....");
         Platform.runLater(() -> updateTimetableView());
+    }
+
+    @Subscribe
+    private void handleEmployeePanelSelectionChangedEvent(EmployeePanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> loadEmployeeTimetable(event.getNewSelection().employee));
     }
 
     @Subscribe
