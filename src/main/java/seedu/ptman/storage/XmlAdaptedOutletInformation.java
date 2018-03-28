@@ -1,5 +1,8 @@
 package seedu.ptman.storage;
 
+import static seedu.ptman.commons.DataEncrypter.DataEncrypter.decrypt;
+import static seedu.ptman.commons.DataEncrypter.DataEncrypter.encrypt;
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -21,6 +24,7 @@ import seedu.ptman.model.outlet.OutletName;
 public class XmlAdaptedOutletInformation {
 
     public static final String FAIL_MESSAGE = "Outlet's %s field is missing!";
+    public static final String DECRYPT_FAIL_MESSAGE = "Cannot decrypt %s";
 
     @XmlElement(required = true)
     private String outletName;
@@ -46,12 +50,22 @@ public class XmlAdaptedOutletInformation {
 
     public XmlAdaptedOutletInformation(String outletName, String operatingHours, String outletContact,
                                        String outletEmail, String passwordHash, String announcement) {
-        this.outletName = outletName;
-        this.operatingHours = operatingHours;
-        this.outletContact = outletContact;
-        this.outletEmail = outletEmail;
-        this.passwordHash = passwordHash;
-        this.announcement = announcement;
+        try {
+            this.outletName = encrypt(outletName);
+            this.operatingHours = encrypt(operatingHours);
+            this.outletContact = encrypt(outletContact);
+            this.outletEmail = encrypt(outletEmail);
+            this.passwordHash = encrypt(passwordHash);
+            this.announcement = encrypt(announcement);
+        } catch (Exception e) {
+            this.outletName = outletName;
+            this.operatingHours = operatingHours;
+            this.outletContact = outletContact;
+            this.outletEmail = outletEmail;
+            this.passwordHash = passwordHash;
+            this.announcement = announcement;
+        }
+
     }
 
     /**
@@ -59,71 +73,121 @@ public class XmlAdaptedOutletInformation {
      */
     public XmlAdaptedOutletInformation(OutletInformation source) {
         this();
-        outletName = source.getName().fullName;
-        operatingHours = source.getOperatingHours().value;
-        outletContact = source.getOutletContact().value;
-        outletEmail = source.getOutletEmail().value;
-        passwordHash = source.getMasterPassword().getPasswordHash();
-        announcement = source.getAnnouncement().value;
+        try {
+            outletName = encrypt(source.getName().fullName);
+            operatingHours = encrypt(source.getOperatingHours().value);
+            outletContact = encrypt(source.getOutletContact().value);
+            outletEmail = encrypt(source.getOutletEmail().value);
+            passwordHash = encrypt(source.getMasterPassword().getPasswordHash());
+            announcement = encrypt(source.getAnnouncement().value);
+        } catch (Exception e) {
+            outletName = source.getName().fullName;
+            operatingHours = source.getOperatingHours().value;
+            outletContact = source.getOutletContact().value;
+            outletEmail = source.getOutletEmail().value;
+            passwordHash = source.getMasterPassword().getPasswordHash();
+            announcement = source.getAnnouncement().value;
+        }
+
     }
 
     private OutletName setOutletName() throws IllegalValueException {
-        if (this.outletName == null) {
+        String decryptedOutletName;
+        try {
+            decryptedOutletName = decrypt(this.outletName);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(DECRYPT_FAIL_MESSAGE, OutletName.class.getSimpleName()));
+        }
+        if (decryptedOutletName == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletName.class.getSimpleName()));
         }
-        if (!OutletName.isValidName(this.outletName)) {
+        if (!OutletName.isValidName(decryptedOutletName)) {
             throw new IllegalValueException(OutletName.MESSAGE_NAME_CONSTRAINTS);
         }
-        OutletName outletName = new OutletName(this.outletName);
+        OutletName outletName = new OutletName(decryptedOutletName);
         return outletName;
     }
 
     private OperatingHours setOperatingHours() throws IllegalValueException {
-        if (this.operatingHours == null) {
+        String decryptedOperatingHours;
+        try {
+            decryptedOperatingHours = decrypt(this.operatingHours);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(DECRYPT_FAIL_MESSAGE,
+                    OperatingHours.class.getSimpleName()));
+        }
+        if (decryptedOperatingHours == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OperatingHours.class.getSimpleName()));
         }
-        if (!OperatingHours.isValidOperatingHours(this.operatingHours)) {
+        if (!OperatingHours.isValidOperatingHours(decryptedOperatingHours)) {
             throw new IllegalValueException(OperatingHours.MESSAGE_OPERATING_HOUR_CONSTRAINTS);
         }
-        OperatingHours operatingHours = new OperatingHours(this.operatingHours);
+        OperatingHours operatingHours = new OperatingHours(decryptedOperatingHours);
         return operatingHours;
     }
 
     private OutletContact setOutletContact() throws IllegalValueException {
-        if (this.outletContact == null) {
+        String decryptedOutletContact;
+        try {
+            decryptedOutletContact = decrypt(this.outletContact);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(DECRYPT_FAIL_MESSAGE,
+                    OutletContact.class.getSimpleName()));
+        }
+        if (decryptedOutletContact == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletContact.class.getSimpleName()));
         }
-        if (!OutletContact.isValidOutletContact(this.outletContact)) {
+        if (!OutletContact.isValidOutletContact(decryptedOutletContact)) {
             throw new IllegalValueException(OutletContact.MESSAGE_OUTLET_CONTACT_CONSTRAINTS);
         }
-        OutletContact outletContact = new OutletContact(this.outletContact);
+        OutletContact outletContact = new OutletContact(decryptedOutletContact);
         return outletContact;
     }
 
     private OutletEmail setOutletEmail() throws IllegalValueException {
-        if (this.outletEmail == null) {
+        String decryptedOutletEmail;
+        try {
+            decryptedOutletEmail = decrypt(this.outletEmail);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(DECRYPT_FAIL_MESSAGE,
+                    OutletEmail.class.getSimpleName()));
+        }
+        if (decryptedOutletEmail == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, OutletEmail.class.getSimpleName()));
         }
-        if (!OutletEmail.isValidOutletEmail(this.outletEmail)) {
+        if (!OutletEmail.isValidOutletEmail(decryptedOutletEmail)) {
             throw new IllegalValueException(OutletEmail.MESSAGE_OUTLET_EMAIL_CONSTRAINTS);
         }
-        OutletEmail outletEmail = new OutletEmail(this.outletEmail);
+        OutletEmail outletEmail = new OutletEmail(decryptedOutletEmail);
         return outletEmail;
     }
 
     private Password setPassword() throws IllegalValueException {
-        if (this.passwordHash == null) {
+        String decryptedPasswordHash;
+        try {
+            decryptedPasswordHash = decrypt(this.passwordHash);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(DECRYPT_FAIL_MESSAGE, Password.class.getSimpleName()));
+        }
+        if (decryptedPasswordHash == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, Password.class.getSimpleName()));
         }
-        Password masterPassword = new Password(this.passwordHash);
+        Password masterPassword = new Password(decryptedPasswordHash);
         return masterPassword;
     }
 
     private Announcement setAnnouncement() throws IllegalValueException {
-        if (this.announcement == null) {
+        String decryptedAnnouncement;
+        try {
+            decryptedAnnouncement = decrypt(this.announcement);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(DECRYPT_FAIL_MESSAGE,
+                    Announcement.class.getSimpleName()));
+        }
+        if (decryptedAnnouncement == null) {
             throw new IllegalValueException(String.format(FAIL_MESSAGE, Announcement.class.getSimpleName()));
         }
-        Announcement announcement = new Announcement(this.announcement);
+        Announcement announcement = new Announcement(decryptedAnnouncement);
         return announcement;
     }
 
