@@ -9,8 +9,8 @@ import java.util.List;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
-import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.shift.Shift;
+import seedu.ptman.model.shift.exceptions.DuplicateShiftException;
 
 //@@author shanwpf
 /**

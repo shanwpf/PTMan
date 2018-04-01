@@ -9,8 +9,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.ptman.commons.util.CollectionUtil;
-import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
-import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
+import seedu.ptman.model.shift.exceptions.DuplicateShiftException;
+import seedu.ptman.model.shift.exceptions.ShiftNotFoundException;
 
 //@@author shanwpf
 /**
