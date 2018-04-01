@@ -2,6 +2,9 @@ package seedu.ptman.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.ptman.logic.commands.ApplyCommand.MESSAGE_DUPLICATE_EMPLOYEE;
+import static seedu.ptman.logic.commands.ApplyCommand.MESSAGE_SHIFT_FULL;
+import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
@@ -27,10 +30,14 @@ import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.shift.Shift;
+import seedu.ptman.model.shift.exceptions.DuplicateShiftException;
+import seedu.ptman.model.shift.exceptions.ShiftFullException;
 import seedu.ptman.testutil.Assert;
 import seedu.ptman.testutil.EmployeeBuilder;
+import seedu.ptman.testutil.ShiftBuilder;
 
 //@@author shanwpf
 /**
@@ -70,6 +77,37 @@ public class ApplyCommandTest {
         editedShift.addEmployee(ALICE);
         expectedModel.updateShift(model.getFilteredShiftList().get(0), editedShift);
         assertCommandSuccess(applyCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_shiftFull_throwsCommandException()
+            throws ShiftFullException, DuplicateEmployeeException, DuplicateShiftException {
+        Model model = new ModelManager();
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
+        Employee employee1 = new EmployeeBuilder().withName("first").build();
+        Employee employee2 = new EmployeeBuilder().withName("second").build();
+        Shift shift = new ShiftBuilder().withCapacity("1").build();
+        shift.addEmployee(employee1);
+        model.addEmployee(employee1);
+        model.addEmployee(employee2);
+        model.addShift(shift);
+        String expectedMessage = String.format(MESSAGE_SHIFT_FULL, INDEX_FIRST_SHIFT.getOneBased());
+        ApplyCommand applyCommand = prepareCommand(INDEX_SECOND_EMPLOYEE, INDEX_FIRST_SHIFT, model);
+        assertCommandFailure(applyCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_duplicateEmployee_throwsCommandException()
+            throws ShiftFullException, DuplicateEmployeeException, DuplicateShiftException {
+        Model model = new ModelManager();
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
+        Employee employee1 = new EmployeeBuilder().withName("first").build();
+        Shift shift = new ShiftBuilder().withCapacity("2").build();
+        shift.addEmployee(employee1);
+        model.addEmployee(employee1);
+        model.addShift(shift);
+        ApplyCommand applyCommand = prepareCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
+        assertCommandFailure(applyCommand, model, MESSAGE_DUPLICATE_EMPLOYEE);
     }
 
     @Test
