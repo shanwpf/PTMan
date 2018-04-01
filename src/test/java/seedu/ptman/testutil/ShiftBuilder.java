@@ -38,7 +38,7 @@ public class ShiftBuilder {
     }
 
     /**
-     * Sets the {@code Day} of the {@code Shift} that we are building.
+     * Sets the {@code Date} of the {@code Shift} that we are building.
      */
     public ShiftBuilder withDate(String date) {
         this.date = new Date(date);

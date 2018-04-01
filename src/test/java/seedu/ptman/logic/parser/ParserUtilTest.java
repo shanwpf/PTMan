@@ -22,7 +22,6 @@ import seedu.ptman.model.employee.Email;
 import seedu.ptman.model.employee.Name;
 import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.outlet.Capacity;
-import seedu.ptman.model.outlet.Day;
 import seedu.ptman.model.outlet.OperatingHours;
 import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletName;
@@ -81,37 +80,6 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_EMPLOYEE, ParserUtil.parseIndex("  1  "));
     }
 
-    @Test
-    public void parseDay_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDay((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDay((Optional<String>) null));
-    }
-
-    @Test
-    public void parseDay_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDay(INVALID_DAY));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDay(Optional.of(INVALID_DAY)));
-    }
-
-    @Test
-    public void parseDay_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseDay(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
-        Day expectedDay = new Day(VALID_DAY);
-        assertEquals(expectedDay, ParserUtil.parseDay(VALID_DAY));
-        assertEquals(Optional.of(expectedDay), ParserUtil.parseDay(Optional.of(VALID_DAY)));
-    }
-
-    @Test
-    public void parseDay_validValueWithWhitespace_returnsTrimmedDay() throws Exception {
-        String dayWithWhitespace = WHITESPACE + VALID_DAY + WHITESPACE;
-        Day expectedDay = new Day(VALID_DAY);
-        assertEquals(expectedDay, ParserUtil.parseDay(dayWithWhitespace));
-        assertEquals(Optional.of(expectedDay), ParserUtil.parseDay(Optional.of(dayWithWhitespace)));
-    }
     //
     @Test
     public void parseTime_null_throwsNullPointerException() {
@@ -424,9 +392,6 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedOutletContact), ParserUtil.parseOutletContact(
                 Optional.of(outletContactWithWhitespace)));
     }
-
-
-
 
     @Test
     public void parseOperatingHours_null_throwsNullPointerException() {
