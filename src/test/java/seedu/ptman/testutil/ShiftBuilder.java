@@ -1,5 +1,10 @@
 package seedu.ptman.testutil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.outlet.Capacity;
 import seedu.ptman.model.outlet.Date;
 import seedu.ptman.model.outlet.Shift;
@@ -19,12 +24,14 @@ public class ShiftBuilder {
     private Time startTime;
     private Time endTime;
     private Capacity capacity;
+    private List<Employee> employees;
 
     public ShiftBuilder() {
         date = new Date(DEFAULT_DATE);
         startTime = new Time(DEFAULT_TIME_START);
         endTime = new Time(DEFAULT_TIME_END);
         capacity = new Capacity(DEFAULT_CAPACITY);
+        employees = new ArrayList<>();
     }
 
     /**
@@ -35,6 +42,7 @@ public class ShiftBuilder {
         startTime = shiftToCopy.getStartTime();
         endTime = shiftToCopy.getEndTime();
         capacity = shiftToCopy.getCapacity();
+        employees = new ArrayList<>(shiftToCopy.getEmployeeList());
     }
 
     /**
@@ -70,11 +78,19 @@ public class ShiftBuilder {
     }
 
     /**
+     * Sets the {@code Employee} of the {@code Shift} that we are building.
+     */
+    public ShiftBuilder withEmployees(Employee... employees) {
+        this.employees.addAll(Arrays.asList(employees));
+        return this;
+    }
+
+    /**
      * Returns the {@code Shift}
      * @return
      */
     public Shift build() {
-        return new Shift(date, startTime, endTime, capacity);
+        return new Shift(date, startTime, endTime, capacity, employees);
     }
 
 }

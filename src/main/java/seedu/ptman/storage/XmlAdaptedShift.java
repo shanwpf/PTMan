@@ -1,6 +1,5 @@
 package seedu.ptman.storage;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +18,7 @@ import seedu.ptman.model.outlet.Time;
  */
 public class XmlAdaptedShift {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Shifts's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT_SHIFT = "Shifts's %s field is missing!";
 
     @XmlElement(required = true)
     private String date;
@@ -81,8 +80,8 @@ public class XmlAdaptedShift {
         }
 
         if (this.date == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    DayOfWeek.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT_SHIFT,
+                    Date.class.getSimpleName()));
         }
         if (!Date.isValidDate(this.date)) {
             throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS);
@@ -90,7 +89,8 @@ public class XmlAdaptedShift {
         final Date date = new Date(this.date);
 
         if (this.startTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT_SHIFT,
+                    Time.class.getSimpleName()));
         }
         if (!Time.isValidTime(this.startTime)) {
             throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
@@ -98,7 +98,8 @@ public class XmlAdaptedShift {
         final Time startTime = new Time(this.startTime);
 
         if (this.endTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT_SHIFT,
+                    Time.class.getSimpleName()));
         }
         if (!Time.isValidTime(this.endTime)) {
             throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
@@ -107,7 +108,7 @@ public class XmlAdaptedShift {
 
 
         if (this.capacity == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT_SHIFT,
                     Capacity.class.getSimpleName()));
         }
         if (!Capacity.isValidCapacity(this.capacity)) {
