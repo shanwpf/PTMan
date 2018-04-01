@@ -21,36 +21,36 @@ public class Shift {
     public static final String MESSAGE_SHIFT_CONSTRAINTS = "Start time should be after the end time.";
     private Time startTime;
     private Time endTime;
-    private Day day;
+    private Date date;
     private UniqueEmployeeList uniqueEmployeeList;
     private Capacity capacity;
 
-    public Shift(Day day, Time startTime, Time endTime, Capacity capacity) {
-        requireAllNonNull(day, startTime, endTime, capacity);
+    public Shift(Date date, Time startTime, Time endTime, Capacity capacity) {
+        requireAllNonNull(startTime, endTime, capacity);
         checkArgument(endTime.isAfter(startTime), MESSAGE_SHIFT_CONSTRAINTS);
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.capacity = capacity;
-        this.day = day;
         this.uniqueEmployeeList = new UniqueEmployeeList();
     }
 
     public Shift(Shift shift) {
+        this.date = shift.getDate();
         this.startTime = shift.getStartTime();
         this.endTime = shift.getEndTime();
         this.capacity = shift.getCapacity();
-        this.day = shift.getDay();
         this.uniqueEmployeeList = new UniqueEmployeeList();
         setEmployees(shift);
     }
 
-    public Shift(Day day, Time startTime, Time endTime, Capacity capacity, List<Employee> employees) {
-        requireAllNonNull(day, startTime, endTime, capacity, employees);
+    public Shift(Date date, Time startTime, Time endTime, Capacity capacity, List<Employee> employees) {
+        requireAllNonNull(date, startTime, endTime, capacity, employees);
         checkArgument(endTime.isAfter(startTime), MESSAGE_SHIFT_CONSTRAINTS);
         this.startTime = startTime;
         this.endTime = endTime;
         this.capacity = capacity;
-        this.day = day;
+        this.date = date;
         this.uniqueEmployeeList = new UniqueEmployeeList();
         try {
             this.uniqueEmployeeList.setEmployees(employees);
@@ -77,7 +77,7 @@ public class Shift {
      * @param employee
      * @throws EmployeeNotFoundException
      */
-    protected void removeEmployee(Employee employee) throws EmployeeNotFoundException {
+    public void removeEmployee(Employee employee) throws EmployeeNotFoundException {
         uniqueEmployeeList.remove(employee);
     }
 
@@ -92,22 +92,18 @@ public class Shift {
         Shift shift = (Shift) o;
         return startTime.equals(shift.startTime)
                 && endTime.equals(shift.endTime)
-                && day.equals(shift.day)
+                && date.equals(shift.date)
                 && uniqueEmployeeList.equals(shift.uniqueEmployeeList)
                 && capacity.equals(shift.capacity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, endTime, day, uniqueEmployeeList, capacity);
+        return Objects.hash(startTime, endTime, date, uniqueEmployeeList, capacity);
     }
 
     public ObservableList<Employee> getEmployeeList() {
         return uniqueEmployeeList.asObservableList();
-    }
-
-    public Day getDay() {
-        return day;
     }
 
     public Time getStartTime() {
@@ -125,7 +121,6 @@ public class Shift {
     public int getSlotsLeft() {
         int numEmployees = Iterables.size(uniqueEmployeeList);
         return capacity.getCapacity() - numEmployees;
-
     }
 
     /**
@@ -135,9 +130,9 @@ public class Shift {
      * @return
      */
     public int compareTo(Shift other) {
-        if (day.equals(other.getDay())) {
+        if (date.equals(other.getDate())) {
             return startTime.compareTo(other.getStartTime());
-        } else if (day.compareTo(other.getDay()) < 0) {
+        } else if (date.compareTo(other.getDate()) < 0) {
             return -1;
         } else {
             return 1;
@@ -156,5 +151,22 @@ public class Shift {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        return sb.append("Date: ")
+                .append(date)
+                .append(" Start time: ")
+                .append(startTime)
+                .append(" End time: ")
+                .append(endTime)
+                .append(" Capacity: ")
+                .append(capacity).toString();
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

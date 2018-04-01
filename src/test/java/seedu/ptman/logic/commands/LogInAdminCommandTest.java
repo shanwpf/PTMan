@@ -11,8 +11,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+
 import seedu.ptman.logic.CommandHistory;
 import seedu.ptman.logic.UndoRedoStack;
+import seedu.ptman.logic.commands.exceptions.InvalidPasswordException;
 import seedu.ptman.model.Model;
 import seedu.ptman.model.PartTimeManager;
 import seedu.ptman.model.Password;
@@ -20,13 +22,13 @@ import seedu.ptman.model.ReadOnlyPartTimeManager;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
-import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
 import seedu.ptman.model.tag.Tag;
+
 
 
 public class LogInAdminCommandTest {
@@ -50,6 +52,7 @@ public class LogInAdminCommandTest {
     }
 
     @Test
+
     public void execute_correctPassword_alreadyLoggedIn() throws Exception {
         ModelStubAcceptingAllPassword modelStub = new ModelStubAcceptingAllPassword();
         modelStub.setIsAdminMode(true); // already in adminMode
@@ -86,6 +89,17 @@ public class LogInAdminCommandTest {
         }
 
         @Override
+        public boolean isAdminPassword(Password password) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void setAdminPassword(Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public boolean isAdminMode() {
             fail("This method should not be called.");
             return false;
@@ -102,6 +116,30 @@ public class LogInAdminCommandTest {
             fail("This method should not be called.");
         }
 
+
+        @Override
+        public void storeResetPassword(OutletInformation outlet, Password tempPassword) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void storeResetPassword(Employee employee, Password tempPassword) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean isCorrectTempPwd(Employee employee, Password tempPassword) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public boolean isCorrectTempPwd(OutletInformation outlet, Password tempPassword) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
         public void addShift(Shift shift) throws DuplicateShiftException {
             fail("This method should not be called.");
         }
@@ -170,12 +208,6 @@ public class LogInAdminCommandTest {
 
         @Override
         public void deleteShift(Shift shiftToDelete) throws ShiftNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addEmployeeToShift(Employee employee, Shift shift)
-                throws ShiftNotFoundException, EmployeeNotFoundException, DuplicateEmployeeException {
             fail("This method should not be called.");
         }
 

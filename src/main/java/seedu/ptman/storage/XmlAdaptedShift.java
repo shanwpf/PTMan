@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.outlet.Capacity;
-import seedu.ptman.model.outlet.Day;
+import seedu.ptman.model.outlet.Date;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Time;
 
@@ -22,7 +22,7 @@ public class XmlAdaptedShift {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Shifts's %s field is missing!";
 
     @XmlElement(required = true)
-    private String day;
+    private String date;
     @XmlElement(required = true)
     private String startTime;
     @XmlElement(required = true)
@@ -42,9 +42,9 @@ public class XmlAdaptedShift {
     /**
      * Constructs an {@code XmlAdaptedEmployee} with the given employee details.
      */
-    public XmlAdaptedShift(String day, String startTime, String endTime,
+    public XmlAdaptedShift(String date, String startTime, String endTime,
                            String capacity, List<XmlAdaptedEmployee> employees) {
-        this.day = day;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.capacity = capacity;
@@ -59,7 +59,7 @@ public class XmlAdaptedShift {
      * @param source future changes to this will not affect the created XmlAdaptedEmployee
      */
     public XmlAdaptedShift(Shift source) {
-        day = source.getDay().toString();
+        date = source.getDate().toString();
         startTime = source.getStartTime().toString();
         endTime = source.getEndTime().toString();
         capacity = source.getCapacity().toString();
@@ -80,14 +80,14 @@ public class XmlAdaptedShift {
             employees.add(employee.toModelType());
         }
 
-        if (this.day == null) {
+        if (this.date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     DayOfWeek.class.getSimpleName()));
         }
-        if (!Day.isValidDay(this.day)) {
-            throw new IllegalValueException(Day.MESSAGE_DAY_CONSTRAINTS);
+        if (!Date.isValidDate(this.date)) {
+            throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS);
         }
-        final Day day = new Day(this.day);
+        final Date date = new Date(this.date);
 
         if (this.startTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
@@ -107,14 +107,15 @@ public class XmlAdaptedShift {
 
 
         if (this.capacity == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Capacity.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Capacity.class.getSimpleName()));
         }
         if (!Capacity.isValidCapacity(this.capacity)) {
             throw new IllegalValueException(Capacity.MESSAGE_CAPACITY_CONSTRAINTS);
         }
         final Capacity capacity = new Capacity(this.capacity);
 
-        return new Shift(day, startTime, endTime, capacity, employees);
+        return new Shift(date, startTime, endTime, capacity, employees);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class XmlAdaptedShift {
         }
 
         XmlAdaptedShift otherShift = (XmlAdaptedShift) other;
-        return Objects.equals(day, otherShift.day)
+        return Objects.equals(date, otherShift.date)
                 && Objects.equals(startTime, otherShift.startTime)
                 && Objects.equals(endTime, otherShift.endTime)
                 && Objects.equals(capacity, otherShift.capacity)

@@ -2,7 +2,10 @@ package seedu.ptman.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.ptman.model.outlet.Timetable.getWeekFromDate;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.ptman.commons.core.ComponentManager;
 import seedu.ptman.commons.core.LogsCenter;
+import seedu.ptman.commons.events.model.OutletDataChangedEvent;
 import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
@@ -33,23 +37,38 @@ public class ModelManager extends ComponentManager implements Model {
     private final PartTimeManager partTimeManager;
     private final FilteredList<Employee> filteredEmployees;
     private final FilteredList<Shift> filteredShifts;
+    private HashMap<Employee, Password> tempPasswordMap;
+    private HashMap<OutletInformation, Password> tempMasterPasswordMap;
 
     /**
      * Initializes a ModelManager with the given partTimeManager and userPrefs.
      */
-    public ModelManager(ReadOnlyPartTimeManager partTimeManager, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyPartTimeManager partTimeManager, UserPrefs userPrefs,
+                        OutletInformation outletInformation) {
         super();
-        requireAllNonNull(partTimeManager, userPrefs);
+        requireAllNonNull(partTimeManager, userPrefs, outletInformation);
 
         logger.fine("Initializing with address book: " + partTimeManager + " and user prefs " + userPrefs);
 
         this.partTimeManager = new PartTimeManager(partTimeManager);
+        try {
+            this.partTimeManager.updateOutlet(outletInformation);
+        } catch (NoOutletInformationFieldChangeException e) {
+            logger.warning("Outlet data should not be empty.");
+        }
         filteredEmployees = new FilteredList<>(this.partTimeManager.getEmployeeList());
         filteredShifts = new FilteredList<>(this.partTimeManager.getShiftList());
+
+        // Only display shifts in the current week
+        updateFilteredShiftList(shift ->
+                getWeekFromDate(shift.getDate().getLocalDate()) == getWeekFromDate(LocalDate.now()));
+
+        tempPasswordMap = new HashMap<>();
+        tempMasterPasswordMap = new HashMap<>();
     }
 
     public ModelManager() {
-        this(new PartTimeManager(), new UserPrefs());
+        this(new PartTimeManager(), new UserPrefs(), new OutletInformation());
     }
 
     @Override
@@ -66,6 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicatePartTimeManagerChanged() {
         raise(new PartTimeManagerChangedEvent(partTimeManager));
+        raise(new OutletDataChangedEvent(partTimeManager.getOutletInformation()));
     }
 
     @Override
@@ -102,6 +122,44 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean isAdminPassword(Password password) {
+        return partTimeManager.isAdminPassword(password);
+    }
+
+    @Override
+    public void setAdminPassword(Password password) {
+        partTimeManager.setAdminPassword(password);
+    }
+
+    @Override
+    public void storeResetPassword(Employee employee, Password tempPassword) {
+        tempPasswordMap.put(employee, tempPassword);
+    }
+
+    @Override
+    public void storeResetPassword(OutletInformation outlet, Password tempPassword) {
+        tempMasterPasswordMap.put(outlet, tempPassword);
+    }
+
+    @Override
+    public boolean isCorrectTempPwd(Employee employee, Password tempPassword) {
+        if (!tempPasswordMap.containsKey(employee)) {
+            return false;
+        } else {
+            return tempPasswordMap.get(employee).equals(tempPassword);
+        }
+    }
+
+    @Override
+    public boolean isCorrectTempPwd(OutletInformation outlet, Password tempPassword) {
+        if (!tempMasterPasswordMap.containsKey(outlet)) {
+            return false;
+        } else {
+            return tempMasterPasswordMap.get(outlet).equals(tempPassword);
+        }
+    }
+
+    @Override
     public void addShift(Shift shift) throws DuplicateShiftException {
         partTimeManager.addShift(shift);
         indicatePartTimeManagerChanged();
@@ -116,13 +174,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteShift(Shift target) throws ShiftNotFoundException {
         partTimeManager.removeShift(target);
-        indicatePartTimeManagerChanged();
-    }
-
-    @Override
-    public void addEmployeeToShift(Employee employee, Shift shift)
-            throws ShiftNotFoundException, DuplicateEmployeeException {
-        partTimeManager.addEmployeeToShift(employee, shift);
         indicatePartTimeManagerChanged();
     }
 

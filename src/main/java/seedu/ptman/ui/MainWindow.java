@@ -50,6 +50,9 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane adminModeDisplayPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -126,11 +129,14 @@ public class MainWindow extends UiPart<Stage> {
         outletPanel = new OutletDetailsPanel(logic.getOutletInformation());
         outletDetailsPanelPlaceholder.getChildren().add(outletPanel.getRoot());
 
-        timetablePanel = new TimetablePanel(logic.getFilteredShiftList());
+        timetablePanel = new TimetablePanel(logic.getFilteredShiftList(), logic.getOutletInformation());
         timetableViewPlaceholder.getChildren().add(timetablePanel.getRoot());
 
         employeeListPanel = new EmployeeListPanel(logic.getFilteredEmployeeList());
         employeeListPanelPlaceholder.getChildren().add(employeeListPanel.getRoot());
+
+        AdminModeDisplay adminModeDisplay = new AdminModeDisplay(logic.isAdminMode());
+        adminModeDisplayPlaceholder.getChildren().add(adminModeDisplay.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

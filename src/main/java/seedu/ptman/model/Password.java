@@ -7,12 +7,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+import org.apache.commons.lang.RandomStringUtils;
+
+import com.sun.media.jfxmedia.logging.Logger;
+
+
 /**
  * Represents a Password in PartTimeManger
  * Store password as hashCode
  */
 public class Password {
-
 
     public static final String MESSAGE_PASSWORD_CONSTRAINTS =
             "Password should be at least 8 character and no spaces.";
@@ -105,10 +109,21 @@ public class Password {
             byte[] byteHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             encodedHash = Base64.getEncoder().encodeToString(byteHash);
         } catch (NoSuchAlgorithmException noSuchAlgoException) {
-            System.out.println("cannot generate hash: MessageDigest.getInstance");
+            Logger.logMsg(Logger.ERROR, "cannot generate hash: MessageDigest.getInstance");
         }
         return encodedHash;
     }
+
+    /**
+     *
+     * @return random 8 character password.
+     */
+    public static String generateRandomPassword() {
+        String charactersAllowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String randomPwd = RandomStringUtils.random(8, charactersAllowed);
+        return randomPwd;
+    }
+
 
     @Override
     public boolean equals(Object other) {

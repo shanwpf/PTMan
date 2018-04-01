@@ -1,4 +1,4 @@
-= PTMan - Developer Guide
+= image:ptman_logo_dg.png[width="400"]
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -215,7 +215,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Employee>` and `ObservableList<Shift>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the lists change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -241,24 +241,30 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 === Shifts feature
-*Reason for implementation*
+==== Reason for implementation
 
 PTMan is designed to give employees the freedom and flexibility to choose the shifts they want to work in.
 By allowing employers to add or delete shifts, employees can then apply for shifts that are available.
 
-*How it is implemented*
+==== How it is implemented
 
-A `Shift` object is created using its constructor:
+In order to create a shift, the date, starting time, ending time, and capacity of the shift must be specified.
+Figure 11 is a class diagram that displays the association between `Shift` and other components in the `Model`.
+
+.Overview of the Shift class in the Model
+image::ShiftClassDiagram.png[width="800"]
+
+A `Shift` object is created using it's constructor:
 ----
-Shift(Day day, Time startTime, Time endTime, Capacity capacity)
+Shift(Date date, Time startTime, Time endTime, Capacity capacity)
 ----
 
 Explanation for arguments:
 
-. `Day`: A class that wraps Java's `DayOfWeek` enum. It indicates the day that the shift is on. +
-Example: `new Day("monday")` creates a `Day` object representing Monday.
+. `Date`: A class that wraps Java's `LocalDate` class. It indicates the date that the shift is on. +
+Example: `new Date("12-03-18")` creates a `Date` object representing 12 March 2018.
 [NOTE]
-The string argument is not case-sensitive, but should be a valid day of week spelt in full.
+The string argument should represent a date in the DD-MM-YY format.
 
 . `Time`: A class that wraps Java's `LocalTime` class. It indicates the either the starting time or ending time of the shift. +
 Example: `new Time("1030")` creates a `Time` object representing 10:30am.
@@ -273,19 +279,18 @@ This is used to store employees that have applied for this shift.
 
 To store a list of shifts, we may use a `UniqueShiftList` to ensure there are no duplicate shifts.
 
-The following commands directly interact with the `Shift` class:
+The following are commands that directly interact with the `Shift` class:
 
-. `AddShiftCommand`: Creates a `Shift` and adds it to the `UniqueShiftList` in `OutletInformation`.
-. `DeleteShiftCommand`: Deletes a `Shift` from the `UniqueShiftList` in `OutletInformation`.
+. `AddShiftCommand`: Creates a `Shift` and adds it to the `UniqueShiftList` in `PartTimeManager`.
+. `DeleteShiftCommand`: Deletes a `Shift` from the `UniqueShiftList` in `PartTimeManager`.
 . `ApplyCommand`: Adds an `Employee` to the `UniqueEmployeeList` in the `Shift`.
 . `UnapplyCommand`: Removes an `Employee` from the `UniqueEmployeeList` in the `Shift`.
 
-
-*Reasons for how it is implemented*
+==== Reasons for how it is implemented
 
 * We wrap the arguments in the classes above so that we may carry out validity checks in those classes.
 
-* `Time` uses Java's well-documented `LocalTime` class for easy integration with the GUI timetable.
+* `Time` and `Date` uses Java's well-documented `LocalTime` and `LocalDate` classes for easy integration with the GUI timetable.
 
 * `UniqueEmployeeList` is used to ensure there are no duplicate employees in the shift.
 
@@ -309,16 +314,23 @@ The timetable GUI is created with the help of the https://github.com/dlemmermann
 
 A `TimetablePanel` is created with its constructor:
 ----
-TimetablePanel(ObservableList<Shift> shiftObservableList)`
+TimetablePanel(ObservableList<Shift> shiftObservableList, OutletInformation outletInformation)
 ----
 
 The `TimetablePanel` is initialised in the `MainWindow` class in the following way:
 ----
-TimetablePanel timetablePanel = new TimetablePanel(logic.getFilteredShiftList());
+TimetablePanel timetablePanel = new TimetablePanel(logic.getFilteredShiftList(), logic.getOutletInformation());
 ----
 
-`TimetablePanel` takes in an `ObservableList<Shift>` object, which is an unmodifiable sorted view of the filtered shifts.
- `TimetablePanel` then uses these `Shift` objects to set the Entries in the timetable view, in the method `setShifts()`.+
+`TimetablePanel` takes in:
+
+ * An `ObservableList<Shift>` object, which is an unmodifiable sorted view of the filtered shifts.
+ * An `OutletInformation` object, which contains information of the outlet that is required to build the timetable.
+  In particular, the operating hours of the outlet.
+
+`TimetablePanel` then uses these `Shift` objects to set the Entries in the timetable view, in the method `setShifts()`.
+The operating hours acquired from `OutletInformation` is then used in `updateTimetableView()` to ensure that the timetable
+displays all the time slots within this time range. +
 
 The timetable GUI automatically refreshes to update the timetable view by calling the `updateTimetableView()` method whenever
 there is a `PartTimeManagerChangedEvent`. This ensures the timetable is always updated when a shift is added, removed, or altered.
@@ -496,35 +508,34 @@ Currently, the `OutletInformation` object initialized in the `PartTimeManager` i
 ----
 OutletInformation()
 ----
-This default constructor initializes the five fields of `OutletInformation` to respective default values:
-----
-    public OutletInformation() {
-        this.name = new OutletName(DEFAULT_OUTLET_NAME);
-        this.masterPassword = new Password();
-        this.operatingHours = new OperatingHours(DEFAULT_OPERATING_HOURS);
-        this.outletContact = new OutletContact(DEFAULT_OUTLET_CONTACT);
-        this.timetable = new Timetable(LocalDate.now());
-    }
-----
+This default constructor initializes the seven fields of `OutletInformation` to respective default values:
+
+* Outlet name +
+* Operating hours +
+* Contact number +
+* Email +
+* Master password +
+* Announcement +
+* Timetable +
+
 This saves the time of any employer new to PTMan because the creation of an outlet has already been done with default values.
 Employers can edit those values by entering an `editoutlet` command.
 However, there is an alternative way to create an `OutletInformation` object:
 ----
-OutletInformation(OutletName outletName, OperatingHours operatingHours, OutletContact outletContact, Timetable timetable)
+OutletInformation(OutletName outletName, OperatingHours operatingHours, OutletContact outletContact, OutletEmail outletEmail, Announcement announcement)
 ----
-This constructor allows flexity in storing outlet information, but master password must be set to the default value.
-It is because this default password is used for employer's first login and any employer cannot change his password without the first login.
-stored in a separate file and managed by the `OutletInformation` class. +
+This constructor allows flexibility in storing outlet information, but master password must be set to the default value.
+It is because this default password is used for employer's first login and any employer cannot change his password without the first login. +
 
 ===== Logic component
 
-Currently, there are two commands that allows employers to change fields of the `OutletInformation` object. +
+Currently, there are three commands that allows employers to change fields of the `OutletInformation` object. +
 
 *Edit outlet command*
 
 After login with correct master password, using the `editoutlet` command, employers should be able to edit the outlet information including
-outlet name, operating hours and contact numbers. Master password can only be changed using changemasterpassword command,
-while timetable can only be set with relevant commands.
+outlet name, operating hours, contact numbers and email. Master password can only be changed using changemasterpassword command,
+while timetable can only be set with relevant `shift` commands.
 [NOTE]
 Editing with some fields not specified is allowed.
 For example, editoutlet n/OUTLETNAME is allowed. This enables employers to edit only the information required for change.
@@ -534,6 +545,12 @@ For example, editoutlet n/OUTLETNAME is allowed. This enables employers to edit 
 After login with correct master password, using the `changemasterpassword` command, employers should be able to change the master password as well.
 However, due to the possibility that previous employer forgot to log out, changemasterpassword command requires
 the old password for further verification. This reduces the risk of password getting stolen.
+
+*Announcement command*
+
+After login with correct master password, using the "announcement" command, employers should be able to create an announcement.
+This allows employers to broadcast important messages to employees. For example, when there is an urgent need of manpower in a specific time slot,
+employers can create an announcement to inform the employees who can sign up for the corresponding time slot upon receving the announcement.
 
 ===== Storage component
 
@@ -1084,6 +1101,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update my password |keep my information secure.
 
+|`* * *` |user |reset my password |reset when i forget my password.
+
 |`* * *` |employer |add a new employee |store them in the record.
 
 |`* * *` |employer |view an employee’s contact |contact them.
@@ -1103,7 +1122,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |employer |edit an employee’s contact |update their outdated contact information.
 
 |`* *` |employer |edit the outlet information |update the outdated outlet information.
-
+c
 |`* *` |employer |sort employees by name |have a clearer view of all employees’ details.
 
 |`* *` |employer |find an employee by name |locate details of employees without having to go through the entire list.
@@ -1112,11 +1131,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |employer |edit an employee’s address|update their outdated address.
 
+|`* *` |employee |view my own shifts in the timetable |so that I can easily recall when I need to work.
+
+|`* *` |employee |export timetable as image |have easy access to the time slots I'm working at.
+
 |`* *` |employee |edit my contact and address |update my particulars.
 
 |`* *` |employee |view my salary so far for the month |plan my expenses.
-
-|`*` |user |export timetable as image |have easy access to the time slots I'm working at.
 
 |`*` |employer |add an employee’s photo |view it at any time.
 
