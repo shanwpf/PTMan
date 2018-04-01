@@ -13,6 +13,7 @@ import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
+import seedu.ptman.model.shift.exceptions.ShiftFullException;
 
 //@@author shanwpf
 /**
@@ -65,17 +66,19 @@ public class Shift {
     }
 
     /**
-     * Adds an employee that is working in this shift.
-     * @param employee
+     * Adds an employee to this shift
      * @throws DuplicateEmployeeException
+     * @throws ShiftFullException
      */
-    public void addEmployee(Employee employee) throws DuplicateEmployeeException {
+    public void addEmployee(Employee employee) throws DuplicateEmployeeException, ShiftFullException {
+        if (this.isFull()) {
+            throw new ShiftFullException();
+        }
         uniqueEmployeeList.add(employee);
     }
 
     /**
-     * Removes an employee who is no longer working in this shift.
-     * @param employee
+     * Removes an employee from this shift
      * @throws EmployeeNotFoundException
      */
     public void removeEmployee(Employee employee) throws EmployeeNotFoundException {
@@ -124,11 +127,13 @@ public class Shift {
         return capacity.getCapacity() - numEmployees;
     }
 
+    public boolean isFull() {
+        return getEmployeeList().size() >= this.capacity.getCapacity();
+    }
+
     /**
      * Compares this shift to another. Returns a negative integer if the argument is a later shift,
      * 0 if the shifts are equal, or a positive integer if the argument is a later shift.
-     * @param other
-     * @return
      */
     public int compareTo(Shift other) {
         if (date.equals(other.getDate())) {
