@@ -2,9 +2,11 @@ package seedu.ptman.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.ptman.commons.core.EventsCenter;
+import seedu.ptman.commons.events.model.UserModeChangedEvent;
 import seedu.ptman.logic.commands.exceptions.CommandException;
+import seedu.ptman.logic.commands.exceptions.InvalidPasswordException;
 import seedu.ptman.model.Password;
-import seedu.ptman.model.employee.exceptions.InvalidPasswordException;
 
 /**
  * Selects a employee identified using it's last displayed index from PTMan.
@@ -42,6 +44,7 @@ public class LogInAdminCommand extends Command {
             throw new InvalidPasswordException();
         }
 
+        EventsCenter.getInstance().post(new UserModeChangedEvent(true));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

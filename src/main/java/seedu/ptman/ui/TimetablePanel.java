@@ -1,5 +1,9 @@
 package seedu.ptman.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,7 +12,11 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
+
 import com.calendarfx.model.Calendar;
+import com.calendarfx.model.Calendar.Style;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -19,10 +27,21 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
+import javafx.scene.transform.Transform;
 import seedu.ptman.commons.core.LogsCenter;
 import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
+import seedu.ptman.commons.events.ui.EmployeePanelSelectionChangedEvent;
+import seedu.ptman.commons.events.ui.ExportTimetableAsImageAndEmailRequestEvent;
+import seedu.ptman.commons.events.ui.ExportTimetableAsImageRequestEvent;
+import seedu.ptman.commons.services.EmailService;
+import seedu.ptman.model.employee.Email;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Timetable;
@@ -33,8 +52,24 @@ import seedu.ptman.model.outlet.Timetable;
  */
 public class TimetablePanel extends UiPart<Region> {
 
+    public static final String TIMETABLE_IMAGE_FILE_NAME_DEFAULT = "MyTimetable";
+    public static final String TIMETABLE_IMAGE_FILE_FORMAT = "png";
+
+    private static final int TIMETABLE_IMAGE_PIXEL_SCALE = 2;
     private static final String FXML = "TimetableView.fxml";
     private static final int MAX_SLOTS_LEFT_RUNNING_OUT = 3;
+
+    private static final Style ENTRY_GREEN_STYLE = Style.STYLE1;
+    private static final Style ENTRY_BLUE_STYLE = Style.STYLE2;
+    private static final Style ENTRY_YELLOW_STYLE = Style.STYLE3;
+    private static final Style ENTRY_RED_STYLE = Style.STYLE5;
+    private static final Style ENTRY_BROWN_STYLE = Style.STYLE7;
+
+    private static Calendar timetableAvail;
+    private static Calendar timetableEmployee;
+    private static Calendar timetableFull;
+    private static Calendar timetableOthers;
+    private static Calendar timetableRunningOut;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -45,9 +80,8 @@ public class TimetablePanel extends UiPart<Region> {
     private ObservableList<Shift> shiftObservableList;
     private OutletInformation outletInformation;
 
-    private Calendar timetableAvail;
-    private Calendar timetableRunningOut;
-    private Calendar timetableFull;
+
+    private Employee currentEmployee = null;
 
     protected TimetablePanel(ObservableList<Shift> shiftObservableList, OutletInformation outletInformation) {
         super(FXML);
@@ -68,6 +102,26 @@ public class TimetablePanel extends UiPart<Region> {
 
     public CalendarView getRoot() {
         return this.timetableView;
+    }
+
+    public static Calendar getTimetableAvail() {
+        return timetableAvail;
+    }
+
+    public static Calendar getTimetableRunningOut() {
+        return timetableRunningOut;
+    }
+
+    public static Calendar getTimetableFull() {
+        return timetableFull;
+    }
+
+    public static Calendar getTimetableEmployee() {
+        return timetableEmployee;
+    }
+
+    public static Calendar getTimetableOthers() {
+        return timetableOthers;
     }
 
     /**
@@ -126,10 +180,39 @@ public class TimetablePanel extends UiPart<Region> {
                     date, shift.getEndTime().getLocalTime());
             Entry<String> shiftEntry = new Entry<>("SHIFT " + index + "\nSlots left: " + shift.getSlotsLeft(),
                     timeInterval);
-            Calendar entryType = getEntryType(shift);
-            entryType.addEntry(shiftEntry);
+            setEntryType(shift, shiftEntry);
             index++;
         }
+    }
+
+    /**
+     * Sets the entry type (aka the color) of the shift in the timetable
+     * @param shift
+     * @param shiftEntry
+     */
+    private void setEntryType(Shift shift, Entry<String> shiftEntry) {
+        Calendar entryType;
+        if (currentEmployee != null) {
+            entryType = getEntryTypeEmployee(shift);
+        } else {
+            entryType = getEntryTypeMain(shift);
+        }
+        entryType.addEntry(shiftEntry);
+    }
+
+    /**
+     * Checks if currentEmployee is in input shift
+     * @param shift
+     * @return true if currentEmployee is in input shift, false if not.
+     */
+    private boolean isCurrentEmployeeInShift(Shift shift) {
+        UniqueEmployeeList employees = shift.getUniqueEmployeeList();
+        for (Employee employee : employees) {
+            if (employee.equals(currentEmployee)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -142,11 +225,11 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * @return the entryType (a Calendar object) for the shift, which reflects
+     * @return the entryType (a Calendar object) for the shift in the main timetable view, which reflects
      * the color of the shift in the timetableView.
      */
-    private Calendar getEntryType(Shift shift) {
-        int ratio = shift.getSlotsLeft() / shift.getCapacity().getCapacity();
+    private Calendar getEntryTypeMain(Shift shift) {
+        float ratio = (float) shift.getSlotsLeft() / (float) shift.getCapacity().getCapacity();
         if (ratio <= 0) {
             return timetableFull;
         } else if (ratio <= 0.5 || shift.getCapacity().getCapacity() < MAX_SLOTS_LEFT_RUNNING_OUT) {
@@ -154,6 +237,32 @@ public class TimetablePanel extends UiPart<Region> {
         } else {
             return timetableAvail;
         }
+    }
+
+    /**
+     * @return the entryType (a Calendar object) for the shift in the employee timetable view, which reflects
+     * the color of the shift in the timetableView.
+     */
+    private Calendar getEntryTypeEmployee(Shift shift) {
+        if (isCurrentEmployeeInShift(shift)) {
+            return timetableEmployee;
+        } else {
+            return timetableOthers;
+        }
+    }
+
+    /**
+     * Replaces the timetable view with a new timetable, with shifts taken by the employee being highlighted
+     * @param employee
+     */
+    private void loadEmployeeTimetable(Employee employee) {
+        currentEmployee = employee;
+        updateTimetableView();
+    }
+
+    private void loadMainTimetable() {
+        currentEmployee = null;
+        updateTimetableView();
     }
 
     /**
@@ -172,25 +281,110 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Adds all relevant Calendars (entryTypes) to its source
+     * Initialises all the Calendar objects
      */
-    private void addCalendars(CalendarSource calendarSource) {
-        // TODO: Improve code quality of this method
+    private void initialiseEntries() {
         timetableAvail = new Calendar("Available");
         timetableRunningOut = new Calendar("Running Out");
         timetableFull = new Calendar("Full");
+        timetableEmployee = new Calendar("Employee's shift");
+        timetableOthers = new Calendar("Other shifts");
+    }
 
-        timetableAvail.setStyle(Calendar.Style.STYLE1); // Green
-        timetableRunningOut.setStyle(Calendar.Style.STYLE3); // Yellow
-        timetableFull.setStyle(Calendar.Style.STYLE5); // Red
+    /**
+     * Sets the color styles of the entries
+     */
+    private void setEntryStyles() {
+        timetableAvail.setStyle(ENTRY_GREEN_STYLE);
+        timetableRunningOut.setStyle(ENTRY_YELLOW_STYLE);
+        timetableFull.setStyle(ENTRY_RED_STYLE);
+        timetableEmployee.setStyle(ENTRY_BLUE_STYLE);
+        timetableOthers.setStyle(ENTRY_BROWN_STYLE);
+    }
 
-        calendarSource.getCalendars().addAll(timetableAvail, timetableRunningOut, timetableFull);
+    /**
+     * Adds all relevant Calendars (entryTypes) to its source
+     */
+    private void addCalendars(CalendarSource calendarSource) {
+        initialiseEntries();
+        setEntryStyles();
+        calendarSource.getCalendars().addAll(timetableAvail, timetableRunningOut, timetableFull,
+                timetableEmployee, timetableOthers);
+    }
+
+    /**
+     * Takes a snapshot of the timetable view
+     */
+    private WritableImage takeSnapshot() {
+        WritableImage timetableWritableImage = new WritableImage(
+                (int) (TIMETABLE_IMAGE_PIXEL_SCALE * timetableView.getWidth()),
+                (int) (TIMETABLE_IMAGE_PIXEL_SCALE * timetableView.getHeight()));
+        SnapshotParameters spa = new SnapshotParameters();
+        spa.setTransform(Transform.scale(TIMETABLE_IMAGE_PIXEL_SCALE, TIMETABLE_IMAGE_PIXEL_SCALE));
+        WritableImage snapshot = timetableView.snapshot(spa, timetableWritableImage);
+        return snapshot;
+    }
+
+    /**
+     * Exports timetable as image and save it locally
+     */
+    private void exportTimetableAsImage(String filename) {
+        File imageFile = new File("." + File.separator + filename + "." + TIMETABLE_IMAGE_FILE_FORMAT);
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(takeSnapshot(), null), TIMETABLE_IMAGE_FILE_FORMAT, imageFile);
+        } catch (IOException e) {
+            logger.warning("Error taking snapshot of timetable.");
+        }
+    }
+
+    /**
+     * Exports timetable as image and email it
+     * @param email
+     */
+    private void exportTimetableAsImageAndEmail(String filename, Email email) {
+        String pathName = "." + File.separator + filename + "." + TIMETABLE_IMAGE_FILE_FORMAT;
+        File imageFile = new File(pathName);
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(takeSnapshot(), null), TIMETABLE_IMAGE_FILE_FORMAT, imageFile);
+            EmailService emailService = EmailService.getInstance();
+            emailService.sendTimetableAttachment(email.toString(), pathName);
+            Files.deleteIfExists(Paths.get(pathName));
+        } catch (IOException e) {
+            logger.warning("Error taking snapshot of timetable.");
+        } catch (MessagingException e) {
+            logger.warning("Error sending timetable as email.");
+        }
     }
 
     @Subscribe
     private void handleShiftChangedEvent(PartTimeManagerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event) + ": Updating timetable view....");
         Platform.runLater(() -> updateTimetableView());
+    }
+
+    @Subscribe
+    private void handleEmployeePanelSelectionChangedEvent(EmployeePanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            if (event.hasNewSelection()) {
+                loadEmployeeTimetable(event.getNewSelection().employee);
+            } else {
+                loadMainTimetable();
+            }
+        });
+    }
+
+    @Subscribe
+    private void handleExportTimetableAsImageRequestEvent(ExportTimetableAsImageRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event) + ": Exporting timetable as image....");
+        Platform.runLater(() -> exportTimetableAsImage(event.filename));
+    }
+
+    @Subscribe
+    private void handleExportTimetableAsImageAndEmailRequestEvent(ExportTimetableAsImageAndEmailRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event)
+                + ": Exporting timetable as image to send email....");
+        Platform.runLater(() -> exportTimetableAsImageAndEmail(event.filename, event.email));
     }
 
 }
