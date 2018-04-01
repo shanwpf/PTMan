@@ -58,7 +58,7 @@ public class TypicalShifts {
             .withEndTime("2200")
             .withCapacity("3").build();
 
-    public static final Shift SHIFT_RUNNING_OUT = new ShiftBuilder().withDay("thursday")
+    public static final Shift SHIFT_RUNNING_OUT = new ShiftBuilder().withDate("22-03-18")
             .withStartTime("0900")
             .withEndTime("1200")
             .withCapacity("1").build();
