@@ -16,7 +16,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.ShiftNotFoundException;
-import seedu.ptman.testutil.Assert;
 
 public class UniqueShiftListTest {
     @Rule
