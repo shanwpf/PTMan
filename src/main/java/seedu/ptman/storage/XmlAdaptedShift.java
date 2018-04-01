@@ -15,7 +15,7 @@ import seedu.ptman.model.outlet.Shift;
 import seedu.ptman.model.outlet.Time;
 
 /**
- * JAXB-friendly version of the Employee.
+ * JAXB-friendly version of the Shift.
  */
 public class XmlAdaptedShift {
 
@@ -34,13 +34,13 @@ public class XmlAdaptedShift {
     private List<XmlAdaptedEmployee> employees = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedEmployee.
+     * Constructs an XmlAdaptedShift.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedShift() {}
 
     /**
-     * Constructs an {@code XmlAdaptedEmployee} with the given employee details.
+     * Constructs an {@code XmlAdaptedShift} with the given shift details.
      */
     public XmlAdaptedShift(String date, String startTime, String endTime,
                            String capacity, List<XmlAdaptedEmployee> employees) {
@@ -54,9 +54,9 @@ public class XmlAdaptedShift {
     }
 
     /**
-     * Converts a given Employee into this class for JAXB use.
+     * Converts a given Shift into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedEmployee
+     * @param source future changes to this will not affect the created XmlAdaptedShift
      */
     public XmlAdaptedShift(Shift source) {
         date = source.getDate().toString();
@@ -70,9 +70,9 @@ public class XmlAdaptedShift {
     }
 
     /**
-     * Converts this jaxb-friendly adapted employee object into the model's Employee object.
+     * Converts this jaxb-friendly adapted shift object into the model's Shift object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted employee
+     * @throws IllegalValueException if there were any data constraints violated in the adapted shift
      */
     public Shift toModelType() throws IllegalValueException {
         final List<Employee> employees = new ArrayList<>();
