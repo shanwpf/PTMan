@@ -1,6 +1,7 @@
 package seedu.ptman.model.outlet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
 import static seedu.ptman.testutil.TypicalEmployees.BOB;
@@ -54,6 +55,32 @@ public class ShiftTest {
         shift1.addEmployee(ALICE);
         shift2.addEmployee(ALICE);
         assertEquals(shift1, shift2);
+    }
+
+    @Test
+    public void hashCode_sameShift_sameHashCode() {
+        Shift shift1 = new ShiftBuilder().withDate("19-03-18")
+                .withCapacity("4")
+                .withStartTime("1200")
+                .withEndTime("1600").build();
+        Shift shift2 = new ShiftBuilder().withDate("19-03-18")
+                .withCapacity("4")
+                .withStartTime("1200")
+                .withEndTime("1600").build();
+        assertEquals(shift1.hashCode(), shift2.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentShift_differentHashCode() {
+        Shift shift1 = new ShiftBuilder().withDate("12-03-18")
+                .withCapacity("4")
+                .withStartTime("1200")
+                .withEndTime("1600").build();
+        Shift shift2 = new ShiftBuilder().withDate("19-03-18")
+                .withCapacity("4")
+                .withStartTime("1200")
+                .withEndTime("1600").build();
+        assertNotEquals(shift1.hashCode(), shift2.hashCode());
     }
 
 }

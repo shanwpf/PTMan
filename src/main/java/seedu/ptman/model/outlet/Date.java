@@ -39,10 +39,6 @@ public class Date {
         return true;
     }
 
-    public boolean isAfter(Date t) {
-        return date.isAfter(t.date);
-    }
-
     @Override
     public String toString() {
         return date.format(DateTimeFormatter.ofPattern(STRING_DATE_PATTERN));
