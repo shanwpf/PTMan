@@ -115,6 +115,9 @@ public abstract class PartTimeManagerSystemTest {
     public CommandBoxHandle getCommandBox() {
         return mainWindowHandle.getCommandBox();
     }
+    public CommandBoxHandle getCommandBoxOutput() {
+        return mainWindowHandle.getCommandBoxOutput();
+    }
 
     public AdminModeDisplayHandle getAdminModeDisplay() {
         return mainWindowHandle.getAdminModeDisplay();
@@ -262,7 +265,7 @@ public abstract class PartTimeManagerSystemTest {
      * Asserts that the command box and result display shows the default style.
      */
     protected void assertCommandBoxShowsDefaultStyle() {
-        assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
+        assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBoxOutput().getStyleClass());
         assertEquals(defaultStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
@@ -270,7 +273,7 @@ public abstract class PartTimeManagerSystemTest {
      * Asserts that the command box and result display shows the error style.
      */
     protected void assertCommandBoxAndResultDisplayShowsErrorStyle() {
-        assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+        assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBoxOutput().getStyleClass());
         assertEquals(errorStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
