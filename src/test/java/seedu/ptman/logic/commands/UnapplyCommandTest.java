@@ -125,28 +125,30 @@ public class UnapplyCommandTest {
     public void execute_userModeNoPassword_throwsMissingPasswordException() throws Exception {
         Model model = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
         model.setFalseAdminMode();
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         Employee employee = new EmployeeBuilder().withName("Present").build();
         Shift shift = new ShiftBuilder().build();
         shift.addEmployee(employee);
         model.addEmployee(employee);
         model.addShift(shift);
         UnapplyCommand unapplyCommand = prepareCommandWithoutPassword(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
-
-        Assert.assertThrows(MissingPasswordException.class, unapplyCommand::execute);
+        thrown.expect(MissingPasswordException.class);
+        unapplyCommand.execute();
     }
 
     @Test
     public void execute_userModeIncorrectPassword_throwsInvalidPasswordException() throws Exception {
         Model model = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
         model.setFalseAdminMode();
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         Employee employee = new EmployeeBuilder().withName("Present").withPassword("incorrect").build();
         Shift shift = new ShiftBuilder().build();
         shift.addEmployee(employee);
         model.addEmployee(employee);
         model.addShift(shift);
         UnapplyCommand unapplyCommand = prepareCommandWithPassword(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
-
-        Assert.assertThrows(InvalidPasswordException.class, unapplyCommand::execute);
+        thrown.expect(InvalidPasswordException.class);
+        unapplyCommand.execute();
     }
 
     @Test
