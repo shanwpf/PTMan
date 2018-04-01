@@ -47,6 +47,11 @@ public class ApplyCommandTest {
         model.setTrueAdminMode(new Password());
     }
 
+    @Before
+    public void showAllShifts() {
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
+    }
+
     @Test
     public void execute_employeeNotInShift_success() throws Exception {
         Employee employee = new EmployeeBuilder().build();
@@ -58,6 +63,7 @@ public class ApplyCommandTest {
         Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs(),
                 new OutletInformation());
         expectedModel.setTrueAdminMode(new Password());
+        expectedModel.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
 
         Shift editedShift = new Shift(MONDAY_AM);
         editedShift.addEmployee(ALICE);

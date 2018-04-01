@@ -147,7 +147,7 @@ public class TimetablePanelTest extends GuiUnitTest {
 
     private List<Entry<?>> getEntriesForEntryType(Calendar entryType) {
         Map<LocalDate, List<Entry<?>>> entryMap = entryType.findEntries(
-                LocalDate.now().minusDays(7), LocalDate.now().plusDays(7), ZoneId.systemDefault());
+                LocalDate.of(2018, 3, 19).minusDays(7), LocalDate.of(2018, 3, 19).plusDays(7), ZoneId.systemDefault());
         List<Entry<?>> entryList = entryMap.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

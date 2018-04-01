@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import seedu.ptman.model.Password;
-import seedu.ptman.model.outlet.exceptions.DuplicateShiftException;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
 /**
@@ -70,10 +69,6 @@ public class OutletInformation {
         this.outletEmail = new OutletEmail(DEFAULT_OUTLET_EMAIL);
         this.announcement = new Announcement(DEFAULT_ANNOUNCEMENT_MESSAGE);
         this.timetable = new Timetable(LocalDate.now());
-    }
-
-    public void addShift(Shift shift) throws DuplicateShiftException {
-        timetable.addShift(shift);
     }
 
     public OutletName getName() {
