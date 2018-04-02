@@ -101,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicatePartTimeManagerChanged();
     }
 
+    //@@author koo1993
     @Override
     public boolean isAdminMode() {
         return partTimeManager.isAdminMode();
