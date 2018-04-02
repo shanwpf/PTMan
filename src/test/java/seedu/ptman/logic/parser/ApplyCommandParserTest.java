@@ -6,6 +6,8 @@ import static seedu.ptman.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 
+import java.util.Optional;
+
 import org.junit.Test;
 
 import seedu.ptman.logic.commands.ApplyCommand;
@@ -19,12 +21,12 @@ public class ApplyCommandParserTest {
     @Test
     public void parse_validArgs_returnsApplyCommand() {
         assertParseSuccess(parser, "1 1 pw/DEFAULT1",
-                new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, new Password()));
+                new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, Optional.of(new Password())));
     }
 
     @Test
-    public void parse_noPassword_throwsParseException() {
-        assertParseFailure(parser, "1 1", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ApplyCommand.MESSAGE_USAGE));
+    public void parse_noPassword_returnsApplyCommand() {
+        assertParseSuccess(parser, "1 1", new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, Optional.empty()));
     }
 
     @Test

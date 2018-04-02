@@ -13,6 +13,7 @@ import static seedu.ptman.testutil.TypicalShifts.getTypicalPartTimeManagerWithSh
 
 import java.util.Optional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -234,8 +235,8 @@ public class UnapplyCommandTest {
 
     @Test
     public void execute_incorrectPassword_throwsInvalidPasswordException() {
-        ApplyCommand applyCommand = new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT,
-                new Password("wrongPassword"));
+        UnapplyCommand applyCommand = new UnapplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT,
+                Optional.of(new Password("wrongPassword")));
         applyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         Assert.assertThrows(InvalidPasswordException.class, applyCommand::execute);
     }
@@ -249,8 +250,14 @@ public class UnapplyCommandTest {
         assertEquals(unapplyCommand1.hashCode(), unapplyCommand2.hashCode());
     }
 
+    @After
+    public void reset() {
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
+    }
+
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code UnapplyCommand} with parameters {@code employeeIndex} and {@code shiftIndex}
+     * and a valid employee password
      */
     private UnapplyCommand prepareCommandWithPassword(Index employeeIndex, Index shiftIndex, Model model) {
         UnapplyCommand unapplyCommand = new UnapplyCommand(employeeIndex, shiftIndex, Optional.of(new Password()));
@@ -259,7 +266,8 @@ public class UnapplyCommandTest {
     }
 
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code UnapplyCommand} with parameters {@code employeeIndex} and {@code shiftIndex}
+     * without a password
      */
     private UnapplyCommand prepareCommandWithoutPassword(Index employeeIndex, Index shiftIndex, Model model) {
         UnapplyCommand unapplyCommand = new UnapplyCommand(employeeIndex, shiftIndex, Optional.empty());

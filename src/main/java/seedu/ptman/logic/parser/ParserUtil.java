@@ -1,6 +1,7 @@
 package seedu.ptman.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -106,7 +107,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String time} into a {@code LocalTime}.
+     * Parses a {@code String time} into a {@code Time}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code time} is invalid.
@@ -121,7 +122,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> time} into an {@code Optional<LocalTime>} if {@code time} is present.
+     * Parses a {@code Optional<String> time} into an {@code Optional<Time>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
@@ -413,7 +414,7 @@ public class ParserUtil {
      * Parses a {@code String date} into a {@code Date}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code day} is invalid.
+     * @throws IllegalValueException if the given {@code date} is invalid.
      */
     public static Date parseDate(String date) throws IllegalValueException {
         requireNonNull(date);
@@ -431,5 +432,17 @@ public class ParserUtil {
     public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * cut away password at the end of the command
+     */
+    public static String clearPasswordFromCommand(String args) {
+        int startIndex = args.indexOf(PREFIX_PASSWORD.getPrefix());
+        if (startIndex == -1) {
+            return args;
+        } else {
+            return args.substring(0, startIndex);
+        }
     }
 }

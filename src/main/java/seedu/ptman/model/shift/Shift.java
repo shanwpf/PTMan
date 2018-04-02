@@ -132,7 +132,8 @@ public class Shift {
     }
 
     /**
-     * Compares this shift to another. Returns a negative integer if the argument is a later shift,
+     * Compares this shift to another.
+     * Returns a negative integer if the argument is an earlier shift,
      * 0 if the shifts are equal, or a positive integer if the argument is a later shift.
      */
     public int compareTo(Shift other) {
