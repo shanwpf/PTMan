@@ -64,12 +64,7 @@ public class XmlAdaptedEmployee {
             this.salary = encrypt(salary);
             this.passwordHash = encrypt(passwordHash);
         } catch (Exception e) {
-            this.name = name;
-            this.phone = phone;
-            this.email = email;
-            this.address = address;
-            this.salary = salary;
-            this.passwordHash = passwordHash;
+            setAttributesFromStrings(name, phone, email, address, salary, passwordHash);
         }
 
         if (tagged != null) {
@@ -91,18 +86,32 @@ public class XmlAdaptedEmployee {
             salary = encrypt(source.getSalary().value);
             passwordHash = encrypt(source.getPassword().getPasswordHash());
         } catch (Exception e) {
-            name = source.getName().fullName;
-            phone = source.getPhone().value;
-            email = source.getEmail().value;
-            address = source.getAddress().value;
-            salary = source.getSalary().value;
-            passwordHash = source.getPassword().getPasswordHash();
+            setAttributesFromSource(source);
         }
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+    }
+
+    private void setAttributesFromStrings(String name, String phone, String email, String address,
+                                          String salary, String passwordHash) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.salary = salary;
+        this.passwordHash = passwordHash;
+    }
+
+    private void setAttributesFromSource(Employee source) {
+        name = source.getName().fullName;
+        phone = source.getPhone().value;
+        email = source.getEmail().value;
+        address = source.getAddress().value;
+        salary = source.getSalary().value;
+        passwordHash = source.getPassword().getPasswordHash();
     }
 
     private Name setName() throws IllegalValueException {

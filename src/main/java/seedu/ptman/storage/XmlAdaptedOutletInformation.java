@@ -58,12 +58,8 @@ public class XmlAdaptedOutletInformation {
             this.passwordHash = encrypt(passwordHash);
             this.announcement = encrypt(announcement);
         } catch (Exception e) {
-            this.outletName = outletName;
-            this.operatingHours = operatingHours;
-            this.outletContact = outletContact;
-            this.outletEmail = outletEmail;
-            this.passwordHash = passwordHash;
-            this.announcement = announcement;
+            setAttributesFromStrings(outletName, operatingHours, outletContact, outletEmail,
+                    passwordHash, announcement);
         }
 
     }
@@ -81,14 +77,28 @@ public class XmlAdaptedOutletInformation {
             passwordHash = encrypt(source.getMasterPassword().getPasswordHash());
             announcement = encrypt(source.getAnnouncement().value);
         } catch (Exception e) {
-            outletName = source.getName().fullName;
-            operatingHours = source.getOperatingHours().value;
-            outletContact = source.getOutletContact().value;
-            outletEmail = source.getOutletEmail().value;
-            passwordHash = source.getMasterPassword().getPasswordHash();
-            announcement = source.getAnnouncement().value;
+            setAttributesFromSource(source);
         }
 
+    }
+
+    private void setAttributesFromStrings(String outletName, String operatingHours, String outletContact,
+                                          String outletEmail, String passwordHash, String announcement) {
+        this.outletName = outletName;
+        this.operatingHours = operatingHours;
+        this.outletContact = outletContact;
+        this.outletEmail = outletEmail;
+        this.passwordHash = passwordHash;
+        this.announcement = announcement;
+    }
+
+    private void setAttributesFromSource(OutletInformation source) {
+        outletName = source.getName().fullName;
+        operatingHours = source.getOperatingHours().value;
+        outletContact = source.getOutletContact().value;
+        outletEmail = source.getOutletEmail().value;
+        passwordHash = source.getMasterPassword().getPasswordHash();
+        announcement = source.getAnnouncement().value;
     }
 
     private OutletName setOutletName() throws IllegalValueException {
