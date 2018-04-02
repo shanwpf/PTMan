@@ -154,11 +154,11 @@ public class XmlAdaptedEmployeeTest {
     public void setAttributesFromSource_validInputs_returnsEqualObject() {
         Employee employee = new Employee(new Name(VALID_NAME), new Phone(VALID_PHONE), new Email(VALID_EMAIL),
                 new Address(VALID_ADDRESS), new Salary(VALID_SALARY), new Password(DEFAULT1_HASH),
-                null);
+                BENSON.getTags());
         XmlAdaptedEmployee adaptedEmployee = new XmlAdaptedEmployee();
         adaptedEmployee.setAttributesFromSource(employee);
         XmlAdaptedEmployee sameAdaptedEmployee = new XmlAdaptedEmployee();
-        adaptedEmployee.setAttributesFromSource(employee);
+        sameAdaptedEmployee.setAttributesFromSource(employee);
         assertEquals(adaptedEmployee, sameAdaptedEmployee);
     }
 
