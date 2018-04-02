@@ -15,6 +15,7 @@ import org.junit.Test;
 import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.model.shift.Capacity;
 import seedu.ptman.model.shift.Date;
+import seedu.ptman.model.shift.Shift;
 import seedu.ptman.model.shift.Time;
 import seedu.ptman.testutil.Assert;
 
@@ -167,6 +168,27 @@ public class XmlAdaptedShiftTest {
                 new XmlAdaptedShift(VALID_DATE, VALID_START_TIME, VALID_END_TIME, VALID_CAPACITY,
                         VALID_EMPLOYEES);
         assertFalse(shift.equals(null));
+    }
+
+    @Test
+    public void setAttributesFromSource_validInputs_returnsSameObject() {
+        Shift shift = new Shift(new Date(VALID_DATE), new Time(VALID_START_TIME), new Time(VALID_END_TIME),
+                new Capacity(VALID_CAPACITY), THURSDAY_AM.getEmployeeList());
+        XmlAdaptedShift xmlAdaptedShift = new XmlAdaptedShift();
+        XmlAdaptedShift sameXmlAdaptedShift = new XmlAdaptedShift();
+        xmlAdaptedShift.setAttributesFromSource(shift);
+        sameXmlAdaptedShift.setAttributesFromSource(shift);
+        assertEquals(xmlAdaptedShift, sameXmlAdaptedShift);
+    }
+
+    @Test
+    public void setAttributesFromStrings_validInputs_returnsSameObject() {
+        XmlAdaptedShift xmlAdaptedShift = new XmlAdaptedShift();
+        XmlAdaptedShift sameXmlAdaptedShift = new XmlAdaptedShift();
+        xmlAdaptedShift.setAttributesFromStrings(VALID_DATE, VALID_START_TIME, VALID_END_TIME, VALID_CAPACITY);
+        sameXmlAdaptedShift.setAttributesFromStrings(VALID_DATE, VALID_START_TIME, VALID_END_TIME,
+                VALID_CAPACITY);
+        assertEquals(xmlAdaptedShift, sameXmlAdaptedShift);
     }
 
 }
