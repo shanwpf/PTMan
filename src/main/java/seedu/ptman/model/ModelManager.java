@@ -129,6 +129,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setAdminPassword(Password password) {
         partTimeManager.setAdminPassword(password);
+        indicatePartTimeManagerChanged();
     }
 
     @Override
