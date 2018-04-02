@@ -95,7 +95,7 @@ public class XmlAdaptedEmployee {
         }
     }
 
-    private void setAttributesFromStrings(String name, String phone, String email, String address,
+    public void setAttributesFromStrings(String name, String phone, String email, String address,
                                           String salary, String passwordHash) {
         this.name = name;
         this.phone = phone;
@@ -105,7 +105,7 @@ public class XmlAdaptedEmployee {
         this.passwordHash = passwordHash;
     }
 
-    private void setAttributesFromSource(Employee source) {
+    public void setAttributesFromSource(Employee source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;

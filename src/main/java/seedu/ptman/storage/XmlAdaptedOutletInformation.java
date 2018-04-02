@@ -82,7 +82,7 @@ public class XmlAdaptedOutletInformation {
 
     }
 
-    private void setAttributesFromStrings(String outletName, String operatingHours, String outletContact,
+    public void setAttributesFromStrings(String outletName, String operatingHours, String outletContact,
                                           String outletEmail, String passwordHash, String announcement) {
         this.outletName = outletName;
         this.operatingHours = operatingHours;
@@ -92,7 +92,7 @@ public class XmlAdaptedOutletInformation {
         this.announcement = announcement;
     }
 
-    private void setAttributesFromSource(OutletInformation source) {
+    public void setAttributesFromSource(OutletInformation source) {
         outletName = source.getName().fullName;
         operatingHours = source.getOperatingHours().value;
         outletContact = source.getOutletContact().value;
