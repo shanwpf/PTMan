@@ -5,11 +5,13 @@ import static seedu.ptman.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.ptman.commons.core.Messages;
 import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.logic.commands.exceptions.InvalidPasswordException;
+import seedu.ptman.logic.commands.exceptions.MissingPasswordException;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.DuplicateEmployeeException;
@@ -31,7 +33,7 @@ public class ApplyCommand extends UndoableCommand {
             + ": Applies an employee for the shift identified by the index number.\n"
             + "Parameters: EMPLOYEE_INDEX (must be a positive integer) "
             + "SHIFT_INDEX "
-            + PREFIX_PASSWORD + "PASSWORD\n"
+            + "[" + PREFIX_PASSWORD + "PASSWORD]\n"
             + "Example: " + COMMAND_WORD + " 1 1 " + PREFIX_PASSWORD + "hunter2";
 
     public static final String MESSAGE_APPLY_SHIFT_SUCCESS = "Employee %1$s applied for shift %2$s";
@@ -40,14 +42,14 @@ public class ApplyCommand extends UndoableCommand {
 
     private final Index employeeIndex;
     private final Index shiftIndex;
-    private final Password password;
+    private final Optional<Password> optionalPassword;
 
     private Employee applicant;
     private Shift shiftToApply;
     private Shift editedShift;
 
-    public ApplyCommand(Index employeeIndex, Index shiftIndex, Password password) {
-        this.password = password;
+    public ApplyCommand(Index employeeIndex, Index shiftIndex, Optional<Password> optionalPassword) {
+        this.optionalPassword = optionalPassword;
         this.employeeIndex = employeeIndex;
         this.shiftIndex = shiftIndex;
     }
@@ -57,8 +59,14 @@ public class ApplyCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(applicant);
 
-        if (!applicant.isCorrectPassword(password)) {
-            throw new InvalidPasswordException();
+        // Check if password is present when not in admin mode
+        if (!model.isAdminMode()) {
+            if (!optionalPassword.isPresent()) {
+                throw new MissingPasswordException();
+            }
+            if (!applicant.isCorrectPassword(optionalPassword.get())) {
+                throw new InvalidPasswordException();
+            }
         }
 
         try {

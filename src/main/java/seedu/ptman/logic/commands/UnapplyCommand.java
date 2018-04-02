@@ -12,7 +12,6 @@ import seedu.ptman.commons.core.index.Index;
 import seedu.ptman.logic.commands.exceptions.CommandException;
 import seedu.ptman.logic.commands.exceptions.InvalidPasswordException;
 import seedu.ptman.logic.commands.exceptions.MissingPasswordException;
-import seedu.ptman.model.Model;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.employee.Employee;
 import seedu.ptman.model.employee.exceptions.EmployeeNotFoundException;
@@ -33,7 +32,7 @@ public class UnapplyCommand extends UndoableCommand {
             + ": Removes an employee from the shift identified by the index number.\n"
             + "Parameters: EMPLOYEE_INDEX (must be a positive integer) "
             + "SHIFT_INDEX "
-            + PREFIX_PASSWORD + "PASSWORD\n"
+            + "[" + PREFIX_PASSWORD + "PASSWORD]\n"
             + "Example: " + COMMAND_WORD + " 1 1 " + PREFIX_PASSWORD + "hunter2";
 
     public static final String MESSAGE_UNAPPLY_SHIFT_SUCCESS = "Employee %1$s removed from shift %2$s";
@@ -58,6 +57,7 @@ public class UnapplyCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(applicant);
 
+        // Check if password is present when not in admin mode
         if (!model.isAdminMode()) {
             if (!optionalPassword.isPresent()) {
                 throw new MissingPasswordException();
@@ -75,7 +75,6 @@ public class UnapplyCommand extends UndoableCommand {
             throw new AssertionError("Duplicate shift");
         }
 
-        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         return new CommandResult(String.format(MESSAGE_UNAPPLY_SHIFT_SUCCESS,
                 applicant.getName(), shiftIndex.getOneBased()));
     }

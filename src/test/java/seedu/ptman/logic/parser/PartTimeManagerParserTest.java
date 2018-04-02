@@ -111,7 +111,7 @@ public class PartTimeManagerParserTest {
         ApplyCommand command = (ApplyCommand) parser.parseCommand(
                 ApplyCommand.COMMAND_WORD + " " + INDEX_FIRST_EMPLOYEE.getOneBased()
                         + " " + INDEX_FIRST_SHIFT.getOneBased() + " " + PREFIX_PASSWORD + "DEFAULT1");
-        assertEquals(new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, new Password()), command);
+        assertEquals(new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, Optional.of(new Password())), command);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class PartTimeManagerParserTest {
         ApplyCommand command = (ApplyCommand) parser.parseCommand(
                 ApplyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_EMPLOYEE.getOneBased()
                         + " " + INDEX_FIRST_SHIFT.getOneBased() + " " + PREFIX_PASSWORD + "DEFAULT1");
-        assertEquals(new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, new Password()), command);
+        assertEquals(new ApplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, Optional.of(new Password())), command);
     }
 
     @Test
