@@ -1,5 +1,8 @@
 package seedu.ptman.storage;
 
+import static seedu.ptman.commons.encrypter.DataEncrypter.decrypt;
+import static seedu.ptman.commons.encrypter.DataEncrypter.encrypt;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,9 +15,6 @@ import seedu.ptman.model.shift.Capacity;
 import seedu.ptman.model.shift.Date;
 import seedu.ptman.model.shift.Shift;
 import seedu.ptman.model.shift.Time;
-
-import static seedu.ptman.commons.encrypter.DataEncrypter.decrypt;
-import static seedu.ptman.commons.encrypter.DataEncrypter.encrypt;
 
 //@@author shanwpf
 /**
@@ -54,7 +54,7 @@ public class XmlAdaptedShift {
             this.endTime = encrypt(endTime);
             this.capacity = encrypt(capacity);
         } catch (Exception e) {
-           setAttributesFromStrings(date, startTime, endTime, capacity);
+            setAttributesFromStrings(date, startTime, endTime, capacity);
         }
 
         if (employees != null) {
@@ -97,6 +97,11 @@ public class XmlAdaptedShift {
         this.capacity = capacity;
     }
 
+    /**
+     * Decrypts date
+     * @return
+     * @throws IllegalValueException
+     */
     private Date decryptDate() throws IllegalValueException {
         String decryptedDate;
         try {
@@ -114,6 +119,12 @@ public class XmlAdaptedShift {
         return new Date(decryptedDate);
     }
 
+    /**
+     * Decryptes time
+     * @param time
+     * @return
+     * @throws IllegalValueException
+     */
     private Time decryptTime(String time) throws IllegalValueException {
         String decryptedTime;
         try {
@@ -131,6 +142,11 @@ public class XmlAdaptedShift {
         return new Time(decryptedTime);
     }
 
+    /**
+     * Decryptes capacity
+     * @return
+     * @throws IllegalValueException
+     */
     private Capacity decryptCapacity() throws IllegalValueException {
         String decryptedCapacity;
         try {
