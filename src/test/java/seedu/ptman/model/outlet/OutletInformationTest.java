@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.ptman.model.Password;
 import seedu.ptman.testutil.Assert;
 
+//@@author SunBangjie
 public class OutletInformationTest {
 
     @Test

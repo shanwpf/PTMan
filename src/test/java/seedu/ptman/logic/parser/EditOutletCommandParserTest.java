@@ -23,6 +23,7 @@ import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 
+//@@author SunBangjie
 public class EditOutletCommandParserTest {
 
     private EditOutletCommandParser parser = new EditOutletCommandParser();

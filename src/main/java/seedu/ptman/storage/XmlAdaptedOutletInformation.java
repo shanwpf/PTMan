@@ -17,6 +17,7 @@ import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 
+//@@author SunBangjie
 /**
  * JAXB-friendly version of the OutletInformation.
  */

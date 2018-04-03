@@ -2,6 +2,7 @@ package seedu.ptman.commons.events.ui;
 
 import seedu.ptman.commons.events.BaseEvent;
 
+//@@author SunBangjie
 /**
  * Represents an announcement change in the Outlet Information
  */

@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import seedu.ptman.testutil.Assert;
 
+//@@author SunBangjie
 public class OperatingHoursTest {
 
     @Test

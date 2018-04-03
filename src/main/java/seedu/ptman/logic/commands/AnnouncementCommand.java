@@ -9,6 +9,7 @@ import seedu.ptman.model.outlet.Announcement;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
+//@@author SunBangjie
 /**
  * Edits the announcement of outlet in the ptman.
  */

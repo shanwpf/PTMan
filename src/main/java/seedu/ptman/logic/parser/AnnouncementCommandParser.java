@@ -4,6 +4,7 @@ import seedu.ptman.logic.commands.AnnouncementCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 import seedu.ptman.model.outlet.Announcement;
 
+//@@author SunBangjie
 /**
  * Parses input arguments and creates a new AnnouncementCommand object
  */

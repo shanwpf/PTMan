@@ -8,6 +8,7 @@ import java.util.Objects;
 import seedu.ptman.model.Password;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
+//@@author SunBangjie
 /**
  * Represents an outlet in PTMan.
  * Guarantees: details are present and not null, field values are validated, immutable.

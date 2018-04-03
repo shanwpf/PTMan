@@ -14,6 +14,7 @@ import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.commons.util.FileUtil;
 import seedu.ptman.model.outlet.OutletInformation;
 
+//@@author SunBangjie
 /**
  * A class to access OutletInformation data stored as an xml file on the hard disk.
  */

@@ -178,12 +178,18 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
         employees.setEmployee(target, syncedEditedEmployee);
     }
 
+    //@@author SunBangjie
     public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
         outlet.setOutletInformation(editedOutlet);
     }
 
     public String getOutletInformationMessage() {
         return outlet.toString();
+    }
+
+    @Override
+    public OutletInformation getOutletInformation() {
+        return outlet;
     }
 
     /**
@@ -337,11 +343,6 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
-    }
-
-    @Override
-    public OutletInformation getOutletInformation() {
-        return outlet;
     }
 
     @Override

@@ -191,7 +191,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredShifts.setPredicate(predicate);
     }
-    //@@author
 
     @Override
     public void updateEmployee(Employee target, Employee editedEmployee)
@@ -202,6 +201,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicatePartTimeManagerChanged();
     }
 
+    //@@author SunBangjie
     @Override
     public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
         partTimeManager.updateOutlet(editedOutlet);
@@ -211,6 +211,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String getOutletInformationMessage() {
         return partTimeManager.getOutletInformationMessage();
+    }
+
+    @Override
+    public OutletInformation getOutletInformation() {
+        return partTimeManager.getOutletInformation();
     }
 
     //=========== Filtered Employee List Accessors =============================================================
@@ -232,11 +237,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredEmployeeList(Predicate<Employee> predicate) {
         requireNonNull(predicate);
         filteredEmployees.setPredicate(predicate);
-    }
-
-    @Override
-    public OutletInformation getOutletInformation() {
-        return partTimeManager.getOutletInformation();
     }
 
     @Override

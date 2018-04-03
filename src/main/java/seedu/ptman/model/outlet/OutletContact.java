@@ -3,6 +3,7 @@ package seedu.ptman.model.outlet;
 import static java.util.Objects.requireNonNull;
 import static seedu.ptman.commons.util.AppUtil.checkArgument;
 
+//@@author SunBangjie
 /**
  * Represents an outlet's contact number in PTMan.
  * Guarantees: immutable; is valid as declared in {@link #isValidOutletContact(String)}

@@ -8,6 +8,7 @@ import org.junit.Test;
 import seedu.ptman.logic.commands.AnnouncementCommand;
 import seedu.ptman.model.outlet.Announcement;
 
+//@@author SunBangjie
 public class AnnouncementCommandParserTest {
 
     private AnnouncementCommandParser parser = new AnnouncementCommandParser();

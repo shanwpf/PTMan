@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.ptman.commons.exceptions.DataConversionException;
 import seedu.ptman.model.outlet.OutletInformation;
 
+//@@author SunBangjie
 /**
  * Represents a storage for {@link seedu.ptman.model.outlet.OutletInformation}.
  */

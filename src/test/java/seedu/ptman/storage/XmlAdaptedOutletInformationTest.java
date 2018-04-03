@@ -17,6 +17,7 @@ import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.testutil.Assert;
 
+//@@author SunBangjie
 public class XmlAdaptedOutletInformationTest {
     private static final String INVALID_OUTLET_NAME = "Awesome@outlet";
     private static final String INVALID_OPERATING_HOURS = "10:00/20:00";

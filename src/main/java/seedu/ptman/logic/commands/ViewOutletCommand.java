@@ -1,5 +1,6 @@
 package seedu.ptman.logic.commands;
 
+//@@author SunBangjie
 /**
  * Displays the details of outlet in the ptman.
  */
