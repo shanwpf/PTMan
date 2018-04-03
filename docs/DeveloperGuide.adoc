@@ -249,7 +249,8 @@ Such details are essential to facilitate other functions such as the access cont
 
 ==== Current implementation
 
-The `OutletInformation` class represents an outlet in PTMan. +
+The `OutletInformation` class represents an outlet in PTMan.
+It supports relevant commands that utilizes attributes of this class and it is also responsible for UI display and local storage. +
 
 _Figure 11_ is a class diagram that displays the association between `OutletInformation` and other components in the `Model`.
 
@@ -270,8 +271,8 @@ However, there is an alternative way to create an `OutletInformation` object:
 ----
 OutletInformation(OutletName outletName, OperatingHours operatingHours, OutletContact outletContact, OutletEmail outletEmail, Announcement announcement)
 ----
-This constructor allows flexibility in storing outlet information where most fields can be initialized with specific values except the master password.
-The master password of an outlet must be set to the default value because it is used for employer's first login and it is impossible to change any password without the first login. +
+This constructor allows flexibility in storing outlet information where most fields can be initialized with specific values except the admin password.
+The admin password of an outlet must be set to the default value because it is used for employer's first login and it is impossible to change any password without the first login. +
 
 ===== Relevant commands
 
@@ -286,15 +287,43 @@ while timetable can only be set with relevant `shift` commands.
 Editing with some fields unspecified is allowed.
 For example, editoutlet n/OUTLETNAME is a valid command. This enables employers to edit only the information required for change.
 
+The current implementation to check some fields are specified is in the `setOutletInformation` method of the `OutletInformation` class.
+When all fields are null, it throws a new exception as shown below:
+----
+//in OutletInformation class
+public void setOutletInformation(OutletName name, OperatingHours operatingHours, OutletContact outletContact, OutletEmail outletEmail) throws NoOutletInformationFieldChangeException {
+    ...
+    if (name == null && operatingHours == null && outletContact == null && outletEmail == null) {
+        throw new NoOutletInformationFieldChangeException();
+    }
+    ...
+}
+----
+This exception is then handled by the `EditOutletCommand`.
+When the exception is caught, the `CommandException` with a message of command failure will be thrown,
+with reference to the function below:
+----
+//in EditOutletCommand class
+public CommandResult executeUndoableCommand() throws CommandException {
+    ...
+    try {
+        editedOutlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
+    } catch (NoOutletInformationFieldChangeException e) {
+        throw new CommandException(MESSAGE_EDIT_OUTLET_FAILURE);
+    }
+    ...
+}
+----
+
 *Change master password command*
 
-After login with correct master password, using the `changemasterpassword` command, employers should be able to change the master password.
-However, due to the possibility that previous employer forgot to log out, `changemasterpassword` command requires
+After login with correct admin password, using the `changemasterpw` command, employers should be able to change the admin password.
+However, due to the possibility that previous employer forgot to log out, `changemasterpw` command requires
 the old password for further verification. This reduces the risk of password getting stolen. You can find out more information on password in _Section 4.5 Password class_.
 
 *Announcement command*
 
-After login with correct master password, using the "announcement" command, employers should be able to create an announcement visible to all employees.
+After login with correct admin password, using the "announcement" command, employers should be able to create an announcement visible to all employees.
 This allows employers to broadcast important messages to employees. For example, when there is an urgent need of manpower in a specific time slot,
 employers can create an announcement to inform the employees who can sign up for the corresponding time slot upon receving the announcement.
 
@@ -654,7 +683,17 @@ Therefore, local storage files are encrypted to prevent any direct interpretatio
 
 Currently, any data is encrypted in the Advanced Encryption Standard (AES) before writing into XML files.
 Data read from XML files must be decrypted before passing to the constructor of any object.
-This implementation successfully prevents any user of the computer directly interpreting the stored information.
+The function below demonstrates how outlet data is encrypted using the encrypt(String text) function: +
+----
+public XmlAdaptedOutletInformation(String outletName, String operatingHours, String outletContact, String outletEmail, String passwordHash, String announcement) {
+    ...
+    this.outletName = encrypt(outletName);
+    ...
+}
+----
+Similarly, decrypt(String encryptedText) can be called to decrypt data read from XML files. +
+
+The current implementation successfully prevents any user of the computer directly interpreting the stored information.
 However, the limitation is that the XML file structure is still maintained and the title of each element is not encrypted as shown in _Figure 15_.
 It is possible that any user with advanced knowledge of data encryption is able to decrypt the data with the found pattern.
 
