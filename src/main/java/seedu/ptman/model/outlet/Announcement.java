@@ -2,6 +2,7 @@ package seedu.ptman.model.outlet;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author SunBangjie
 /**
  * Represents an announcement in PTMan.
  * Guarantees: immutable;

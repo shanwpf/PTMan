@@ -6,6 +6,7 @@ import static seedu.ptman.commons.util.AppUtil.checkArgument;
 import java.time.LocalTime;
 import java.util.Objects;
 
+//@@author SunBangjie
 /**
  * Represents operating hours in an outlet.
  * Guarantees: details are present and not null, field values are validated, immutable.

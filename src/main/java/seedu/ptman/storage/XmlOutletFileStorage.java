@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import seedu.ptman.commons.exceptions.DataConversionException;
 import seedu.ptman.commons.util.XmlUtil;
 
+//@@author SunBangjie
 /**
  * Stores outlet information data in an XML file
  */

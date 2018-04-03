@@ -14,6 +14,7 @@ import seedu.ptman.model.outlet.OutletContact;
 import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletName;
 
+//@@author SunBangjie
 /**
  * Parses input arguments and creates a new EditOutletCommand object
  */

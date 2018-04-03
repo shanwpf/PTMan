@@ -14,6 +14,7 @@ import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
 import seedu.ptman.commons.events.ui.OutletNameChangedEvent;
 import seedu.ptman.model.outlet.OutletInformation;
 
+//@@author SunBangjie
 /**
  * The Outlet Panel of the App, which displays the Outlet name and details
  */

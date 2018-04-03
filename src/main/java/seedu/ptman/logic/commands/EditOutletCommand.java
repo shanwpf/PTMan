@@ -17,6 +17,7 @@ import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 import seedu.ptman.model.outlet.exceptions.NoOutletInformationFieldChangeException;
 
+//@@author SunBangjie
 /**
  * Edits the details of outlet in the ptman.
  */

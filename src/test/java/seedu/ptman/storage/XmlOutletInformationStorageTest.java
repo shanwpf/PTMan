@@ -19,6 +19,7 @@ import seedu.ptman.model.outlet.OutletEmail;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.outlet.OutletName;
 
+//@@author SunBangjie
 public class XmlOutletInformationStorageTest {
     private static final String TEST_DATA_FOLDER =
             FileUtil.getPath("./src/test/data/XmlOutletInformationStorageTest/");

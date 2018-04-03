@@ -107,6 +107,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     // ================ OutletInformation methods ==============================
 
+    //@@author SunBangjie
     @Override
     public String getOutletInformationFilePath() {
         return outletInformationStorage.getOutletInformationFilePath();
