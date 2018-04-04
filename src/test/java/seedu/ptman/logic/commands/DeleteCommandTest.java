@@ -37,7 +37,8 @@ import seedu.ptman.model.shift.exceptions.ShiftFullException;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalPartTimeManagerWithShifts(), new UserPrefs(), new OutletInformation());
+    private Model model = new ModelManager(getTypicalPartTimeManagerWithShifts(),
+            new UserPrefs(), new OutletInformation());
 
     @Before
     public void setMode_adminMode() {

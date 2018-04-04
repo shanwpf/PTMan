@@ -242,7 +242,15 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
     private void removeEmployeeFromAllShifts(Employee key) throws EmployeeNotFoundException {
         for (Shift shift : shifts) {
             if (shift.containsEmployee(key)) {
-                shift.removeEmployee(key);
+                Shift copy = new Shift(shift);
+                try {
+                    copy.removeEmployee(key);
+                    shifts.setShift(shift, copy);
+                } catch (DuplicateShiftException e) {
+                    throw new AssertionError("shifts should never be duplicates");
+                } catch (ShiftNotFoundException e) {
+                    throw new AssertionError("shift should always exist");
+                }
             }
         }
     }
