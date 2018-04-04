@@ -88,6 +88,6 @@ public class TypicalShifts {
 
     public static List<Shift> getTypicalShifts() {
         return new ArrayList<>(Arrays.asList(SHIFT_MONDAY_AM, SHIFT_MONDAY_PM, SHIFT_TUESDAY_AM, SHIFT_TUESDAY_PM,
-                SHIFT_WEDNESDAY_AM, SHIFT_WEDNESDAY_PM, SHIFT_SUNDAY_PM, SHIFT_SUNDAY_AM));
+                SHIFT_WEDNESDAY_AM, SHIFT_WEDNESDAY_PM, SHIFT_SUNDAY_AM, SHIFT_SUNDAY_PM));
     }
 }
