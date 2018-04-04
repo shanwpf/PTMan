@@ -21,7 +21,7 @@ import seedu.ptman.model.shift.exceptions.ShiftNotFoundException;
 
 //@@author shanwpf
 /**
- * Registers an employee to a shift identified using their last displayed index from PTMan.
+ * Deletes an employee from a shift identified using their last displayed index from PTMan.
  */
 public class UnapplyCommand extends UndoableCommand {
 

@@ -1,5 +1,7 @@
 package seedu.ptman.ui;
 
+import static seedu.ptman.commons.util.DateUtil.DEFAULT_LOCALE;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
-import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -40,7 +42,6 @@ import seedu.ptman.commons.events.ui.ExportTimetableAsImageRequestEvent;
 import seedu.ptman.commons.services.EmailService;
 import seedu.ptman.model.employee.Email;
 import seedu.ptman.model.employee.Employee;
-import seedu.ptman.model.employee.UniqueEmployeeList;
 import seedu.ptman.model.outlet.OutletInformation;
 import seedu.ptman.model.shift.Shift;
 
@@ -138,7 +139,7 @@ public class TimetablePanel extends UiPart<Region> {
 
         timetableView.getWeekPage().setShowNavigation(false);
         timetableView.getWeekPage().setShowDate(false);
-        timetableView.weekFieldsProperty().setValue(WeekFields.of(Locale.FRANCE)); // Start week from Monday
+        timetableView.weekFieldsProperty().setValue(WeekFields.of(DEFAULT_LOCALE)); // Start week from Monday
         timetableView.setShowToday(true);
         timetableView.setShowPrintButton(true);
         timetableView.setShowAddCalendarButton(false);
@@ -185,7 +186,7 @@ public class TimetablePanel extends UiPart<Region> {
             Interval timeInterval = new Interval(date, shift.getStartTime().getLocalTime(),
                     date, shift.getEndTime().getLocalTime());
             Entry<String> shiftEntry = new Entry<>("SHIFT " + index + "\nSlots left: " + shift.getSlotsLeft()
-                    + "/" + shift.getCapacity().getCapacity(), timeInterval);
+                    + "/" + shift.getCapacity().getValue(), timeInterval);
             setEntryType(shift, shiftEntry);
             index++;
         }
@@ -212,7 +213,7 @@ public class TimetablePanel extends UiPart<Region> {
      * @return true if currentEmployee is in input shift, false if not.
      */
     private boolean isCurrentEmployeeInShift(Shift shift) {
-        UniqueEmployeeList employees = shift.getUniqueEmployeeList();
+        Set<Employee> employees = shift.getEmployees();
         for (Employee employee : employees) {
             if (employee.equals(currentEmployee)) {
                 return true;
@@ -226,10 +227,10 @@ public class TimetablePanel extends UiPart<Region> {
      * the color of the shift in the timetableView.
      */
     private Calendar getEntryTypeMain(Shift shift) {
-        float ratio = (float) shift.getSlotsLeft() / (float) shift.getCapacity().getCapacity();
+        float ratio = (float) shift.getSlotsLeft() / (float) shift.getCapacity().getValue();
         if (ratio <= 0) {
             return timetableFull;
-        } else if (ratio <= 0.5 || shift.getCapacity().getCapacity() < MAX_SLOTS_LEFT_RUNNING_OUT) {
+        } else if (ratio <= 0.5 || shift.getCapacity().getValue() < MAX_SLOTS_LEFT_RUNNING_OUT) {
             return timetableRunningOut;
         } else {
             return timetableAvail;

@@ -38,7 +38,7 @@ public class AddShiftCommand extends UndoableCommand {
     private final Shift toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Shift}
+     * Creates an AddShiftCommand to add the specified {@code Shift}
      */
     public AddShiftCommand(Shift shift) {
         requireNonNull(shift);

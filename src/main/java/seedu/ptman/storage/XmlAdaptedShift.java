@@ -23,7 +23,7 @@ import seedu.ptman.model.shift.Time;
  */
 public class XmlAdaptedShift {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT_SHIFT = "Shifts's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT_SHIFT = "Shift's %s field is missing!";
     public static final String DECRYPT_FAIL_MESSAGE = "Cannot decrypt %s.";
 
     @XmlElement(required = true)
@@ -99,9 +99,8 @@ public class XmlAdaptedShift {
     }
 
     /**
-     * Decrypts date
-     * @return
-     * @throws IllegalValueException
+     * Decrypts Date
+     * @throws IllegalValueException if decryption fails
      */
     private Date decryptDate() throws IllegalValueException {
         String decryptedDate;
@@ -121,10 +120,8 @@ public class XmlAdaptedShift {
     }
 
     /**
-     * Decryptes time
-     * @param time
-     * @return
-     * @throws IllegalValueException
+     * Decrypts Time
+     * @throws IllegalValueException if decryption fails
      */
     private Time decryptTime(String time) throws IllegalValueException {
         String decryptedTime;
@@ -144,9 +141,8 @@ public class XmlAdaptedShift {
     }
 
     /**
-     * Decryptes capacity
-     * @return
-     * @throws IllegalValueException
+     * Decrypts Capacity
+     * @throws IllegalValueException if decryption fails
      */
     private Capacity decryptCapacity() throws IllegalValueException {
         String decryptedCapacity;

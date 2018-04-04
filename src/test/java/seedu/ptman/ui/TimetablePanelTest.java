@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.ptman.testutil.EventsUtil.postNow;
 import static seedu.ptman.testutil.TypicalEmployees.ALICE;
-import static seedu.ptman.testutil.TypicalShifts.getTypicalPartTimeManagerWithShiftsWithoutSunday;
+import static seedu.ptman.testutil.TypicalShifts.getTypicalPartTimeManagerWithShifts;
 import static seedu.ptman.ui.TimetablePanel.TIMETABLE_IMAGE_FILE_FORMAT;
 import static seedu.ptman.ui.TimetablePanel.getTimetableAvail;
 import static seedu.ptman.ui.TimetablePanel.getTimetableEmployee;
@@ -51,9 +51,9 @@ import seedu.ptman.model.shift.Shift;
 public class TimetablePanelTest extends GuiUnitTest {
 
     private static final ObservableList<Shift> TYPICAL_SHIFTS =
-            getTypicalPartTimeManagerWithShiftsWithoutSunday().getShiftList();
+            getTypicalPartTimeManagerWithShifts().getShiftList();
     private static final OutletInformation TYPICAL_OUTLET =
-            getTypicalPartTimeManagerWithShiftsWithoutSunday().getOutletInformation();
+            getTypicalPartTimeManagerWithShifts().getOutletInformation();
 
     private static final String TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST = "Testing1";
     private static final String TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST = "Testing2";

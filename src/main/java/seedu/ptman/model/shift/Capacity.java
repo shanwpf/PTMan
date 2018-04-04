@@ -27,7 +27,7 @@ public class Capacity {
         return test.matches(CAPACITY_VALIDATION_REGEX);
     }
 
-    public int getCapacity() {
+    public int getValue() {
         return capacity;
     }
 

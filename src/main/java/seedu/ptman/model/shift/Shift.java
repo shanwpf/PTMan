@@ -120,11 +120,11 @@ public class Shift {
 
     public int getSlotsLeft() {
         int numEmployees = Iterables.size(uniqueEmployeeList);
-        return capacity.getCapacity() - numEmployees;
+        return capacity.getValue() - numEmployees;
     }
 
     public boolean isFull() {
-        return getEmployeeList().size() >= this.capacity.getCapacity();
+        return getEmployeeList().size() >= this.capacity.getValue();
     }
 
     /**
@@ -135,15 +135,9 @@ public class Shift {
     public int compareTo(Shift other) {
         if (date.equals(other.getDate())) {
             return startTime.compareTo(other.getStartTime());
-        } else if (date.compareTo(other.getDate()) < 0) {
-            return -1;
         } else {
-            return 1;
+            return date.compareTo(other.getDate());
         }
-    }
-
-    public UniqueEmployeeList getUniqueEmployeeList() {
-        return uniqueEmployeeList;
     }
 
     public void setEmployees(Shift shift) {

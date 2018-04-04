@@ -240,7 +240,7 @@ public class PartTimeManager implements ReadOnlyPartTimeManager {
      * @throws EmployeeNotFoundException if the {@code key} is not found
      */
     private void removeEmployeeFromAllShifts(Employee key) throws EmployeeNotFoundException {
-        for (Shift shift : shifts) {
+        for (final Shift shift : shifts) {
             if (shift.containsEmployee(key)) {
                 Shift copy = new Shift(shift);
                 try {

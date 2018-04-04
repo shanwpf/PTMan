@@ -75,11 +75,11 @@ public class UniqueShiftList implements Iterable<Shift> {
      */
     public boolean remove(Shift toRemove) throws ShiftNotFoundException {
         requireNonNull(toRemove);
-        final boolean shiftFoundAndDeleted = internalList.remove(toRemove);
-        if (!shiftFoundAndDeleted) {
+        final boolean isShiftFoundAndDeleted = internalList.remove(toRemove);
+        if (!isShiftFoundAndDeleted) {
             throw new ShiftNotFoundException();
         }
-        return shiftFoundAndDeleted;
+        return true;
     }
 
     public void setShifts(UniqueShiftList replacement) {

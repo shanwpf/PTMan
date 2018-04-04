@@ -60,7 +60,7 @@ public class GuiTestAssert {
         assertEquals(expectedShift.getStartTime().getLocalTime(), actualEntry.getStartTime());
         assertEquals(expectedShift.getEndTime().getLocalTime(), actualEntry.getEndTime());
         assertEquals("SHIFT " + index + "\nSlots left: " + expectedShift.getSlotsLeft() + "/"
-                        + expectedShift.getCapacity().getCapacity(),
+                        + expectedShift.getCapacity().getValue(),
                 actualEntry.getTitle());
     }
 
