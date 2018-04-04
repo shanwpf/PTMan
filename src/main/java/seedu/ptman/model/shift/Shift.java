@@ -176,4 +176,8 @@ public class Shift {
     public Date getDate() {
         return date;
     }
+
+    public boolean containsEmployee(Employee key) {
+        return uniqueEmployeeList.contains(key);
+    }
 }
