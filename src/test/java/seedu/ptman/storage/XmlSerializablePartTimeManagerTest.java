@@ -12,14 +12,14 @@ import seedu.ptman.commons.exceptions.IllegalValueException;
 import seedu.ptman.commons.util.FileUtil;
 import seedu.ptman.commons.util.XmlUtil;
 import seedu.ptman.model.PartTimeManager;
-import seedu.ptman.model.util.SampleDataUtil;
+import seedu.ptman.testutil.TypicalEmployees;
 
 public class XmlSerializablePartTimeManagerTest {
 
     private static final String TEST_DATA_FOLDER =
             FileUtil.getPath("src/test/data/XmlSerializablePartTimeManagerTest/");
     private static final File TYPICAL_EMPLOYEES_FILE =
-            new File(TEST_DATA_FOLDER + "typicalEncryptedEmployeesPartTimeManager.xml");
+            new File(TEST_DATA_FOLDER + "typicalEmployeesPartTimeManager.xml");
     private static final File INVALID_EMPLOYEE_FILE =
             new File(TEST_DATA_FOLDER + "invalidEmployeePartTimeManager.xml");
     private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagPartTimeManager.xml");
@@ -32,7 +32,7 @@ public class XmlSerializablePartTimeManagerTest {
         XmlSerializablePartTimeManager dataFromFile = XmlUtil.getDataFromFile(TYPICAL_EMPLOYEES_FILE,
                 XmlSerializablePartTimeManager.class);
         PartTimeManager partTimeManagerFromFile = dataFromFile.toModelType();
-        assertEquals(partTimeManagerFromFile.getEmployeeList(), SampleDataUtil.getSamplePartTimeManager()
+        assertEquals(partTimeManagerFromFile.getEmployeeList(), TypicalEmployees.getTypicalPartTimeManager()
                 .getEmployeeList());
     }
 
