@@ -38,7 +38,7 @@ public class ParserUtilTest {
     private static final String INVALID_OUTLET_NAME = "Awesome@Outlet";
     private static final String INVALID_OUTLET_CONTACT = "+1234";
     private static final String INVALID_OPERATING_HOURS = "09:00/18:00";
-    private static final String INVALID_START_END_TIME = "20:00-10:00";
+    private static final String INVALID_START_END_TIME = "2000-1000";
     private static final String INVALID_TIME = "1pm";
     private static final String INVALID_CAPACITY = "one";
     private static final String VALID_NAME = "Rachel Walker";
