@@ -65,7 +65,7 @@ public class XmlEncryptedAdaptedEmployee {
             this.salary = encrypt(salary);
             this.passwordHash = encrypt(passwordHash);
         } catch (Exception e) {
-            setAttributesFromStrings(name, phone, email, address, salary, passwordHash);
+            //Encryption should not fail
         }
 
         if (tagged != null) {
@@ -87,7 +87,7 @@ public class XmlEncryptedAdaptedEmployee {
             salary = encrypt(source.getSalary().value);
             passwordHash = encrypt(source.getPassword().getPasswordHash());
         } catch (Exception e) {
-            setAttributesFromSource(source);
+            //Encryption should not fail
         }
 
         tagged = new ArrayList<>();

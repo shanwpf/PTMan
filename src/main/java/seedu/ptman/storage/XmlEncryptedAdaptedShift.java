@@ -55,7 +55,7 @@ public class XmlEncryptedAdaptedShift {
             this.endTime = encrypt(endTime);
             this.capacity = encrypt(capacity);
         } catch (Exception e) {
-            setAttributesFromStrings(date, startTime, endTime, capacity);
+            //Encryption should not fail
         }
 
         if (employees != null) {
@@ -75,7 +75,7 @@ public class XmlEncryptedAdaptedShift {
             endTime = encrypt(source.getEndTime().toString());
             capacity = encrypt(source.getCapacity().toString());
         } catch (Exception e) {
-            setAttributesFromSource(source);
+            //Encryption should not fail
         }
 
         employees = new ArrayList<>();

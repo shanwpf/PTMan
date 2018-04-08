@@ -32,7 +32,7 @@ public class XmlEncryptedAdaptedTag {
         try {
             this.tagName = encrypt(tagName);
         } catch (Exception e) {
-            this.tagName = tagName;
+            //Encryption should not fail
         }
     }
 
@@ -45,7 +45,7 @@ public class XmlEncryptedAdaptedTag {
         try {
             tagName = encrypt(source.tagName);
         } catch (Exception e) {
-            tagName = source.tagName;
+            //Encryption should not fail
         }
     }
 

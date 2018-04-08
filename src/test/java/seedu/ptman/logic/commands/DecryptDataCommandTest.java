@@ -15,9 +15,6 @@ import seedu.ptman.model.Password;
 import seedu.ptman.model.UserPrefs;
 import seedu.ptman.model.outlet.OutletInformation;
 
-
-
-
 public class DecryptDataCommandTest {
 
     private Model model = new ModelManager(getTypicalPartTimeManager(), new UserPrefs(), new OutletInformation());
