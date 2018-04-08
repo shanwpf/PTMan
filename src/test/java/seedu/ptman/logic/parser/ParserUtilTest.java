@@ -49,7 +49,7 @@ public class ParserUtilTest {
     private static final String VALID_TAG_2 = "neighbour";
     private static final String VALID_OUTLET_NAME = "AwesomeOutlet";
     private static final String VALID_OUTLET_CONTACT = "91234567";
-    private static final String VALID_OPERATING_HOURS = "09:00-18:00";
+    private static final String VALID_OPERATING_HOURS = "0900-1800";
     private static final String VALID_TIME = "1300";
     private static final String VALID_CAPACITY = "10";
     private static final String WHITESPACE = " \t\r\n";
