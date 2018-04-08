@@ -117,6 +117,7 @@ public class PartTimeManagerTest {
         assertEquals(expectedPartTimeManager, partTimeManagerWithAliceAndBenson);
     }
 
+    //@@author SunBangjie
     @Test
     public void getOutletInformationMessage_defaultData_returnCorrectMessage() {
         String actualMessage = partTimeManager.getOutletInformationMessage();
@@ -136,6 +137,7 @@ public class PartTimeManagerTest {
         partTimeManager.decryptLocalStorage();
         assertFalse(partTimeManager.getOutletInformation().getEncryptionMode());
     }
+    //@@author
 
     /**
      * A stub ReadOnlyPartTimeManager whose employees and tags lists can violate interface constraints.

@@ -35,6 +35,7 @@ public class ModelManagerTest {
         modelManager.getFilteredEmployeeList().remove(0);
     }
 
+    //@@author SunBangjie
     @Test
     public void updateOutlet_validCondition_success() throws NoOutletInformationFieldChangeException {
         PartTimeManager partTimeManager = new PartTimeManager();
@@ -84,6 +85,7 @@ public class ModelManagerTest {
         modelManager.decryptLocalStorage();
         assertNotEquals(modelManager, differentModelManager);
     }
+    //@@author
 
     @Test
     public void equals() {
