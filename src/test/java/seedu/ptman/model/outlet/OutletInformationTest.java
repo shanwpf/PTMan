@@ -104,6 +104,26 @@ public class OutletInformationTest {
     }
 
     @Test
+    public void setEncryptionMode_inputTrue_returnsTrue() {
+        OutletInformation outlet = new OutletInformation();
+        outlet.setEncryptionMode(true);
+        assertTrue(outlet.getEncryptionMode());
+    }
+
+    @Test
+    public void getEncryptionModeMessage_inputTrue_returnsEncryptedMessage() {
+        OutletInformation outlet = new OutletInformation();
+        outlet.setEncryptionMode(true);
+        assertEquals(outlet.getEncryptionModeMessage(), OutletInformation.DATA_ENCRYPTED_MESSAGE);
+    }
+
+    @Test
+    public void getEncryptionModeMessage_inputFalse_returnsNotEncryptedMessage() {
+        OutletInformation outlet = new OutletInformation();
+        assertEquals(outlet.getEncryptionModeMessage(), OutletInformation.DATA_NOT_ENCRYPTED_MESSAGE);
+    }
+
+    @Test
     public void hashCode_sameObject_returnsTrue() {
         Password masterPassword = new Password();
         OutletName name = new OutletName("outlet");

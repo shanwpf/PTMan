@@ -36,7 +36,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void updateOutlet() throws NoOutletInformationFieldChangeException {
+    public void updateOutlet_validCondition_success() throws NoOutletInformationFieldChangeException {
         PartTimeManager partTimeManager = new PartTimeManager();
         PartTimeManager differentPartTimeManager = new PartTimeManager();
         UserPrefs userPrefs = new UserPrefs();
@@ -50,6 +50,38 @@ public class ModelManagerTest {
 
         assertEquals(modelManager, differentModelManager);
         modelManager.updateOutlet(outlet);
+        assertNotEquals(modelManager, differentModelManager);
+    }
+
+    @Test
+    public void encryptLocalStorage_dataNotEncrypted_success() {
+        PartTimeManager partTimeManager = new PartTimeManager();
+        PartTimeManager differentPartTimeManager = new PartTimeManager();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(partTimeManager, userPrefs, new OutletInformation());
+        ModelManager differentModelManager = new ModelManager(differentPartTimeManager, userPrefs,
+                new OutletInformation());
+
+        assertEquals(modelManager, differentModelManager);
+        modelManager.encryptLocalStorage();
+        assertNotEquals(modelManager, differentModelManager);
+    }
+
+    @Test
+    public void decryptLocalStorage_dataEncrypted_success() {
+        PartTimeManager partTimeManager = new PartTimeManager();
+        PartTimeManager differentPartTimeManager = new PartTimeManager();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(partTimeManager, userPrefs, new OutletInformation());
+        ModelManager differentModelManager = new ModelManager(differentPartTimeManager, userPrefs,
+                new OutletInformation());
+
+        modelManager.encryptLocalStorage();
+        differentModelManager.encryptLocalStorage();
+        assertEquals(modelManager, differentModelManager);
+        modelManager.decryptLocalStorage();
         assertNotEquals(modelManager, differentModelManager);
     }
 

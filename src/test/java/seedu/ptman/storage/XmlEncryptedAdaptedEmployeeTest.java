@@ -20,6 +20,7 @@ import seedu.ptman.model.employee.Phone;
 import seedu.ptman.model.employee.Salary;
 import seedu.ptman.testutil.Assert;
 
+//@@author SunBangjie
 public class XmlEncryptedAdaptedEmployeeTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
