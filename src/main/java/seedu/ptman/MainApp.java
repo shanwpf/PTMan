@@ -217,6 +217,8 @@ public class MainApp extends Application {
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
+            storage.backupPartTimeManager(model.getPartTimeManager());
+            storage.backupOutletInformation(model.getOutletInformation());
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }

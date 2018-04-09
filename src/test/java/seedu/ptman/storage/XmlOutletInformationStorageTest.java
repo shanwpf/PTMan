@@ -114,4 +114,39 @@ public class XmlOutletInformationStorageTest {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
+
+    @Test
+    public void backupOutletInformation_nullOutletInformation_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        backupOutletInformation(null, TEST_DATA_FOLDER + "SomeBackupFile.xml");
+    }
+
+    @Test
+    public void backupOutletInformation_nullFilePath_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        backupOutletInformation(new OutletInformation(), null);
+    }
+
+    @Test
+    public void backupOutletInformation_validInputs_backupSuccess() throws Exception {
+        String filePath = TEST_DATA_FOLDER + "backupFile";
+        OutletInformation original = new OutletInformation();
+        backupOutletInformation(original, filePath);
+        XmlOutletInformationStorage xmlOutletInformationStorage =
+                new XmlOutletInformationStorage(filePath + ".backup");
+        OutletInformation readBack =
+                xmlOutletInformationStorage.readOutletInformation(filePath + ".backup").get();
+        assertEquals(original, new OutletInformation(readBack));
+    }
+
+    /**
+     * Backups {@code partTimeManager} at the specified {@code filePath}.
+     */
+    private void backupOutletInformation(OutletInformation outletInformation, String filePath) {
+        try {
+            new XmlOutletInformationStorage(filePath).backupOutletInformation(outletInformation);
+        } catch (IOException ioe) {
+            throw new AssertionError("There should not be an error writing to the file.", ioe);
+        }
+    }
 }

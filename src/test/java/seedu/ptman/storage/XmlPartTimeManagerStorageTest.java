@@ -124,6 +124,7 @@ public class XmlPartTimeManagerStorageTest {
         savePartTimeManager(new PartTimeManager(), null);
     }
 
+    //@@author SunBangjie
     @Test
     public void backupPartTimeManager_nullPartTimeManager_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -136,6 +137,18 @@ public class XmlPartTimeManagerStorageTest {
         backupPartTimeManager(new PartTimeManager(), null);
     }
 
+    @Test
+    public void backupParTimeManager_validInputs_backupSuccess() throws Exception {
+        String filePath = TEST_DATA_FOLDER + "backupFile";
+        PartTimeManager original = getTypicalPartTimeManager();
+        backupPartTimeManager(original, filePath);
+        XmlPartTimeManagerStorage xmlPartTimeManagerStorage =
+                new XmlPartTimeManagerStorage(filePath + ".backup");
+        ReadOnlyPartTimeManager readBack =
+                xmlPartTimeManagerStorage.readPartTimeManager(false, filePath + ".backup").get();
+        assertEquals(original, new PartTimeManager(readBack));
+    }
+
     /**
      * Backups {@code partTimeManager} at the specified {@code filePath}.
      */
@@ -146,6 +159,4 @@ public class XmlPartTimeManagerStorageTest {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
-
-
 }

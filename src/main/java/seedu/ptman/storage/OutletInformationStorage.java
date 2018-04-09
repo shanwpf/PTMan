@@ -23,4 +23,6 @@ public interface OutletInformationStorage {
     void saveOutletInformation(OutletInformation outletInformation) throws IOException;
 
     void saveOutletInformation(OutletInformation outletInformation, String filePath) throws IOException;
+
+    void backupOutletInformation(OutletInformation outletInformation) throws IOException;
 }
