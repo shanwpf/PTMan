@@ -21,7 +21,6 @@ import seedu.ptman.model.shift.exceptions.ShiftFullException;
  * Represents a shift that employees can work in.
  */
 public class Shift {
-    public static final String MESSAGE_SHIFT_CONSTRAINTS = "Start time should be after the end time.";
     private Time startTime;
     private Time endTime;
     private Date date;
@@ -30,7 +29,6 @@ public class Shift {
 
     public Shift(Date date, Time startTime, Time endTime, Capacity capacity) {
         requireAllNonNull(startTime, endTime, capacity);
-        checkArgument(endTime.isAfter(startTime), MESSAGE_SHIFT_CONSTRAINTS);
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -49,7 +47,6 @@ public class Shift {
 
     public Shift(Date date, Time startTime, Time endTime, Capacity capacity, Set<Employee> employees) {
         requireAllNonNull(date, startTime, endTime, capacity, employees);
-        checkArgument(endTime.isAfter(startTime), MESSAGE_SHIFT_CONSTRAINTS);
         this.startTime = startTime;
         this.endTime = endTime;
         this.capacity = capacity;

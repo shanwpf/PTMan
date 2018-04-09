@@ -11,7 +11,7 @@ import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_SHIFT;
-import static seedu.ptman.testutil.TypicalShifts.MONDAY_AM;
+import static seedu.ptman.testutil.TypicalShifts.SHIFT_MONDAY_AM;
 import static seedu.ptman.testutil.TypicalShifts.getTypicalPartTimeManagerWithShifts;
 
 import java.util.Optional;
@@ -77,7 +77,7 @@ public class ApplyCommandTest {
         expectedModel.setTrueAdminMode(new Password());
         expectedModel.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
 
-        Shift editedShift = new Shift(MONDAY_AM);
+        Shift editedShift = new Shift(SHIFT_MONDAY_AM);
         editedShift.addEmployee(ALICE);
         expectedModel.updateShift(model.getFilteredShiftList().get(0), editedShift);
         assertCommandSuccess(applyCommand, model, expectedMessage, expectedModel);
