@@ -53,7 +53,7 @@ public class AddShiftCommandTest {
         ModelStubAcceptingShiftAdded modelStub = new ModelStubAcceptingShiftAdded();
         modelStub.setTrueAdminMode(new Password());
 
-        Shift validShift = new ShiftBuilder().build();
+        Shift validShift = new ShiftBuilder().withDate(LocalDate.now()).build();
         CommandResult commandResult = getAddShiftCommandForShift(validShift, modelStub).execute();
 
         assertEquals(String.format(AddShiftCommand.MESSAGE_SUCCESS, validShift), commandResult.feedbackToUser);
@@ -64,7 +64,7 @@ public class AddShiftCommandTest {
     public void execute_duplicateShift_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateShiftException();
         modelStub.setTrueAdminMode(new Password());
-        Shift validShift = new ShiftBuilder().build();
+        Shift validShift = new ShiftBuilder().withDate(LocalDate.now()).build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddShiftCommand.MESSAGE_DUPLICATE_SHIFT);
