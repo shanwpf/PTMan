@@ -21,6 +21,7 @@ import seedu.ptman.model.outlet.OutletInformation;
 public class XmlOutletInformationStorage implements OutletInformationStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlOutletInformationStorage.class);
+    private static final String BACKUP_FILE_EXTENSION = ".backup";
 
     private String filePath;
 
@@ -83,5 +84,23 @@ public class XmlOutletInformationStorage implements OutletInformationStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlOutletFileStorage.saveDataToFile(file, new XmlAdaptedOutletInformation(outletInformation));
+    }
+
+    @Override
+    public void backupOutletInformation(OutletInformation outletInformation) throws IOException {
+        saveOutletInformation(outletInformation, addFileNameExtentionIfNotNull(filePath));
+    }
+
+    /**
+     *
+     * @param filePath location of data.
+     * @return
+     */
+    private String addFileNameExtentionIfNotNull(String filePath) {
+        if (filePath == null) {
+            return null;
+        } else {
+            return filePath + BACKUP_FILE_EXTENSION;
+        }
     }
 }

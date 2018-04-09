@@ -6,6 +6,7 @@ import static seedu.ptman.commons.encrypter.DataEncrypter.encrypt;
 
 import org.junit.Test;
 
+//@@author SunBangjie
 public class EncrypterTest {
 
     @Test

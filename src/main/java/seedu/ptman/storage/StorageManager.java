@@ -90,11 +90,6 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void backupPartTimeManager(ReadOnlyPartTimeManager partTimeManager) throws IOException {
-        partTimeManagerStorage.backupPartTimeManager(partTimeManager);
-    }
-
-    @Override
     @Subscribe
     public void handlePartTimeManagerChangedEvent(PartTimeManagerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
@@ -146,5 +141,18 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    // ================ backup methods ==============================
+
+    //@@author SunBangjie
+    @Override
+    public void backupPartTimeManager(ReadOnlyPartTimeManager partTimeManager) throws IOException {
+        partTimeManagerStorage.backupPartTimeManager(partTimeManager);
+    }
+
+    @Override
+    public void backupOutletInformation(OutletInformation outletInformation) throws IOException {
+        outletInformationStorage.backupOutletInformation(outletInformation);
     }
 }
