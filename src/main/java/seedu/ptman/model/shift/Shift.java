@@ -1,6 +1,5 @@
 package seedu.ptman.model.shift;
 
-import static seedu.ptman.commons.util.AppUtil.checkArgument;
 import static seedu.ptman.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
