@@ -39,7 +39,7 @@ import seedu.ptman.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    private static final int EXPECTED_MIN_ARG_LENGTH = 3;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -75,6 +75,10 @@ public class ParserUtil {
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseSecondIndex(String oneBasedIndex) throws IllegalValueException {
+        String[] split = oneBasedIndex.trim().split(" ");
+        if (split.length < EXPECTED_MIN_ARG_LENGTH) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
         String trimmedIndex = oneBasedIndex.trim().split(" ")[1];
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
