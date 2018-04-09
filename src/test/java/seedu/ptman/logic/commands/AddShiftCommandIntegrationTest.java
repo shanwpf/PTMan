@@ -56,6 +56,12 @@ public class AddShiftCommandIntegrationTest {
         assertCommandFailure(prepareCommand(shift, model), model, AddShiftCommand.MESSAGE_DUPLICATE_SHIFT);
     }
 
+    @Test
+    public void execute_invalidShiftDate_throwsCommandException() {
+        Shift shift = new ShiftBuilder().withDate("01-01-10").build();
+        assertCommandFailure(prepareCommand(shift, model), model, AddShiftCommand.MESSAGE_DATE_OVER);
+    }
+
     /**
      * Generates a new {@code AddShiftCommand} which upon execution, adds {@code shift} into the {@code model}.
      */
