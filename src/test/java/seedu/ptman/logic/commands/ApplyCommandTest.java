@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.ptman.logic.commands.ApplyCommand.MESSAGE_DUPLICATE_EMPLOYEE;
 import static seedu.ptman.logic.commands.ApplyCommand.MESSAGE_SHIFT_FULL;
+import static seedu.ptman.logic.commands.ApplyCommand.MESSAGE_SHIFT_OVER;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.ptman.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
@@ -128,6 +129,16 @@ public class ApplyCommandTest {
         assertCommandFailure(applyCommand, model, MESSAGE_DUPLICATE_EMPLOYEE);
     }
 
+    @Test
+    public void execute_shiftOver_throwsCommandException() {
+        Shift shift = new ShiftBuilder().withDate("01-01-10").withCapacity("3").build();
+        Employee employee = new EmployeeBuilder().build();
+        Model model = prepareModel(false, shift, employee);
+
+        String expectedMessage = String.format(MESSAGE_SHIFT_OVER, INDEX_FIRST_SHIFT.getOneBased());
+        ApplyCommand applyCommand = prepareCommandWithPassword(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
+        assertCommandFailure(applyCommand, model, expectedMessage);
+    }
 
     @Test
     public void equals_sameObject_returnsTrue() {

@@ -173,4 +173,8 @@ public class Shift {
     public Set<Employee> getEmployees() {
         return Collections.unmodifiableSet(uniqueEmployeeList.toSet());
     }
+
+    public boolean isOver() {
+        return date.isOver() && startTime.isOver();
+    }
 }
