@@ -64,27 +64,6 @@ public class ApplyCommandTest {
     }
 
     @Test
-    public void execute_userModeEmployeeNotInShift_success() throws Exception {
-        Model model = new ModelManager(getTypicalPartTimeManagerWithShifts(), new UserPrefs(), new OutletInformation());
-        model.setTrueAdminMode(new Password());
-        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
-        ApplyCommand applyCommand = prepareCommandWithPassword(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
-
-        String expectedMessage = String.format(ApplyCommand.MESSAGE_APPLY_SHIFT_SUCCESS,
-                ALICE.getName(), INDEX_FIRST_SHIFT.getOneBased());
-
-        Model expectedModel = new ModelManager(getTypicalPartTimeManagerWithShifts(), new UserPrefs(),
-                new OutletInformation());
-        expectedModel.setTrueAdminMode(new Password());
-        expectedModel.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
-        Shift editedShift = new Shift(model.getFilteredShiftList().get(0));
-        editedShift.addEmployee(ALICE);
-        expectedModel.updateShift(model.getFilteredShiftList().get(0), editedShift);
-
-        assertCommandSuccess(applyCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_userModeNoPassword_throwsMissingPasswordException() throws Exception {
         Model model = new ModelManager(new PartTimeManager(), new UserPrefs(), new OutletInformation());
         model.setFalseAdminMode();
