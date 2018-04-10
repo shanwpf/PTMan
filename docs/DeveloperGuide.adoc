@@ -262,6 +262,8 @@ Classes used by multiple components are in the `seedu.ptman.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+
+// tag::outlet[]
 === Outlet feature
 
 ==== Reason for implementation
@@ -308,7 +310,7 @@ There are also commands that allow employers to encrypt and decrypt local storag
 
 ====== Edit outlet command
 
-The `editoutlet` command can change outlet name, operating hours, contact numbers and email, which are displayed in the app as shown in _Figure 12_.
+The `editoutlet` command can change outlet name, operating hours, contact number and email, which are displayed in the app as shown in _<<fig-OutletInformationDisplayed>>_.
 The information displayed will change after a successful command.
 
 [[fig-OutletInformationDisplayed]]
@@ -344,6 +346,11 @@ public CommandResult executeUndoableCommand() throws CommandException {
     ...
 }
 ----
+The following sequence diagram (_<<fig-EditOutletCommandSequenceDiagram>>_) illustrates how an `editoutlet` command is executed in the Logic Component, and how it interacts with the Model Component.
+
+[[fig-EditOutletCommandSequenceDiagram]]
+.Interactions inside the Logic Component for the `editoutlet n/Edited Outlet` Admin Command
+image::EditOutletCommandSequenceDiagram.png[width="800"]
 
 When `executeUndoableCommand` executed succesfully without any exception, three events will be raised:
 
@@ -351,6 +358,71 @@ When `executeUndoableCommand` executed succesfully without any exception, three 
 . `OutletInformationChangedEvent` updates the operating hours, contact numbers and email displayed in the app.
 . `OutletDataChangedEvent` saves latest outlet information in local storage file "data/outletinformation.xml".
 
+====== Announcement command
+
+Similar to `editoutlet` command, `announcement` command changes the `announcement` attribute of `OutletInformation`.
+The implementation is similar to the implementation of `editoutlet` command mentioned previously.
+Take note that there is not any input constraint on the `announcement`, unlike outlet name, operating hours, contact number and email which have specific input constraints.
+
+Thus, an alternative implementation of the `Announcement` class can put certain constraints on the input string, and check whether the input string matches the validation regex as shown below:
+----
+public static final String ANNOUNCEMENT_VALIDATION_REGEX = //your own validation regex;
+public static boolean isValidAnnouncement(String test) {
+    return test.matches(ANNOUNCEMENT_VALIDATION_REGEX);
+}
+----
+When `announcement` command executes successfully, `AnnouncementChangedEvent` is raised and handled to update the information displayed in the app as highlighted in _<<fig-AnnouncementDisplayed>>_.
+[[fig-AnnouncementDisplayed]]
+.Example of Announcement Displayed
+image::announcementdisplay.jpg[width="600"]
+
+Similarly, `OutletDataChangedEvent` is also raised and handled to save the latest announcement into local storage file "data/outletinformation.xml".
+
+====== Encrypt and decrypt commands
+Since PTMan stores files locally, it is highly possible that any worker in the outlet can open the storage files and read data inside.
+Such files store a large amount of essential and private data such as admin password, employees' passwords, employees' phones, addresses, and emails.
+By using the `encrypt` command, the data in local storage files can be hidden from any group of people who do not have the access to it.
+Employers can use the `decrypt` command to make the files human-readable.
+
+Currently, the local data is encrypted in the Advanced Encryption Standard (AES) in XML files.
+If data is encrypted, data read from XML files must be decrypted before passing to the constructor of any object.
+The function below demonstrates how outlet data is encrypted using the encrypt(String text) function: +
+----
+public XmlAdaptedOutletInformation(String outletName, ...) {
+    ...
+    this.outletName = encrypt(outletName);
+    ...
+}
+----
+Similarly, decrypt(String encryptedText) can be called to decrypt data read from XML files. +
+
+The current implementation successfully prevents any user of the computer directly interpreting the stored information.
+However, the limitation is that the XML file structure is still maintained and the title of each element is not encrypted as shown in _<<fig-OutletEncrypt>>_.
+It is possible that any user with advanced knowledge of data encryption is able to decrypt the data with the found patterns.
+
+[[fig-OutletEncrypt]]
+.Example of Encrypted XML File of Outlet Information
+image::OutletInformationEncryptedXMLFile.jpg[width="800"]
+
+The limitation of the current implementation leads to an alternative implementation that encrypts the entire XML file.
+The XMLCipher package from apache.org can be used to encrypt the XML file stored locally, as illustrated below:
+----
+Document encryptedDoc = XMLUtil.encryptDocument(document, secretKey, XMLCipher.AES_128);
+XMLUtil.saveDocumentTo(encryptedDoc, encryptedFile);
+Document decryptedDoc = XMLUtil.decryptDocument(encryptedDoc, secretKey, XMLCipher.AES_128);
+XMLUtil.saveDocumentTo(decryptedDoc, decryptedFile);
+----
+You can implement `encryptDocument` using the code below. Take note that `decryptDocument` is simply the reverse process of `encryptDocument`.
+----
+public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+    Element rootElement = document.getDocumentElement();
+    XMLCipher xmlCipher = XMLCipher.getInstance(algorithm);
+    xmlCipher.init(XMLCipher.ENCRYPT_MODE, secretKey);
+    xmlCipher.doFinal(document, rootElement, true);
+    return document;
+}
+----
+// end::outlet[]
 
 
 // tag::shifts[]
@@ -758,44 +830,25 @@ sendResetPasswordMessage(String name, String email, String newPassword)
 `EmailService` class is free for extension.
 // end::accessControl[]
 
-
-// tag::dataencryption[]
-=== Data encryption
+=== Backup storage
 
 ==== Reason for implementation
-
-Since PTMan stores files locally, it is highly possible that any worker in the outlet can open the storage files and read data inside.
-Such files store a large amount of essential and private data such as admin password, employees' passwords, employees' phones, addresses, and emails.
-The information is supposed to be hidden from any group of people who do not have the access to it.
-Therefore, local storage files are encrypted to prevent any direct interpretation of saved data.
+Sometimes local storage files might be corrupted due to accidents.
+It is important to keep backup files to prevent any loss of essential data.
 
 ==== How it is implemented
-
-Currently, any data is encrypted in the Advanced Encryption Standard (AES) before writing into XML files.
-Data read from XML files must be decrypted before passing to the constructor of any object.
-The function below demonstrates how outlet data is encrypted using the encrypt(String text) function: +
+Currently, backup files are stored with file extension ".backup" in the same folder as local storage files.
+Backup files are updated upon exit of the app. It is implemented by calling backupPartTimeManager(ReadOnlyPartTimeManager partTimeManager) and backupOutletInformation(OutletInformation outletInformation) in the MainApp.java as shown below:
 ----
-public XmlAdaptedOutletInformation(String outletName, String operatingHours, String outletContact, String outletEmail, String passwordHash, String announcement) {
+public void stop() {
     ...
-    this.outletName = encrypt(outletName);
+    storage.backupPartTimeManager(model.getPartTimeManager());
+    storage.backupOutletInformation(model.getOutletInformation());
     ...
 }
 ----
-Similarly, decrypt(String encryptedText) can be called to decrypt data read from XML files. +
-
-The current implementation successfully prevents any user of the computer directly interpreting the stored information.
-However, the limitation is that the XML file structure is still maintained and the title of each element is not encrypted as shown in _<<fig-OutletEncrypt>>_.
-It is possible that any user with advanced knowledge of data encryption is able to decrypt the data with the found pattern.
-
-[[fig-OutletEncrypt]]
-.Example of Encrypted XML File of Outlet Information
-image::OutletInformationEncryptedXMLFile.jpg[width="700"]
-
-Hence, there is an alternative implementation which encrypts the entire XML file.
-The XMLCipher package from apache.org can be used to encrypt the XML file stored locally.
-
-
-// end::dataencryption[]
+An alternative implementation would be not only saving backup files but also sending them to the cloud such as Dropbox and Google Drive.
+It can be done using the relevant Dropbox and Google Drive APIs.
 
 === Logging
 
@@ -1263,10 +1316,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 . *Outlet Feature(Major)*:
 .. *Edit outlet information*: Commands are added for the employers to edit outlet information, including outlet name and operating hours.
+.. *Create announcement*: Announcement command is added for the employers to broadcast important messages to all employees.
 .. *Display outlet information*: Outlet information will be displayed in the UI. Any change in the outlet information will be reflected as well.
-.. *Store Outlet information*: Outlet information is stored in a separate file.
-. *Data Encryption(Minor)*: Storage files are encrypted to ciphertext to ensure that data cannot be obtained and understood by any third party.
-
+.. *Store outlet information*: Outlet information is stored in a separate file.
+.. *Data encryption*: Storage files can be encrypted and decrypted on command to ensure that data cannot be obtained and understood by any third party.
+. *Backup storage files (Minor)*: Backup files with file extension ".backup" are created and updated upon exit of the app.
 
 [appendix]
 == User Stories
