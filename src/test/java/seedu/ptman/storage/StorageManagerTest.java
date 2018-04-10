@@ -10,6 +10,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.ptman.commons.events.model.OutletDataChangedEvent;
@@ -25,6 +26,10 @@ public class StorageManagerTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
@@ -76,11 +81,6 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void getOutletInformationFilePath() {
-        assertNotNull(storageManager.getOutletInformationFilePath());
-    }
-
-    @Test
     public void getUserOrefsFilePath() {
         assertNotNull(storageManager.getUserPrefsFilePath());
     }
@@ -95,6 +95,12 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    //@@author SunBangjie
+    @Test
+    public void getOutletInformationFilePath() {
+        assertNotNull(storageManager.getOutletInformationFilePath());
+    }
+
     @Test
     public void handleOutletDataChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that throws an exception when the save method is called
@@ -105,6 +111,40 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void backupPartTimeManager_nullValue_exceptionThrown() throws Exception {
+        thrown.expect(NullPointerException.class);
+        storageManager.backupPartTimeManager(null);
+    }
+
+    @Test
+    public void backupPartTimeManager_validValue_success() throws Exception {
+        PartTimeManager original = getTypicalPartTimeManager();
+        storageManager.backupPartTimeManager(original);
+        XmlPartTimeManagerStorage partTimeManagerStorage = new XmlPartTimeManagerStorage(getTempFilePath("ab"));
+        ReadOnlyPartTimeManager readBack =
+                partTimeManagerStorage.readPartTimeManager(false, getTempFilePath("ab.backup")).get();
+        assertEquals(original, new PartTimeManager(readBack));
+    }
+
+    @Test
+    public void backupOutletInformation_nullValue_exceptionThrown() throws Exception {
+        thrown.expect(NullPointerException.class);
+        storageManager.backupOutletInformation(null);
+    }
+
+    @Test
+    public void backupOutletInformation_validValue_success() throws Exception {
+        OutletInformation original = new OutletInformation();
+        storageManager.backupOutletInformation(original);
+        XmlOutletInformationStorage outletInformationStorage =
+                new XmlOutletInformationStorage(getTempFilePath("outlet"));
+        OutletInformation readBack = outletInformationStorage
+                .readOutletInformation(getTempFilePath("outlet.backup")).get();
+        assertEquals(original, readBack);
+    }
+
+    //@@author
 
     /**
      * A Stub class to throw an exception when the save method is called

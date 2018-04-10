@@ -1,5 +1,8 @@
 package seedu.ptman.testutil;
 
+import static seedu.ptman.testutil.TypicalEmployees.ALICE;
+import static seedu.ptman.testutil.TypicalEmployees.BENSON;
+import static seedu.ptman.testutil.TypicalEmployees.CARL;
 import static seedu.ptman.testutil.TypicalEmployees.getTypicalEmployees;
 
 import java.util.ArrayList;
@@ -58,7 +61,8 @@ public class TypicalShifts {
     public static final Shift SHIFT_THURSDAY_PM = new ShiftBuilder().withDate("22-03-18")
             .withStartTime("1200")
             .withEndTime("2200")
-            .withCapacity("3").build();
+            .withCapacity("3")
+            .withEmployees(ALICE, BENSON, CARL).build();
 
     public static final Shift SHIFT_RUNNING_OUT = new ShiftBuilder().withDate("22-03-18")
             .withStartTime("0900")
@@ -88,6 +92,6 @@ public class TypicalShifts {
 
     public static List<Shift> getTypicalShifts() {
         return new ArrayList<>(Arrays.asList(SHIFT_MONDAY_AM, SHIFT_MONDAY_PM, SHIFT_TUESDAY_AM, SHIFT_TUESDAY_PM,
-                SHIFT_WEDNESDAY_AM, SHIFT_WEDNESDAY_PM, SHIFT_SUNDAY_AM, SHIFT_SUNDAY_PM));
+                SHIFT_WEDNESDAY_AM, SHIFT_WEDNESDAY_PM, SHIFT_THURSDAY_PM, SHIFT_SUNDAY_AM, SHIFT_SUNDAY_PM));
     }
 }

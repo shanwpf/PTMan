@@ -11,7 +11,6 @@ import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_FIRST_SHIFT;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_EMPLOYEE;
 import static seedu.ptman.testutil.TypicalIndexes.INDEX_SECOND_SHIFT;
-import static seedu.ptman.testutil.TypicalShifts.SHIFT_MONDAY_AM;
 import static seedu.ptman.testutil.TypicalShifts.getTypicalPartTimeManagerWithShifts;
 
 import java.util.Optional;
@@ -66,20 +65,22 @@ public class ApplyCommandTest {
 
     @Test
     public void execute_userModeEmployeeNotInShift_success() throws Exception {
-        Employee employee = new EmployeeBuilder().build();
+        Model model = new ModelManager(getTypicalPartTimeManagerWithShifts(), new UserPrefs(), new OutletInformation());
+        model.setTrueAdminMode(new Password());
+        model.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
         ApplyCommand applyCommand = prepareCommandWithPassword(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, model);
 
         String expectedMessage = String.format(ApplyCommand.MESSAGE_APPLY_SHIFT_SUCCESS,
-                employee.getName(), INDEX_FIRST_SHIFT.getOneBased());
+                ALICE.getName(), INDEX_FIRST_SHIFT.getOneBased());
 
-        Model expectedModel = new ModelManager(new PartTimeManager(model.getPartTimeManager()), new UserPrefs(),
+        Model expectedModel = new ModelManager(getTypicalPartTimeManagerWithShifts(), new UserPrefs(),
                 new OutletInformation());
         expectedModel.setTrueAdminMode(new Password());
         expectedModel.updateFilteredShiftList(Model.PREDICATE_SHOW_ALL_SHIFTS);
-
-        Shift editedShift = new Shift(SHIFT_MONDAY_AM);
+        Shift editedShift = new Shift(model.getFilteredShiftList().get(0));
         editedShift.addEmployee(ALICE);
         expectedModel.updateShift(model.getFilteredShiftList().get(0), editedShift);
+
         assertCommandSuccess(applyCommand, model, expectedMessage, expectedModel);
     }
 
