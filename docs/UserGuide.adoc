@@ -142,6 +142,7 @@ The timetable automatically displays the shifts in the current week, allowing yo
 
 If you are an employee, PTMan gives you flexibility in your working hours by allowing you to apply for shifts that you wish to work in.
 
+// tag::outletManagement[]
 === Outlet Management
 If you are a manager, PTMan allows you to manage your outlet. You can edit your outlet name, operating hours, contact number and email.
 The timetable automatically re-sizes according to the operating hours. You can also create any announcement and broadcast to your employees.
@@ -153,11 +154,13 @@ _<<fig-Feature_Outlet>>_ shows where you can view your outlet information.
 [[fig-Feature_Outlet]]
 .Sample Outlet Information Displayed +
 image::IntroductionToOutlet.jpg[width="790"]
+// end::outletManagement[]
 
 === Saving the data
 
 All data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
+// tag::backup[]
 === Backing up the data
 Backup files are automatically created and saved in the hard disk upon exit of the app. There is no need to do backup manually. +
 You can replace any local storage files with backup files by the following steps:
@@ -169,6 +172,7 @@ You can replace any local storage files with backup files by the following steps
 . Rename `outletinformation.xml.backup` to `outletinformation.xml`.
 . Rename `parttimemanager.xml.backup` to `parttimemanager.xml`.
 . Run the app `PTMan.jar` and you will see all the restored data read from backup files.
+// end::backup[]
 
 === Keeping track of employees' monthly salaries [Coming in v2.0]
 
@@ -406,7 +410,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-[[Eo]]
+// tag::outletCommand[]
+[[Editoutlet]]
 ==== Editing outlet information: `editoutlet`
 Edits the outlet information. +
 
@@ -460,8 +465,8 @@ Sets an announcement for the outlet. +
 Examples:
 
 . Your store has a *new drink released this coming Wednesday*, and you want your employees who come working on Wednesday to be
-familiar with the recipe for it. Why not leave a note for your employees so that they can be prepared for their shifts?
-To make an announcement in PTMan, we can do the following as illustrated in _<<fig-Announce1>>_.
+familiar with the recipe for it. You can leave a note for your employees so that they can be prepared for their shifts.
+To make an announcement in PTMan, you can type the following command as illustrated in _<<fig-Announce1>>_.
 +
 [[fig-Announce1]]
 .Example of `announce` command usage +
@@ -515,6 +520,7 @@ Open `outletinformation.xm;` file again, now you can read and understand the dat
 [[fig-Decrypt]]
 .Example of Decrypted `outletinformation.xml` File in `data` Folder +
 image::OutletInformationDecryptedXMLFile.jpg[width="790"]
+// end::outletCommand[]
 
 // tag::shiftmanager[]
 [[Addshift]]
