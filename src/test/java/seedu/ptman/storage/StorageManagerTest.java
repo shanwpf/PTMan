@@ -75,6 +75,7 @@ public class StorageManagerTest {
         assertEquals(original, new PartTimeManager(retrieved));
     }
 
+
     @Test
     public void getPartTimeManagerFilePath() {
         assertNotNull(storageManager.getPartTimeManagerFilePath());
@@ -96,6 +97,19 @@ public class StorageManagerTest {
     }
 
     //@@author SunBangjie
+    @Test
+    public void outletInformationReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlOutletInformationStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlOutletInformationStorageTest} class.
+         */
+        OutletInformation original = new OutletInformation();
+        storageManager.saveOutletInformation(original);
+        OutletInformation retrieved = storageManager.readOutletInformation().get();
+        assertEquals(original, retrieved);
+    }
+
     @Test
     public void getOutletInformationFilePath() {
         assertNotNull(storageManager.getOutletInformationFilePath());
