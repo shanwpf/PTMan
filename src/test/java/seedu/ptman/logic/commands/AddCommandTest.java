@@ -213,6 +213,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean getEncryptionMode() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
         public ObservableList<Employee> getFilteredEmployeeList() {
             fail("This method should not be called.");
             return null;
