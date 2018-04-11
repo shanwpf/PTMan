@@ -120,4 +120,6 @@ public interface Model {
     void setFilteredShiftListToWeek(LocalDate date);
 
     OutletInformation getOutletInformation();
+
+    boolean getEncryptionMode();
 }

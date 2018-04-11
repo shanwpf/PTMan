@@ -22,7 +22,7 @@ public class EncryptDataCommand extends Command {
         if (!model.isAdminMode()) {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
-        if (model.getOutletInformation().getEncryptionMode()) {
+        if (model.getEncryptionMode()) {
             throw new CommandException(MESSAGE_ENCRYPT_FAILURE);
         }
         model.encryptLocalStorage();
