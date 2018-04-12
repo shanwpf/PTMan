@@ -126,6 +126,19 @@ public class StorageManagerTest {
     }
 
     @Test
+    public void handleOutletDataChangedEvent_validInput_eventRaised() throws Exception {
+        OutletInformation original = new OutletInformation();
+        XmlOutletInformationStorage outletInformationStorage = new XmlOutletInformationStorage("dummy");
+        Storage storage = new StorageManager(new XmlPartTimeManagerStorage("dummy"),
+                new JsonUserPrefsStorage("dummy"),
+                outletInformationStorage);
+        storage.handleOutletDataChangedEvent(new OutletDataChangedEvent(original));
+        OutletInformation readBack = outletInformationStorage
+                .readOutletInformation("dummy").get();
+        assertEquals(original, readBack);
+    }
+
+    @Test
     public void backupPartTimeManager_nullValue_exceptionThrown() throws Exception {
         thrown.expect(NullPointerException.class);
         storageManager.backupPartTimeManager(null);
