@@ -75,6 +75,7 @@ public class StorageManagerTest {
         assertEquals(original, new PartTimeManager(retrieved));
     }
 
+
     @Test
     public void getPartTimeManagerFilePath() {
         assertNotNull(storageManager.getPartTimeManagerFilePath());
@@ -97,6 +98,19 @@ public class StorageManagerTest {
 
     //@@author SunBangjie
     @Test
+    public void outletInformationReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlOutletInformationStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlOutletInformationStorageTest} class.
+         */
+        OutletInformation original = new OutletInformation();
+        storageManager.saveOutletInformation(original);
+        OutletInformation retrieved = storageManager.readOutletInformation().get();
+        assertEquals(original, retrieved);
+    }
+
+    @Test
     public void getOutletInformationFilePath() {
         assertNotNull(storageManager.getOutletInformationFilePath());
     }
@@ -109,6 +123,19 @@ public class StorageManagerTest {
                 new XmlOutletInformationStorageExceptionThrowingStub("dummy"));
         storage.handleOutletDataChangedEvent(new OutletDataChangedEvent(new OutletInformation()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    @Test
+    public void handleOutletDataChangedEvent_validInput_eventRaised() throws Exception {
+        OutletInformation original = new OutletInformation();
+        XmlOutletInformationStorage outletInformationStorage = new XmlOutletInformationStorage("dummy");
+        Storage storage = new StorageManager(new XmlPartTimeManagerStorage("dummy"),
+                new JsonUserPrefsStorage("dummy"),
+                outletInformationStorage);
+        storage.handleOutletDataChangedEvent(new OutletDataChangedEvent(original));
+        OutletInformation readBack = outletInformationStorage
+                .readOutletInformation("dummy").get();
+        assertEquals(original, readBack);
     }
 
     @Test

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <outletinformation>
+    <encryptionMode>Outlet information storage files are not encrypted.</encryptionMode>
     <outletName>DefaultOutlet</outletName>
-    <operatingHours>09:00-22:00</operatingHours>
+    <operatingHours>0900-2200</operatingHours>
     <outletContact>91234567</outletContact>
     <outletEmail>DefaultOutlet@gmail.com</outletEmail>
     <passwordHash>wkqTFuX6NX3hucWqn2ZxB24cRo73LssRq7IDOk6Zx00=</passwordHash>

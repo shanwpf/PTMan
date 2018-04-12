@@ -21,7 +21,7 @@ By: `W14-B2`      Since: `March 2018`      Licence: `MIT`
 Part-time Manager (PTMan) is a Java application that helps employers manage and schedule their part-time employees. +
 It provides a graphical user interface for displaying schedules and employee information while making use of a command-line interface as the primary mode of input.
 
-== Setting up
+== Setting Up
 
 === Prerequisites
 You need to make sure the following prerequisites are installed on your computer before proceeding:
@@ -40,7 +40,7 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting Up the Project in Your Computer
 Follow these steps to set up the project in your computer:
 
 . Fork this repo, and clone the fork to your computer.
@@ -55,13 +55,13 @@ Follow these steps to set up the project in your computer:
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
 You may check that you have setup the project correctly by following these steps:
 
 . Run the `seedu.ptman.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configurations to do Before Writing Code
 
 ==== Configuring the coding style
 
@@ -152,7 +152,7 @@ image::LogicClassDiagram.png[width="800"]
 _<<fig-DeleteSeq1>>_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 [[fig-DeleteSeq1]]
-.Component interactions for `delete 1` command (part 1)
+.Component Interactions for `delete 1` Command (Part 1)
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
@@ -161,7 +161,7 @@ Note how the `Model` simply raises a `PartTimeManagerChangedEvent` when the Part
 _<<fig-DeleteSeq2>>_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 [[fig-DeleteSeq2]]
-.Component interactions for `delete 1` command (part 2)
+.Component Interactions for `delete 1` Command (Part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
 [NOTE]
@@ -170,7 +170,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 [[Design-Ui]]
-=== UI component
+=== UI Component
 
 The `UI` component is responsible for displaying information to the user.
 _<<fig-UI>>_ below shows the structure of the `UI` component.
@@ -191,7 +191,7 @@ The `UI` component:
 * Responds to events raised from various parts of the app and updates the UI accordingly.
 
 [[Design-Logic]]
-=== Logic component
+=== Logic Component
 
 _<<fig-LogicClassDiagram2>>_ shows the overall structure of the `Logic` component.
 
@@ -222,7 +222,7 @@ _<<fig-DeleteSd>>_ is the Sequence Diagram for interactions within the `Logic` c
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
-=== Model component
+=== Model Component
 _<<fig-ModelClassDiagram>>_ shows the overview of the `Model` component.
 
 [[fig-ModelClassDiagram]]
@@ -239,7 +239,7 @@ The `Model` component:
 * Does not depend on any of the other three components (`UI`, `Storage` and `Logic`).
 
 [[Design-Storage]]
-=== Storage component
+=== Storage Component
 _<<fig-StorageClassDiagram>>_ shows the overview of the `Storage` component.
 
 [[fig-StorageClassDiagram]]
@@ -254,7 +254,7 @@ The `Storage` component:
 * Saves the PartTimeManager data in xml format and reads it back.
 
 [[Design-Commons]]
-=== Common classes
+=== Common Classes
 // TODO: Either add content or delete
 Classes used by multiple components are in the `seedu.ptman.commons` package.
 
@@ -264,7 +264,7 @@ This section describes some noteworthy details on how certain features are imple
 
 
 // tag::outlet[]
-=== Outlet feature
+=== Outlet Feature
 
 ==== Reason for implementation
 PTMan is designed for outlets such as bubble tea shops and fast food restaurants which require a large number of part-time workers.
@@ -280,7 +280,7 @@ It supports relevant commands that utilize attributes of this class. It is also 
 _<<fig-OutletClassDiagram>>_ is a class diagram that displays the association between `OutletInformation` and other components in the `Model`.
 
 [[fig-OutletClassDiagram]]
-.Overview of the OutletInformation class in the Model
+.Overview of the OutletInformation Class in the Model Component
 image::OutletInformationClassDiagram.png[width="800"]
 
 Currently, the `OutletInformation` object initialized in the `PartTimeManager` is created by calling its default constructor:
@@ -303,7 +303,7 @@ Since `isDataEncrypted` can be initialized to true, you may want to inform the u
 Similarly, you need to update the default admin password in the User Guide to whatever you used to initialize the `masterPassword`.
 Otherwise, users are unable to log in with correct password when they start using the app for the first time.
 
-===== Relevant commands
+===== Commands
 
 Currently, there are two commands that allow employers to change attributes of the `OutletInformation`.
 There are also commands that allow employers to encrypt and decrypt local storage files. +
@@ -314,7 +314,7 @@ The `editoutlet` command can change outlet name, operating hours, contact number
 The information displayed will change after a successful command.
 
 [[fig-OutletInformationDisplayed]]
-.Example of Outlet Information Displayed
+.Example of the Outlet Information Displayed
 image::outletinformationdisplay.jpg[width="600"]
 
 Currently, editing with some fields unspecified is allowed.
@@ -352,11 +352,15 @@ The following sequence diagram (_<<fig-EditOutletCommandSequenceDiagram>>_) illu
 .Interactions inside the Logic Component for the `editoutlet n/Edited Outlet` Admin Command
 image::EditOutletCommandSequenceDiagram.png[width="800"]
 
-When `executeUndoableCommand` executed succesfully without any exception, three events will be raised:
+When an `editoutlet` executes successfully, three events will be raised and handled with reference to _<<fig-EditOutletCommandHighLevelSequenceDiagram>>_:
 
 . `OutletNameChangedEvent` updates the outlet name displayed in the app.
 . `OutletInformationChangedEvent` updates the operating hours, contact numbers and email displayed in the app.
 . `OutletDataChangedEvent` saves latest outlet information in local storage file "data/outletinformation.xml".
+
+[[fig-EditOutletCommandHighLevelSequenceDiagram]]
+.High Level Sequence Diagram for the `editoutlet` Command
+image::EditOutletCommandHighLevelSequenceDiagrams.png[width="800"]
 
 ====== Announcement command
 
@@ -371,9 +375,9 @@ public static boolean isValidAnnouncement(String test) {
     return test.matches(ANNOUNCEMENT_VALIDATION_REGEX);
 }
 ----
-When `announcement` command executes successfully, `AnnouncementChangedEvent` is raised and handled to update the information displayed in the app as highlighted in _<<fig-AnnouncementDisplayed>>_.
+When an `announcement` command executes successfully, `AnnouncementChangedEvent` is raised and handled to update the information displayed in the app as highlighted in _<<fig-AnnouncementDisplayed>>_.
 [[fig-AnnouncementDisplayed]]
-.Example of Announcement Displayed
+.Example of the Announcement Displayed
 image::announcementdisplay.jpg[width="600"]
 
 Similarly, `OutletDataChangedEvent` is also raised and handled to save the latest announcement into local storage file "data/outletinformation.xml".
@@ -383,6 +387,21 @@ Since PTMan stores files locally, it is highly possible that any worker in the o
 Such files store a large amount of essential and private data such as admin password, employees' passwords, employees' phones, addresses, and emails.
 By using the `encrypt` command, the data in local storage files can be hidden from any group of people who do not have the access to it.
 Employers can use the `decrypt` command to make the files human-readable.
+
+The following sequence diagram (_<<fig-EncryptCommandSequenceDiagram>>_) illustrates how an `encrypt` command is executed in the Logic Component, and how it interacts with the Model Component.
+
+[[fig-EncryptCommandSequenceDiagram]]
+.Interactions inside the Logic Component for the `encrypt` Admin Command
+image::EncryptDataCommandSequenceDiagram.png[width="800"]
+
+When an `encrypt` executes successfully, two events will be raised and handled with reference to _<<fig-EncryptCommandHighLevelSequenceDiagram>>_:
+
+. `PartTimeManagerChangedEvent` saves encrypted or decrypted information on employees and shifts in local storage file "data/parttimemanager.xml".
+. `OutletDataChangedEvent` saves encrypted or decrypted outlet information in local storage file "data/outletinformation.xml".
+
+[[fig-EncryptCommandHighLevelSequenceDiagram]]
+.High Level Sequence Diagram for the `encrypt` Command
+image::EncryptCommandHighLevelSequenceDiagrams.png[width="800"]
 
 Currently, the local data is encrypted in the Advanced Encryption Standard (AES) in XML files.
 If data is encrypted, data read from XML files must be decrypted before passing to the constructor of any object.
@@ -401,7 +420,7 @@ However, the limitation is that the XML file structure is still maintained and t
 It is possible that any user with advanced knowledge of data encryption is able to decrypt the data with the found patterns.
 
 [[fig-OutletEncrypt]]
-.Example of Encrypted XML File of Outlet Information
+.Example of an Encrypted XML File of Outlet Information
 image::OutletInformationEncryptedXMLFile.jpg[width="800"]
 
 The limitation of the current implementation leads to an alternative implementation that encrypts the entire XML file.
@@ -426,7 +445,7 @@ public static Document encryptDocument(Document document, SecretKey secretKey, S
 
 
 // tag::shifts[]
-=== Shifts feature
+=== Shifts Feature
 
 ==== Reason for implementation
 
@@ -451,7 +470,7 @@ It guarantees there are no duplicate employees in the shift.
 _<<fig-ShiftClassDiagram>>_ is a class diagram that displays the association between `Shift` and other components in the `Model`.
 
 [[fig-ShiftClassDiagram]]
-.Overview of the Shift class in the Model
+.Overview of the Shift Class in the Model Component
 image::ShiftClassDiagram.png[width="800"]
 
 `Date` and `Time` use Java's `LocalDate` and `LocalTime` classes for easy integration with the timetable.
@@ -476,7 +495,7 @@ Similar to `ApplyCommand`, `UnapplyCommand` will:
 .. Remove the `Employee` from the copy.
 .. Replace the original with the copy.
 
-===== Shift Indexing
+===== Shift indexing
 
 The commands `DeleteShiftCommand`, `ApplyCommand` and `UnapplyCommand` access the specified `Shift` via it's index displayed on the timetable.
 The preferred behaviour for the indexes is to have the first shift of the week start from index 1, with subsequent shifts incrementing that index.
@@ -505,13 +524,13 @@ image::ShiftIndexGood.png[width=800]
 // end::shifts[]
 
 // tag::timetable[]
-=== Timetable feature
+=== Timetable Feature
 
 We have a timetable that increases interactivity between users and the shifts in PTMan.
 _<<fig-Feature_Timetable1>>_ below shows how the timetable looks like.
 
 [[fig-Feature_Timetable1]]
-.Example of the timetable in PTMan
+.Example of the Timetable in PTMan
 image::Feature_Timetable1.png[width=800]
 
 ==== Reason for implementation
@@ -543,7 +562,7 @@ It allows users to click on them to navigate through the weeks in the timetable.
 _<<fig-TimetablePanelClassDiagram>>_ below shows a class diagram of the `TimetablePanel` and its association with JavaFX components. +
  +
 [[fig-TimetablePanelClassDiagram]]
-.Overview of the TimetablePanel class in the UI
+.Overview of the TimetablePanel Class in the UI Component
 image::TimetablePanelClassDiagram.png[width="800"]
 
 A `TimetablePanel` is created with its constructor:
@@ -578,14 +597,14 @@ _<<fig-updateTimetableViewHighLevelSequenceDiagram>>_ below shows a high level s
  is posted and how it causes the `UI` to call `updateTimetableView()`. +
  +
 [[fig-updateTimetableViewHighLevelSequenceDiagram]]
-.Component interactions for a `PartTimeManagerChangedEvent`
+.Component Interactions for a `PartTimeManagerChangedEvent`
 image::updateTimetableViewHighLevelSequenceDiagram.png[width="800"]
 
 _<<fig-updateTimetableViewSequenceDiagram>>_ below shows the sequence diagram of how `TimetablePanel` carries out `updateTimetableView()` to
 respond to a `PartTimeManagerChangedEvent`. +
  +
 [[fig-updateTimetableViewSequenceDiagram]]
-.Sequence diagram to update timetable
+.Sequence Diagram to Update Timetable
 image::updateTimetableViewSequenceDiagram.png[width="750"]
 
 Here are some examples of when `updateTimetableView()` is called: +
@@ -650,8 +669,8 @@ through the `EmailService` class, and then finally delete the local file contain
 
 
 // tag::undoredo[]
-=== Undo/Redo feature
-==== Current Implementation
+=== Undo/Redo Feature
+==== How it is implemented
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the Part-time Manager (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -659,7 +678,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 {nbsp} +
 
 [[fig-LogicCommand]]
-.Inheritance Diagram for commands
+.Inheritance Diagram for Commands
 image::LogicCommandClassDiagram.png[width="800"]
 
 {nbsp} +
@@ -699,14 +718,18 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the Part-time Manager. The current state of the Part-time Manager is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the Part-time Manager. The current state of the Part-time Manager is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command) as shown in _<<fig-Undo1>>_.
 
+[[fig-Undo1]]
+.Demonstration of `delete 5` Command in Undo and Redo Stack
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 {nbsp} +
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person, as shown in _<<fig-Undo2>>_.
 
+[[fig-Undo2]]
+.Demonstration of `add n/David ...` Command in Undo and Redo Stack
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -716,8 +739,10 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Part-time Manager to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Part-time Manager to the state before the `add` command executed as shown in _<<fig-Undo3>>_..
 
+[[fig-Undo3]]
+.Demonstration of `undo` Command in Undo and Redo Stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -737,28 +762,34 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). _<<fig-Undo4>>_ shows changes in undoStack and redoStack after a `clear` command.
 
+[[fig-Undo4]]
+.Demonstration of `clear` Command in Undo and Redo Stack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 {empty} +
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in _<<fig-Undo5>>_.
 
+[[fig-Undo5]]
+.Demonstration of `list` Command in Undo and Redo Stack
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 {nbsp} +
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command, as shown in _<<fig-Undo6>>_.
 
+[[fig-Undo6]]
+.Activity Diagram for Undo/Redo Feature
 image::UndoRedoActivityDiagram.png[width="650"]
 
 {nbsp} +
 
-==== Design Considerations
+==== Design considerations
 This section highlights the considerations behind our application's design choices.
 
-===== Aspect: Implementation of `UndoableCommand`
+===== Aspect: implementation of `UndoableCommand`
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
@@ -767,7 +798,7 @@ This section highlights the considerations behind our application's design choic
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: how undo & redo executes
 
 * **Alternative 1 (current choice):** Saves the entire Part-time Manager.
 ** Pros: Easy to implement.
@@ -777,7 +808,7 @@ This section highlights the considerations behind our application's design choic
 ** Cons: We must ensure that the implementation of each command is correct.
 
 
-===== Aspect: Type of commands that can be undone/redone
+===== Aspect: type of commands that can be undone/redone
 
 * **Alternative 1 (current choice):** Only include commands that modify the Part-time Manager (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
@@ -787,7 +818,7 @@ This section highlights the considerations behind our application's design choic
 ** Cons: User has no way of skipping such commands if he or she just want to reset the state of PTMan and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
-===== Aspect: Data structure to support the undo/redo commands
+===== Aspect: data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
 ** Pros: Easy to understand for new Computer Science undergraduates, who are likely to be the new incoming developers of our project.
@@ -800,7 +831,7 @@ This section highlights the considerations behind our application's design choic
 
 
 // tag::accessControl[]
-=== Password feature
+=== Password Feature
 
 ==== Reason for implementation
 As PTMan is currently designed to use locally on a system, both employer and employee must go through the same system to allocate their preferred slot or to edit the data in PTMan. A Password class is given to both employer and employee to ensure that they are the authorized person that is using the system.
@@ -824,18 +855,18 @@ createPassword(String password)
 As of version 1.2, each person and outlet now has a `Password` class. You may refer to _<<fig-PasswordCD>>_ for an overview of the `Password` class.
 
 [[fig-PasswordCD]]
-.Overview of the Password class in Model
+.Overview of the Password Class in Model Component
 image::PasswordClassDiagram.png[width="700"]
 
 
 The reason of converting password string to hashCode is to protect user’s password from being seen in the storage file.  Anyone who get hold of the data are not able to convert the hashCode back to the original password string as SHA-256 is a https://en.wikipedia.org/wiki/Collision_resistance[collision resistant] hash.
 
-=== Admin mode and command feature
+=== Admin Mode and Command Feature
 
 ==== Reason for implementation
 Initial startup of PTMan require huge amount of manual input by admin. To promote hassle-free commands, employers can log in to admin mode with `login` command and use the command provided without the need to be autheticated for every command.
 
-==== How it is implemented  (Admin mode)
+==== How it is implemented  (admin mode)
 Model component now implement three new API for logic component to use.
 ----
 boolean isAdminMode();
@@ -847,7 +878,7 @@ setFalseAdminMode();
 
 `setTrueAdminMode(Password password)` requires a password that will check against the outlet password and set admin mode accordingly. Failing to give the correct password will result in returning false.
 
-==== How it is implemented (Admin command)
+==== How it is implemented (admin command)
 In order to enable commands to be usable only in admin mode the code below must be added to the execution() of the command *first*.
 ----
 if (!model.isAdminMode()) {
@@ -861,7 +892,7 @@ _<<fig-DeleteSD>>_ below illustrates how the admin command is generally executed
 image::DeletePersonSdForLogic.png[width="800"]
 
 
-=== Email service feature
+=== Email Service Feature
 
 ==== Reason for implementation
 Email service can be useful to send reset password and notification to employee. To facilitate easy sending of email, a https://en.wikipedia.org/wiki/Singleton_pattern[singleton] `EmailService` class is introduced.
@@ -884,7 +915,7 @@ sendResetPasswordMessage(String name, String email, String newPassword)
 `EmailService` class is free for extension.
 // end::accessControl[]
 
-=== Backup storage
+=== Backup Storage
 
 ==== Reason for implementation
 Sometimes local storage files might be corrupted due to accidents.
@@ -940,7 +971,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -988,7 +1019,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more information on how to run tests 
 [NOTE]
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the computer while the tests are running.
 
-=== Types of tests
+=== Types of Tests
 
 We have two types of tests:
 
@@ -1060,7 +1091,7 @@ Suggested path for new programmers:
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
 
 [[GetStartedProgramming-EachComponent]]
-=== Improving each component
+=== Improving Each Component
 
 Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
 
@@ -1110,7 +1141,7 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 ****
 
 [discrete]
-==== `Ui` component
+==== `UI` component
 
 *Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Part-time Manager application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
 
@@ -1203,7 +1234,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 ****
 
 [[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
+=== Creating a New Command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
@@ -1220,7 +1251,7 @@ Edits the remark for the first person to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first person.
 
-==== Step-by-step Instructions
+==== Step-by-step instructions
 
 ===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
@@ -1251,7 +1282,7 @@ Let's teach the application to parse arguments that our `remark` command will ac
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/PartTimeManagerParserTest.java[`PartTimeManagerParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
+===== [Step 3] UI: Add a placeholder for remark in `PersonCard`
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
 
 **Main:**
@@ -1303,7 +1334,7 @@ Since `Person` can now have a `Remark`, we should add a helper method to link:{r
 . Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
 . Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
+===== [Step 7] UI: Connect `Remark` field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
@@ -1459,7 +1490,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `PTMan` and the *Actor* is the `employer`, unless specified otherwise)
 
-[discrete]
 === Use case: Add employee
 
 *MSS*
@@ -1527,7 +1557,6 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-[discrete]
 === Use case: Delete employee
 
 *MSS*
@@ -1553,7 +1582,6 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-[discrete]
 === Use case: Edit employee
 
 *MSS*
@@ -1586,7 +1614,6 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-[discrete]
 === Use case: Sign up for available shifts
 
 *MSS*
@@ -1678,7 +1705,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting an employee
+=== Deleting an Employee
 
 . Deleting an employee while all employees are listed
 
@@ -1690,7 +1717,7 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-=== Saving data
+=== Saving Data
 
 . Dealing with missing/corrupted data files
 

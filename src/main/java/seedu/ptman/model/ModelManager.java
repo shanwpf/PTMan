@@ -87,6 +87,16 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicatePartTimeManagerChanged() {
         raise(new PartTimeManagerChangedEvent(partTimeManager));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateEncryptionModeChanged() {
+        raise(new PartTimeManagerChangedEvent(partTimeManager));
+        raise(new OutletDataChangedEvent(partTimeManager.getOutletInformation()));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateOutletInformationChanged() {
         raise(new OutletDataChangedEvent(partTimeManager.getOutletInformation()));
     }
 
@@ -133,7 +143,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setAdminPassword(Password password) {
         partTimeManager.setAdminPassword(password);
-        indicatePartTimeManagerChanged();
+        indicateOutletInformationChanged();
     }
 
     @Override
@@ -215,7 +225,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
         partTimeManager.updateOutlet(editedOutlet);
-        indicatePartTimeManagerChanged();
+        indicateOutletInformationChanged();
     }
 
     @Override
@@ -229,15 +239,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean getEncryptionMode() {
+        return getOutletInformation().getEncryptionMode();
+    }
+
+    @Override
     public void encryptLocalStorage() {
         partTimeManager.encryptLocalStorage();
-        indicatePartTimeManagerChanged();
+        indicateEncryptionModeChanged();
     }
 
     @Override
     public void decryptLocalStorage() {
         partTimeManager.decryptLocalStorage();
-        indicatePartTimeManagerChanged();
+        indicateEncryptionModeChanged();
     }
     //@@author
     //=========== Filtered Employee List Accessors =============================================================
