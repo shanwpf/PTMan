@@ -883,7 +883,7 @@ Displays the shifts of the selected employee on the timetable view. Shifts appli
  in blue, while the other shifts would be displayed in brown. +
 
 *Format:* `select EMPLOYEE_INDEX` +
-*Shorthand:* `s EMPLOYEE_INDEX`
+*Shorthand:* `sel EMPLOYEE_INDEX`
 
 // TODO: SCREENSHOT
 Examples:
@@ -898,16 +898,18 @@ Examples:
 Alternatively, you can select an employee simply by clicking on the employee's card in the employee list
 
 [TIP]
-To stop displaying the employee's shifts on the timetable, use the `main` command. +
-Refer to <<Displaying the default timetable: `main`>> for more information.
+To stop displaying the employee's shifts on the timetable, use the `defaultview` command. +
+Refer to <<Displaying the default timetable: `defaultview`>> for more information.
 
-[[Main]]
-==== Displaying the default timetable: `main`
+[[Dv]]
+==== Deselecting an employee: `deselect`
 
-Displays the main timetable view (of the current week). Useful for users to navigate back to the default timetable
-after using the `select` command. +
+Displays the timetable without any employee selected.
+Useful for users to navigate back to the default timetable after using the `select` command, or when they have lost track of
+where they have navigated the timetable week to. +
 
-*Format:* `main`
+*Format:* `deselect`
+*Shorthand:* `dsel`
 
 [[Export]]
 ==== Exporting the timetable as image: `export`
@@ -964,7 +966,7 @@ Exits the app. +
 * <<List, *List*>>: `list`
 * <<Viewshift, *View shift*>>: `viewshift SHIFT_INDEX`
 * <<Select, *Display employee's shifts*>>: `select EMPLOYEE_INDEX`
-* <<Main, *Display default timetable*>>: `main`
+* <<Dv, *Display default timetable*>>: `defaultview`
 * <<Export, *Export timetable*>>: `export`
 * <<History, *History*>>: `history`
 * <<Exit, *Exit*>>: `exit`
