@@ -44,7 +44,7 @@ import seedu.ptman.logic.commands.ResetPasswordCommand;
 import seedu.ptman.logic.commands.SelectCommand;
 import seedu.ptman.logic.commands.UnapplyCommand;
 import seedu.ptman.logic.commands.UndoCommand;
-import seedu.ptman.logic.commands.ViewOutletCommand;
+import seedu.ptman.logic.commands.ViewEncryptionCommand;
 import seedu.ptman.logic.commands.ViewShiftCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 
@@ -174,9 +174,9 @@ public class PartTimeManagerParser {
         case EditOutletCommand.COMMAND_ALIAS:
             return new EditOutletCommandParser().parse(arguments);
 
-        case ViewOutletCommand.COMMAND_WORD:
-        case ViewOutletCommand.COMMAND_ALIAS:
-            return new ViewOutletCommand();
+        case ViewEncryptionCommand.COMMAND_WORD:
+        case ViewEncryptionCommand.COMMAND_ALIAS:
+            return new ViewEncryptionCommand();
 
         case AnnouncementCommand.COMMAND_WORD:
         case AnnouncementCommand.COMMAND_ALIAS:
