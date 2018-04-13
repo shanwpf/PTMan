@@ -51,7 +51,7 @@ import seedu.ptman.logic.commands.RedoCommand;
 import seedu.ptman.logic.commands.SelectCommand;
 import seedu.ptman.logic.commands.UnapplyCommand;
 import seedu.ptman.logic.commands.UndoCommand;
-import seedu.ptman.logic.commands.ViewOutletCommand;
+import seedu.ptman.logic.commands.ViewEncryptionCommand;
 import seedu.ptman.logic.commands.ViewShiftCommand;
 import seedu.ptman.logic.parser.exceptions.ParseException;
 import seedu.ptman.model.Password;
@@ -303,12 +303,12 @@ public class PartTimeManagerParserTest {
 
     @Test
     public void parseCommand_viewoutlet() throws Exception {
-        assertTrue(parser.parseCommand(ViewOutletCommand.COMMAND_WORD) instanceof ViewOutletCommand);
+        assertTrue(parser.parseCommand(ViewEncryptionCommand.COMMAND_WORD) instanceof ViewEncryptionCommand);
     }
 
     @Test
     public void parseCommand_viewoutletAlias() throws Exception {
-        assertTrue(parser.parseCommand(ViewOutletCommand.COMMAND_ALIAS) instanceof ViewOutletCommand);
+        assertTrue(parser.parseCommand(ViewEncryptionCommand.COMMAND_ALIAS) instanceof ViewEncryptionCommand);
     }
 
     //@@author hzxcaryn
