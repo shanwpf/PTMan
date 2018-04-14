@@ -91,6 +91,7 @@ You may refer to <<Changing your employee password: `changepw`>> for instruction
 === Outlet Management
 If you are a manager, PTMan allows you to manage your outlet. You can edit your outlet name, operating hours, contact number and email.
 The timetable automatically re-sizes according to the operating hours. You can also create any announcement and broadcast to your employees.
+Moreover, PTMan allows you to encrypt and decrypt data stored locally to prevent any group of people who do not have access to it from interpreting and understanding essential and private data.
 
 If you are an employee, you can view announcement created by your manager and take actions accordingly.
 
@@ -169,7 +170,7 @@ All data is saved in the hard disk automatically after any command that changes 
 
 // tag::backup[]
 === Backing Up the Data
-Backup files are automatically created and saved in the hard disk upon exit of the app. There is no need to do backup manually. +
+Backup files are automatically created and saved in the hard disk upon exit of the app. There is no need to do backup manually.
 You can replace any local storage files with backup files by the following steps:
 
 . Copy any backup files named `outletinformation.xml.backup` or `parttimemanager.xml.backup`.
