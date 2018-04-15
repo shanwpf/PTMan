@@ -41,6 +41,7 @@ This enhancement also changes the storage component significantly as data stored
 ** Documentation:
 *** Updated user stories, use cases and NFRs in Developer guide: https://github.com/CS2103JAN2018-W14-B2/main/pull/2[#2], https://github.com/CS2103JAN2018-W14-B2/main/pull/10[#10]
 *** Updated formatting of Developer Guide: https://github.com/CS2103JAN2018-W14-B2/main/pull/23[#23]
+*** Updated manual testing in Developer Guide: https://github.com/CS2103JAN2018-W14-B2/main/pull/231[#231]
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B2/main/issues/142[#142])
 
