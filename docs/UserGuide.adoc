@@ -706,14 +706,14 @@ Adds a shift to the timetable to indicate that you require employees at that per
 +
 [[fig-addshiftBefore]]
 .Adding a Shift +
-image::AddShiftBefore.png[width="800"]
+image::AddshiftBefore.png[width="800"]
 +
 . You should see a confirmation message in the feedback box along with the shift you've added being displayed in the timetable.
 This is illustrated in _<<fig-addshiftAfter>>_.
 +
 [[fig-addshiftAfter]]
 .Successful Adding of a Shift +
-image::AddShiftAfter.png[width="800"]
+image::AddshiftAfter.png[width="800"]
 
 [[Deleteshift]]
 ==== Deleting a shift: `deleteshift`
